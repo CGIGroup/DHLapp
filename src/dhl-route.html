@@ -1,0 +1,35 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/google-map/google-map.html">
+<link rel="import" href="../bower_components/geo-location/geo-location.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="dhl-route">
+    <template>
+        <style include="shared-styles">
+            :host {
+                display: block;
+                height: 100%;
+                position: relative;
+                overflow-y: auto;
+                padding: 10px;
+
+                padding: 10px;
+            }
+            google-map {
+                height: 600px;
+            }
+        </style>
+
+        <geo-location latitude="{{lat}}" longitude="{{lng}}"></geo-location>
+
+        <google-map latitude="[[lat]]" longitude="[[lng]]" api-key="AIzaSyCCh4Cn9fdeGBI3JJ75rk_ou9YaqliHNFI">
+            <google-map-marker latitude="[[lat]]" longitude="[[lng]]"></google-map-marker>
+        </google-map>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'dhl-route',
+        });
+    </script>
+</dom-module>

@@ -1,8 +1,8 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/granite-qrcode-scanner/granite-qrcode-scanner.html">
 <link rel="import" href="shared-styles.html">
-<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
 
-<dom-module id="dhl-home">
+<dom-module id="dhl-qrcode">
     <template>
         <style include="shared-styles">
             :host {
@@ -14,18 +14,18 @@
 
                 padding: 10px;
             }
-            iron-icon{
-                width:100%;
-                height: auto;
-            }
         </style>
 
-        <iron-icon src="https://firebasestorage.googleapis.com/v0/b/dhlapp-29433.appspot.com/o/stage_bridge_720x233.png?alt=media&token=305e8fc5-a753-43a3-9a10-839938b61b0b"></iron-icon>
+        <granite-qrcode-scanner data="{{data}}" continuous></granite-qrcode-scanner>
+
+        <div>
+            Scanned QR code: [[data]]
+        </div>
     </template>
 
     <script>
         Polymer({
-            is: 'dhl-home',
+            is: 'dhl-qrcode',
         });
     </script>
 </dom-module>

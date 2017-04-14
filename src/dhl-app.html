@@ -6,56 +6,38 @@
 <link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
 <link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
 <link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
-<link rel="import" href="../bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
 <link rel="import" href="../bower_components/app-route/app-location.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<!--<link rel="import" href="../bower_components/iron-icons/iron-icons.html">-->
 <link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
-<link rel="import" href="../bower_components/paper-scroll-header-panel/paper-scroll-header-panel.html">
-<link rel="import" href="../bower_components/paper-drawer-panel/paper-drawer-panel.html">
 <link rel="import" href="dhl-icons.html">
 
 <dom-module id="dhl-app">
     <template>
-        <style include="iron-flex iron-flex-alignment iron-positioning"></style>
-
+        <style include="iron-flex iron-flex-alignment"></style>
         <style>
             :host {
                 --app-primary-color: #fc0;
                 --app-secondary-color: black;
 
                 display: block;
-                height: 100%;
-                width: 100%;
-                position: relative;
             }
-            paper-toolbar {
-                --paper-toolbar-background: var(--app-primary-color);
-                --paper-toolbar-title: {
-                    font-weight: bold;
-                    color: black;
-                };
-            }
-            paper-button {
-                background: var(--app-primary-color);
-                color: black;
-            }
-            paper-scroll-header-panel {
-                width: 100%;
-                height: 100%;
-            }
-            .content {
-                width: 100%;
-                height: 100%;
-                position: relative;
-                overflow-y: auto;
+
+            app-drawer {
+                --app-drawer-content-container: {
+                    background-color:  var(--app-primary-color);
+                    box-shadow: 1px 0 2px 1px rgba(0,0,0,0.18);
+                }
             }
             app-header {
-                color: #fff;
+                color: black;
                 background-color: var(--app-primary-color);
             }
             app-header paper-icon-button {
@@ -68,7 +50,9 @@
 
             .drawer-list a {
                 display: block;
+                padding: 0 16px;
                 text-decoration: none;
+                background-color: var(--app-primary-color);
                 color: var(--app-secondary-color);
                 line-height: 40px;
             }
@@ -78,21 +62,23 @@
                 font-weight: bold;
             }
 
-            .cgipng {
+            .dhlgif {
                 margin-left: 12px;
-                width: 100px;
-                height: 50px;
+                width: auto;
+                height: 40px;
             }
         </style>
 
         <!-- IMPORTANT: The firebase-app element needs to appear before any
              other firebase-* elements -->
+        <!--
         <firebase-app
                 id="firebase"
                 api-key="AIzaSyA2jOyybEfFmYNLIjR7rrwHoGZpzkPDy2U"
                 auth-domain="dhlapp-29433.firebaseapp.com"
                 database-url="https://dhlapp-29433.firebaseio.com">
         </firebase-app>
+        -->
 
         <firebase-auth
                 id="auth"
@@ -101,63 +87,61 @@
                 provider="google">
         </firebase-auth>
 
+
         <app-location route="{{route}}"></app-location>
+
         <app-route
                 route="{{route}}"
                 pattern="/:page"
                 data="{{routeData}}"
                 tail="{{subroute}}"></app-route>
 
-        <paper-scroll-header-panel fixed>
-            <paper-toolbar >
-                <!-- Attach an event listener here -->
-                <paper-icon-button icon="menu" on-tap="toggleDrawer"></paper-icon-button>
+        <app-drawer-layout fullbleed>
+            <!-- Drawer content -->
+            <app-drawer id="drawer">
+                <app-toolbar></app-toolbar>
+                <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
+                    <a name="home" href="/home">Home</a>
+                    <a name="barcode" href="/barcode">Barcode</a>
+                    <a name="qrcode" href="/qrcode">Qrcode</a>
+                    <a name="route" href="/route">Route</a>
+                </iron-selector>
+            </app-drawer>
 
-                <iron-icon class="Xcgipng" src="../images/dhl_logo.gif"></iron-icon>
-                <div class="flex"></div>
-                <span>
-                    <template is="dom-if" if="[[user]]">
-                        <p>User: [[user.displayName]]</p>
-                    </template>
-                </span>
-                <span>
-                    <paper-button raised on-tap="login" hidden$="[[user]]">Sign in</paper-button>
-                    <paper-button raised on-tap="logout" hidden$="[[!user]]">Sign out</paper-button>
-                </span>
-            </paper-toolbar>
-            <div class="content">
-                <paper-drawer-panel id="drawerPanel">
-                    <paper-header-panel mode="scroll" drawer>
-                        <div class="layout vertical fit">
+            <!-- Main content -->
+            <app-header-layout has-scrolling-region>
 
-                            <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-                                <a name="home" href="/home">Home</a>
-                                <a name="barcode" href="/barcode">Barcode</a>
-                                <a name="route" href="/route">Route</a>
-                            </iron-selector>
+                <app-header condenses reveals effects="waterfall">
+                    <app-toolbar>
+                        <paper-icon-button icon="dhl-icons:menu" drawer-toggle></paper-icon-button>
 
-                            <div class="flex"></div>
+                        <iron-icon class="dhlgif" src="../images/dhl_logo.gif"></iron-icon>
+                        <div class="flex"></div>
+                        <span>
+                            <template is="dom-if" if="[[user]]">
+                                <p>User: [[user.displayName]]</p>
+                            </template>
+                        </span>
+                        <span>
+                            <paper-button raised on-tap="login" hidden$="[[user]]">Sign in</paper-button>
+                            <paper-button raised on-tap="logout" hidden$="[[!user]]">Sign out</paper-button>
+                        </span>
+                    </app-toolbar>
+                </app-header>
 
-
-
-                        </div>
-                    </paper-header-panel>
-                    <div main>
-                        <iron-pages
-                                selected="[[page]]"
-                                attr-for-selected="name"
-                                fallback-selection="view404"
-                                role="main">
-                            <dhl-home class="fit" name="home"></dhl-home>
-                            <dhl-barcode class="fit" name="barcode"></dhl-barcode>
-                            <dhl-route class="fit" name="route"></dhl-route>
-                            <dhl-view404 class="fit" name="view404"></dhl-view404>
-                        </iron-pages>
-                    </div>
-                </paper-drawer-panel>
-            </div>
-        </paper-scroll-header-panel>
-
+                <iron-pages
+                        selected="[[page]]"
+                        attr-for-selected="name"
+                        fallback-selection="view404"
+                        role="main">
+                    <dhl-home name="home"></dhl-home>
+                    <dhl-barcode name="barcode"></dhl-barcode>
+                    <dhl-qrcode name="qrcode"></dhl-qrcode>
+                    <dhl-route name="route"></dhl-route>
+                    <dhl-view404 name="view404"></dhl-view404>
+                </iron-pages>
+            </app-header-layout>
+        </app-drawer-layout>
     </template>
 
     <script>
@@ -170,16 +154,6 @@
                     reflectToAttribute: true,
                     observer: '_pageChanged',
                 },
-                user: {
-                    type: Object
-                },
-                statusKnown: {
-                    type: Object
-                },
-            },
-            toggleDrawer: function() {
-                this.$.drawerPanel.togglePanel();
-                //console.log('Toggled');
             },
 
             observers: [
@@ -189,14 +163,14 @@
             _routePageChanged: function(page) {
                 this.page = page || 'home';
 
-                //if (!this.$.drawer.persistent) {
-                //    this.$.drawer.close();
-                //}
+                if (!this.$.drawer.persistent) {
+                    this.$.drawer.close();
+                }
             },
 
             _pageChanged: function(page) {
                 // Load page import on demand. Show 404 page if fails
-                var resolvedPageUrl = this.resolveUrl('cgi-' + page + '.html');
+                var resolvedPageUrl = this.resolveUrl('dhl-' + page + '.html');
                 this.importHref(resolvedPageUrl, null, this._showPage404, true);
             },
 
@@ -208,7 +182,7 @@
             },
             logout: function() {
                 return this.$.auth.signOut();
-            },
+            }
         });
     </script>
 </dom-module>

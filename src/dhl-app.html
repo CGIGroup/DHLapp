@@ -1,7 +1,10 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="dhl-icons.html">
+<!--
 <link rel="import" href="../bower_components/polymerfire/firebase-app.html">
 <link rel="import" href="../bower_components/polymerfire/firebase-auth.html">
+-->
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
 <link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
 <link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
@@ -13,8 +16,6 @@
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
-<!--<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
-<link rel="import" href="../bower_components/iron-icon/iron-icon.html">-->
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
@@ -78,7 +79,7 @@
                 auth-domain="dhlapp-29433.firebaseapp.com"
                 database-url="https://dhlapp-29433.firebaseio.com">
         </firebase-app>
-        -->
+
 
         <firebase-auth
                 id="auth"
@@ -86,7 +87,14 @@
                 status-known="{{statusKnown}}"
                 provider="google">
         </firebase-auth>
-
+        -->
+        <iron-ajax
+                auto
+                url="http://localhost:8080/trips/744567"
+                handle-as="json"
+                last-response="{{tripInfo}}"
+                debounce-duration="300">
+        </iron-ajax>
 
         <app-location route="{{route}}"></app-location>
 
@@ -102,9 +110,10 @@
                 <app-toolbar></app-toolbar>
                 <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
                     <a name="home" href="/home">Home</a>
+                    <a name="trip" href="/trip">Trip</a>
+                    <a name="route" href="/route">Route</a>
                     <a name="barcode" href="/barcode">Barcode</a>
                     <a name="qrcode" href="/qrcode">Qrcode</a>
-                    <a name="route" href="/route">Route</a>
                 </iron-selector>
             </app-drawer>
 
@@ -116,6 +125,8 @@
                         <paper-icon-button icon="dhl-icons:menu" drawer-toggle></paper-icon-button>
 
                         <iron-icon class="dhlgif" src="../images/dhl_logo.gif"></iron-icon>
+
+                        <!--
                         <div class="flex"></div>
                         <span>
                             <template is="dom-if" if="[[user]]">
@@ -126,6 +137,7 @@
                             <paper-button raised on-tap="login" hidden$="[[user]]">Sign in</paper-button>
                             <paper-button raised on-tap="logout" hidden$="[[!user]]">Sign out</paper-button>
                         </span>
+                        -->
                     </app-toolbar>
                 </app-header>
 
@@ -135,9 +147,10 @@
                         fallback-selection="view404"
                         role="main">
                     <dhl-home name="home"></dhl-home>
+                    <dhl-trip trip-info="[[tripInfo]]" name="trip"></dhl-trip>
+                    <dhl-route trip-info="[[tripInfo]]" name="route"></dhl-route>
                     <dhl-barcode name="barcode"></dhl-barcode>
                     <dhl-qrcode name="qrcode"></dhl-qrcode>
-                    <dhl-route name="route"></dhl-route>
                     <dhl-view404 name="view404"></dhl-view404>
                 </iron-pages>
             </app-header-layout>
@@ -153,6 +166,11 @@
                     type: String,
                     reflectToAttribute: true,
                     observer: '_pageChanged',
+                },
+                tripInfo:{
+                    type: Object,
+                    value: null,
+                    observer: 'dataChanged',
                 },
             },
 
@@ -172,6 +190,9 @@
                 // Load page import on demand. Show 404 page if fails
                 var resolvedPageUrl = this.resolveUrl('dhl-' + page + '.html');
                 this.importHref(resolvedPageUrl, null, this._showPage404, true);
+            },
+            dataChanged: function(newValue, oldValue) {
+                console.log('tripInfo', oldValue, 'to:', newValue);
             },
 
             _showPage404: function() {

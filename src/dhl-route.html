@@ -2,6 +2,7 @@
 <link rel="import" href="../bower_components/google-map/google-map.html">
 <link rel="import" href="../bower_components/geo-location/geo-location.html">
 <link rel="import" href="../bower_components/google-map/google-map-directions.html">
+<link rel="import" href="../bower_components/google-streetview-pano/google-streetview-pano.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="dhl-route">
@@ -23,22 +24,60 @@
 
         <geo-location latitude="{{lat}}" longitude="{{lng}}"></geo-location>
 
-        <google-map  map="{{map}}" latitude="[[lat]]" longitude="[[lng]]" api-key="AIzaSyDrIreXFKXwprD4yBAemMUB3JZhw8rG65c">
+        <template is="dom-if" if="{{lat}}">
+            <template is="dom-if" if="{{tripInfo}}">
+                <google-map  map="{{map}}"
+                             latitude="[[lat]]" longitude="[[lng]]"
+                             fitToMarkers
+                             api-key="AIzaSyDrIreXFKXwprD4yBAemMUB3JZhw8rG65c">
+                </google-map>
 
-            <google-map-marker latitude="[[lat]]" longitude="[[lng]]"></google-map-marker>
+                <google-map-directions map="{{map}}"
+                                       start-address="[[computedPosition()]]"
+                                       end-address="[[computedPosition()]]"
+                                       waypoints="[[computedWaypoints()]]"
+                                       api-key="AIzaSyDrIreXFKXwprD4yBAemMUB3JZhw8rG65c">
+                </google-map-directions>
+                <!--
+                <google-streetview-pano
+                        position="[[computedPosition()]]"
+                        heading="330"
+                        pitch="-2"
+                        zoom="0.8"
+                        disable-default-ui
+                        api-key="AIzaSyDrIreXFKXwprD4yBAemMUB3JZhw8rG65c">
+                </google-streetview-pano>
+                               position="[[computedPosition()]]"   -->
+            </template>
+        </template>
 
-        </google-map>
-
-
-        <!--<google-map-directions map="{{map}}"
-                               start-address="Utrecht"
-                               end-address="Amsterdam"></google-map-directions>
-        -->
     </template>
 
     <script>
         Polymer({
             is: 'dhl-route',
+            properties:{
+                tripInfo:{
+                    type: Object,
+                    value: null,
+                }
+            },
+            observers: [
+                'stopsArr(tripInfo.stops)',
+            ],
+            computedWaypoints:function(){
+                var wayPoints = [];
+                if(this.tripInfo) this.tripInfo.stops.forEach(function(stop){
+                    wayPoints.push({location: stop.address.latitude+' '+stop.address.longitude});
+                });
+                return wayPoints
+            },
+            computedPosition:function(){
+                //return { lat: 42.345573, lng: -71.098326 };
+                //return {location: this.lat+' '+this.lng}
+                return {lat: this.lat, lng:this.lng}
+            }
+
         });
     </script>
 </dom-module>

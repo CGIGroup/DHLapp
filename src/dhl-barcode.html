@@ -1,5 +1,5 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="../bower_components/barcoder-element/barcoder-element.html">
+<link rel="import" href="../bower_components/barcode-scanner/barcode-scanner.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="dhl-barcode">
@@ -14,9 +14,23 @@
 
         padding: 10px;
       }
+      .placeholder {
+          width: var(--placeholder-width, 320px);
+          height: var(--placeholder-height, 240px);
+          border-radius: 10px;
+          background-color:var(--placeholder-background-color, #ffc107);
+          color: var(--placeholder-color, white);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+          font-size: 24px;
+          font-weight: bold;
+      }
     </style>
 
-      <barcoder-element></barcoder-element>
+      <span>Scanned Barcode: [[code]]</span>
+      <barcode-scanner class="placeholder" code="{{code}}"></barcode-scanner>
 
   </template>
 

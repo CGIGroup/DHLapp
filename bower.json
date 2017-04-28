@@ -22,7 +22,6 @@
     "polymerfire": "firebase/polymerfire#^0.10.3",
     "google-map": "GoogleWebComponents/google-map#^1.2.0",
     "geo-location": "ebidel/geo-location#^1.0.6",
-    "barcoder-element": "locomuco/barcode-scanner",
     "granite-qrcode-scanner": "LostInBrittany/granite-qrcode-scanner#^1.3.5",
     "paper-button": "PolymerElements/paper-button#^1.0.14",
     "iron-icons": "PolymerElements/iron-icons#^1.2.0",
@@ -30,10 +29,18 @@
     "paper-card": "PolymerElements/paper-card#^1.1.6",
     "paper-listbox": "PolymerElements/paper-listbox#^1.1.3",
     "paper-item": "PolymerElements/paper-item#^1.2.2",
-    "google-streetview-pano": "GoogleWebComponents/google-streetview-pano#^1.0.4"
+    "google-streetview-pano": "GoogleWebComponents/google-streetview-pano#^1.0.4",
+    "granite-file-saver": "lostinbrittany/granite-file-saver#^1.0.4",
+    "quagga": "0.9.0",
+    "barcode-scanner": "lemaik/barcode-scanner#^0.1.1",
+    "iron-list": "PolymerElements/iron-list#^1.4.5"
   },
   "devDependencies": {
     "web-component-tester": "^4.0.0"
   },
-  "private": true
+  "private": true,
+  "resolutions": {
+    "polymer": "^1.6.0",
+    "quagga": "0.9.0"
+  }
 }

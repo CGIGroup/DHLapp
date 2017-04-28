@@ -62,13 +62,15 @@
                     value: null,
                 }
             },
-            observers: [
-                'stopsArr(tripInfo.stops)',
-            ],
             computedWaypoints:function(){
                 var wayPoints = [];
                 if(this.tripInfo) this.tripInfo.stops.forEach(function(stop){
                     wayPoints.push({location: stop.address.latitude+' '+stop.address.longitude});
+                    //wayPoints.push({location: stop.address.street+' '+
+                    //stop.address.postalCode+' '+
+                    //stop.address.city
+                    //stop.address.country
+                    //});
                 });
                 return wayPoints
             },

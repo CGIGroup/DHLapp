@@ -3,6 +3,7 @@
   "shell": "src/dhl-app.html",
   "fragments": [
     "src/dhl-home.html",
+    "src/dhl-trip.html",
     "src/dhl-barcode.html",
     "src/dhl-route.html",
     "src/my-view404.html"

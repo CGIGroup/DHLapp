@@ -1,73 +1,189 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="shared-styles.html">
-<link rel="import" href="../bower_components/paper-card/paper-card.html">
-<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
-<link rel="import" href="../bower_components/paper-item/paper-item.html">
-<link rel="import" href="../bower_components/paper-item/paper-item-body.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../bower_components/paper-styles/color.html">
+<link rel="import" href="../bower_components/paper-styles/typography.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-list/iron-list.html">
+
+<!--
+<link rel="import" href="../../iron-image/iron-image.html">
+<link rel="import" href="../../paper-icon-button/paper-icon-button.html">
+-->
 
 <dom-module id="dhl-trip">
     <template>
-        <style include="shared-styles">
+        <style>
             :host {
                 display: block;
-                height: 100%;
+                height: 1000px;
                 position: relative;
                 overflow-y: auto;
                 padding: 10px;
+                @apply(--paper-font-common-base);
             }
+
+            iron-list {
+                /*padding-top: 64px;*/
+                --iron-list-items-container: {
+                    height: 1000px;
+                    max-width: 400px;
+                    margin: auto;
+                    margin-top: 10px;
+                    margin-bottom: 10px;
+                };
+            }
+
+            .item {
+                @apply(--layout-horizontal);
+                padding: 20px;
+                background-color: white;
+                border: 1px solid #ddd;
+                cursor: pointer;
+                margin-bottom: 10px;
+            }
+
+            .pad {
+                padding: 0 16px;
+                @apply(--layout-flex);
+                @apply(--layout-vertical);
+            }
+
+            .idx {
+                width: 20px;
+                display: block;
+                float: left;
+                clear: left;
+            }
+
+            .primary {
+                font-size: 16px;
+                font-weight: bold;
+            }
+
+            .shortText, .longText {
+                font-size: 14px;
+                margin-left: 20px;
+            }
+
+            .longText {
+                color: gray;
+                display: none;
+            }
+
+            .label {
+                color: gray;
+                width: 130px;
+                display: block;
+                float: left;
+                clear: left;
+            }
+            .content {
+                color: black;
+                display: block;
+                float: left;
+            }
+            .contentbold {
+                color: black;
+                font-weight: bold;
+                display: block;
+                float: left;
+            }
+            .contentfinal {
+                color: black;
+                font-weight: bold;
+                display: block;
+                float: right;
+            }
+
+            .item.expanded .longText {
+                display: block;
+                margin-left: 20px;
+            }
+
+
+            .spacer {
+                @apply(--layout-flex);
+            }
+
+            @media (max-width: 460px) {
+                paper-toolbar .bottom.title {
+                    font-size: 14px;
+                }
+            }
+
         </style>
 
-        <paper-card heading="Trip Number: [[tripInfo.tripNumber]]">
-            <paper-listbox selected="{{stopObj}}" attr-for-selected="value">
-                <template is="dom-repeat" items="{{tripInfo.stops}}" as="stop">
-                    <paper-item value="{{stop}}">
-                        <paper-item-body three-line>
-                            <div>[[stop.address.street]] [[stop.address.houseNumber]]</div>
-                            <div>[[stop.address.postalCode]] [[stop.address.city]]</div>
-                            <div>[[stop.address.country]]</div>
-                        </paper-item-body>
-                    </paper-item>
-                </template>
-            </paper-listbox>
-        </paper-card>
+        <iron-list id="list" items="{{tripInfo.stops}}" as="stop" selection-enabled multi-selection>
+            <template>
+                <div>
+                    <div class$="[[getClassForItem(stop, selected)]]" tabindex$="[[tabIndex]]">
+                        <div class="pad">
+                            <div class="primary">
+                                <span class="idx">[[computedIndex(index)]]</span>
+                                <span>[[stop.address.street]] [[stop.address.houseNumber]]</span>
+                            </div>
+                            <div class="shortText">[[stop.address.postalCode]] [[stop.address.city]]</div>
+                            <div class="longText">
+                                <template is="dom-repeat" items="{{stop.pieces}}" as="piece">
+                                    <p class="indent">
+                                        <span class="label">Receiver Name:</span>
+                                        <span class="contentbold">[[piece.receiverName]]</span>
+                                        <span class="label">ID:</span>
+                                        <span class="content">[[piece.id]]</span>
+                                        <span class="label">Shipment Number:</span>
+                                        <span class="content">[[piece.shipmentNumber]]</span>
+                                        <span class="label">Status:</span>
+                                        <span class="contentfinal">[[piece.status]]</span>
+                                        <span class="label">&nbsp</span>
+                                    </p>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </iron-list>
 
-
-        <paper-card heading="Pieces: [[stopObj.address.street]] [[stopObj.address.houseNumber]]">
-            <paper-listbox>
-                <template is="dom-repeat" items="{{stopObj.pieces}}" as="piece">
-                    <paper-item>
-                        <paper-item-body four-line>
-                            <div>id: [[piece.id]]</div>
-                            <div>Receiver Name: [[piece.receiverName]]</div>
-                            <div>Shipment Number: [[piece.shipmentNumber]]</div>
-                            <div>Status: [[piece.status]]</div>
-                            <div></div>
-                        </paper-item-body>
-                    </paper-item>
-                </template>
-            </paper-listbox>
-        </paper-card>
     </template>
 
     <script>
+
         Polymer({
             is: 'dhl-trip',
 
-            properties:{
+            properties: {
+
                 tripInfo:{
                     type: Object,
                     value: null,
+                    observer: 'dataChanged',
                 },
 
-                stopObj:{
-                    type: Object,
-                    value: null,
-                    observer: 'stopChanged'
-                }
             },
-            stopChanged: function(newValue, oldValue) {
-                console.log('Stop', oldValue, 'to:', newValue);
-            }
+
+            attached: function() {
+                // Use the document element
+                this.$.list.scrollTarget = this.ownerDocument.documentElement;
+            },
+
+            computedIndex: function(index) {
+              return index+1;
+            },
+
+            iconForItem: function(item) {
+                return item ? (item.integer < 50 ? 'star-border' : 'star') : '';
+            },
+
+            getClassForItem: function(item, selected) {
+                return selected ? 'item expanded' : 'item';
+            },
+
+            dataChanged: function(newValue, oldValue) {
+                console.log('tripInfo', oldValue, 'to:', newValue);
+            },
+
         });
+
     </script>
 </dom-module>
+

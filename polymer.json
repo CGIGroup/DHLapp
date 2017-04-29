@@ -6,6 +6,7 @@
     "src/dhl-trip.html",
     "src/dhl-barcode.html",
     "src/dhl-route.html",
+    "src/dhl-qrcode-generator.html",
     "src/my-view404.html"
   ],
   "sourceGlobs": [

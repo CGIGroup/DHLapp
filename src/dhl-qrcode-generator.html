@@ -1,0 +1,47 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/granite-qrcode-generator/granite-qrcode-generator.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="dhl-qrcode-generator">
+    <template>
+        <style include="shared-styles">
+            :host {
+                display: block;
+                height: 100%;
+                position: relative;
+                overflow-y: auto;
+                padding: 10px;
+
+                padding: 10px;
+            }
+            iron-icon{
+                width:100%;
+                height: auto;
+            }
+        </style>
+
+    </template>
+    <template is="dom-repeat" items="{{tripInfo.stops}}" as="stop">
+        <h1>[[stop.address.street]] [[stop.address.houseNumber]]</h1>
+        <template is="dom-repeat" items="{{stopObj.pieces}}" as="piece">
+            <h2>id: [[piece.id]]</h2>
+            <granite-qrcode-generator
+                    data="[[piece.id]]"
+                    mode="alphanumeric"
+                    auto></granite-qrcode-generator>
+        </template>
+    </template>
+    <script>
+        Polymer({
+            is: 'dhl-qrcode-generator',
+
+            properties: {
+                tripInfo: {
+                    type: Object,
+                    value: null,
+                    observer: 'dataChanged',
+                }
+            }
+        });
+    </script>
+</dom-module>

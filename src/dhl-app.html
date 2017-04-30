@@ -113,8 +113,9 @@
                     <a name="trip" href="/trip">Trip</a>
                     <a name="route" href="/route">Route</a>
                     <a name="barcode" href="/barcode">Barcode</a>
-                    <a name="qrcode" href="/qrcode">Qrcode</a>
-                    <a name="qrcodegenerator" href="/qrcode-generator">Qrcode Generator</a>
+                    <a name="qrcode" href="/qrcode">QRcode</a>
+                    <a name="barcodegenerator" href="/barcodegenerator">Barcode Generator</a>
+                    <a name="qrcodegenerator" href="/qrcodegenerator">QRcode Generator</a>
                 </iron-selector>
             </app-drawer>
 
@@ -150,9 +151,10 @@
                     <dhl-home name="home"></dhl-home>
                     <dhl-trip trip-info="[[tripInfo]]" name="trip"></dhl-trip>
                     <dhl-route trip-info="[[tripInfo]]" name="route"></dhl-route>
-                    <dhl-barcode name="barcode"></dhl-barcode>
-                    <dhl-qrcode name="qrcode"></dhl-qrcode>
-                    <dhl-qrcode-gennerator  trip-info="[[tripInfo]]" name="qrcodegenerator"></dhl-qrcode-gennerator>
+                    <dhl-barcode trip-info="{{tripInfo}}" name="barcode"></dhl-barcode>
+                    <dhl-qrcode trip-info="{{tripInfo}}" name="qrcode"></dhl-qrcode>
+                    <dhl-barcodegenerator trip-info="[[tripInfo]]" name="barcodegenerator"></dhl-barcodegenerator>
+                    <dhl-qrcodegenerator trip-info="[[tripInfo]]" name="qrcodegenerator"></dhl-qrcodegenerator>
                     <dhl-view404 name="view404"></dhl-view404>
                 </iron-pages>
             </app-header-layout>

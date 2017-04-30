@@ -1,0 +1,28 @@
+//https://github.com/PolymerElements/platinum-sw/issues/75
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<dom-module id="dhl-backgroundsync">
+    <template>
+        <platinum-sw-register auto-register>
+            <platinum-sw-fetch path="/(.*)" handler="networkOnly" origin="http://192\.168\..+\..+">
+                <platinum-sw-cache></platinum-sw-cache>
+        </platinum-sw-register>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'dhl-backgroundsync',
+
+            properties:{
+                tripInfo: {
+                    type: Object,
+                    value: function(){return {};},
+                    notify:true,
+                    observer: 'tripInfoChanged'
+                },
+
+            },
+        });
+    </script>
+</dom-module>

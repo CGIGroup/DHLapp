@@ -1,7 +1,8 @@
 {
-  "name": "polymer-starter-kit",
+  "name": "DHL app",
   "authors": [
-    "The Polymer Authors"
+    "Chris de Jong",
+    "Christope Hesters"
   ],
   "license": "https://polymer.github.io/LICENSE.txt",
   "dependencies": {
@@ -34,7 +35,9 @@
     "quagga": "0.9.0",
     "barcode-scanner": "cgigroup/barcode-scanner#shadowdom",
     "iron-list": "PolymerElements/iron-list#^1.4.5",
-    "granite-qrcode-generator": "LostInBrittany/granite-qrcode-generator#^1.0.4"
+    "granite-qrcode-generator": "LostInBrittany/granite-qrcode-generator#^1.0.4",
+    "paper-input": "PolymerElements/paper-input#^1.1.24",
+    "JsBarcode": "lindell/JsBarcode#3.6.0"
   },
   "devDependencies": {
     "web-component-tester": "^4.0.0"

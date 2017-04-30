@@ -1,0 +1,47 @@
+//https://gist.github.com/desk-sr/3960aba180a453e401f95c8904afb7aa
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="dhl-barcode-generator.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="dhl-barcodegenerator">
+    <template>
+        <style include="shared-styles">
+            :host {
+                display: block;
+                height: 1000px;
+                position: relative;
+                overflow-y: auto;
+                padding: 10px;
+            }
+        </style>
+
+        <h1>Barcodes for demo purposes</h1>
+
+        <template is="dom-if" if="{{tripInfo}}">
+            <template is="dom-repeat" items="{{tripInfo.stops}}" as="stop">
+                <h2>[[stop.address.street]] [[stop.address.houseNumber]]</h2>
+                <template is="dom-repeat" items="{{stop.pieces}}" as="piece">
+                    <h3>id: [[piece.id]]</h3>
+                    <dhl-barcode-generator data="[[piece.id]]"></dhl-barcode-generator>
+                </template>
+            </template>
+        </template>
+
+    </template>
+
+    <script src="../bower_components/JsBarcode/dist/JsBarcode.all.js"></script>
+
+    <script>
+        Polymer({
+            is: 'dhl-barcodegenerator',
+
+            properties: {
+                tripInfo: {
+                    type: Object,
+                    value: null,
+                }
+            },
+        });
+    </script>
+
+</dom-module>

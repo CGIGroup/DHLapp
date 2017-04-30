@@ -1,0 +1,33 @@
+//https://gist.github.com/desk-sr/3960aba180a453e401f95c8904afb7aa
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<dom-module id="dhl-barcode-generator">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+        </style>
+
+        <svg id="barcode" jsbarcode-format="code128"></svg>
+
+    </template>
+
+    <script src="../bower_components/JsBarcode/dist/JsBarcode.all.js"></script>
+
+    <script>
+        Polymer({
+            is: 'dhl-barcode-generator',
+
+            properties: {
+                data: {
+                    type: String,
+                },
+            },
+            ready: function(){
+                JsBarcode(this.$.barcode, this.data);
+            }
+        });
+    </script>
+
+</dom-module>

@@ -37,7 +37,8 @@
     "iron-list": "PolymerElements/iron-list#^1.4.5",
     "granite-qrcode-generator": "LostInBrittany/granite-qrcode-generator#^1.0.4",
     "paper-input": "PolymerElements/paper-input#^1.1.24",
-    "JsBarcode": "lindell/JsBarcode#3.6.0"
+    "JsBarcode": "lindell/JsBarcode#3.6.0",
+    "paper-toast": "PolymerElements/paper-toast#^1.3.1"
   },
   "devDependencies": {
     "web-component-tester": "^4.0.0"

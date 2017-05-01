@@ -8,7 +8,8 @@
     "src/dhl-route.html",
     "src/dhl-qrcode.html",
     "src/dhl-qrcodegenerator.html",
-    "src/my-view404.html"
+    "src/dhl-backgroundsync.html",
+    "src/dhl-view404.html"
   ],
   "sourceGlobs": [
     "src/**/*",

@@ -1,9 +1,9 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="dhl-icons.html">
-<!--
+<!---->
 <link rel="import" href="../bower_components/polymerfire/firebase-app.html">
 <link rel="import" href="../bower_components/polymerfire/firebase-auth.html">
--->
+
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
 <link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
@@ -13,12 +13,16 @@
 <link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
 <link rel="import" href="../bower_components/app-route/app-location.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/app-storage/app-network-status-behavior.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
-<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
-<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="dhl-backgroundsync.html">
 
 <dom-module id="dhl-app">
     <template>
@@ -72,7 +76,7 @@
 
         <!-- IMPORTANT: The firebase-app element needs to appear before any
              other firebase-* elements -->
-        <!--
+        <!---->
         <firebase-app
                 id="firebase"
                 api-key="AIzaSyA2jOyybEfFmYNLIjR7rrwHoGZpzkPDy2U"
@@ -87,14 +91,16 @@
                 status-known="{{statusKnown}}"
                 provider="google">
         </firebase-auth>
-        -->
+
         <iron-ajax
                 auto
-                url="http://localhost:8080/trips/744567"
+                url="http://localhost:8080/trips/[[tripId]]"
                 handle-as="json"
                 last-response="{{tripInfo}}"
                 debounce-duration="300">
         </iron-ajax>
+
+        <dhl-backgroundsync trip-info="{{tripInfo}}"></dhl-backgroundsync>
 
         <app-location route="{{route}}"></app-location>
 
@@ -128,18 +134,22 @@
 
                         <iron-icon class="dhlgif" src="../images/dhl_logo.gif"></iron-icon>
 
-                        <!--
                         <div class="flex"></div>
-                        <span>
-                            <template is="dom-if" if="[[user]]">
-                                <p>User: [[user.displayName]]</p>
-                            </template>
-                        </span>
-                        <span>
-                            <paper-button raised on-tap="login" hidden$="[[user]]">Sign in</paper-button>
-                            <paper-button raised on-tap="logout" hidden$="[[!user]]">Sign out</paper-button>
-                        </span>
-                        -->
+
+                        <!-- http://stackoverflow.com/questions/37793271/polymer-1-0-hidden-show-not-working -->
+                        <template is="dom-if" if="{{online}}">
+                            <iron-icon icon="cloud"></iron-icon>
+                        </template>
+                        <template is="dom-if" if="{{!online}}">
+                            <iron-icon icon="cloud-off"></iron-icon>
+                        </template>
+
+                        <paper-icon-button
+                                icon="[[computeLockIcon(user)]]"
+                                disabled="[[!signedIn]]"
+                                on-tap="lock">
+                        </paper-icon-button>
+
                     </app-toolbar>
                 </app-header>
 
@@ -151,8 +161,8 @@
                     <dhl-home name="home"></dhl-home>
                     <dhl-trip trip-info="[[tripInfo]]" name="trip"></dhl-trip>
                     <dhl-route trip-info="[[tripInfo]]" name="route"></dhl-route>
-                    <dhl-barcode trip-info="{{tripInfo}}" name="barcode"></dhl-barcode>
-                    <dhl-qrcode trip-info="{{tripInfo}}" name="qrcode"></dhl-qrcode>
+                    <dhl-barcode trip-info="{{tripInfo}}" trip="[[tripId]]" name="barcode"></dhl-barcode>
+                    <dhl-qrcode trip-info="{{tripInfo}}" trip="[[tripId]]" name="qrcode"></dhl-qrcode>
                     <dhl-barcodegenerator trip-info="[[tripInfo]]" name="barcodegenerator"></dhl-barcodegenerator>
                     <dhl-qrcodegenerator trip-info="[[tripInfo]]" name="qrcodegenerator"></dhl-qrcodegenerator>
                     <dhl-view404 name="view404"></dhl-view404>
@@ -165,6 +175,10 @@
         Polymer({
             is: 'dhl-app',
 
+            behaviors: [
+                Polymer.AppNetworkStatusBehavior
+            ],
+
             properties: {
                 page: {
                     type: String,
@@ -176,6 +190,21 @@
                     value: null,
                     observer: 'dataChanged',
                 },
+                signedIn: {
+                    type: Boolean,
+                    notify: true,
+                    value: false
+                },
+                online: {
+                    type: Boolean,
+                    reflectToAttribute: true,
+                    value: false
+                },
+                tripId: {
+                    type: String,
+                    value: '744567',
+                    notify: true,
+                }
             },
 
             observers: [
@@ -202,12 +231,25 @@
             _showPage404: function() {
                 this.page = 'view404';
             },
+
             login: function() {
                 return this.$.auth.signInWithPopup();
             },
             logout: function() {
                 return this.$.auth.signOut();
-            }
+            },
+
+            computeLockIcon: function(signedIn) {
+                return signedIn ? 'lock-open' : 'lock';
+            },
+            lock: function() {
+                return this.$.auth.signOut();
+            },
+            _setOnline: function(online){
+                console.log('online', online);
+                this.online = online;
+            },
+
         });
     </script>
 </dom-module>

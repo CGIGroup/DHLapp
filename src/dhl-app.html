@@ -1,9 +1,9 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="dhl-icons.html">
-<!---->
+<!--
 <link rel="import" href="../bower_components/polymerfire/firebase-app.html">
 <link rel="import" href="../bower_components/polymerfire/firebase-auth.html">
-
+-->
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
 <link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
@@ -74,9 +74,10 @@
             }
         </style>
 
+
         <!-- IMPORTANT: The firebase-app element needs to appear before any
              other firebase-* elements -->
-        <!---->
+        <!--
         <firebase-app
                 id="firebase"
                 api-key="AIzaSyA2jOyybEfFmYNLIjR7rrwHoGZpzkPDy2U"
@@ -91,11 +92,13 @@
                 status-known="{{statusKnown}}"
                 provider="google">
         </firebase-auth>
-
+        -->
         <iron-ajax
                 auto
-                url="http://localhost:8080/trips/[[tripId]]"
+                url="http://localhost:8080/trips/744567"
                 handle-as="json"
+                on-response="handleTripsResponse"
+                on-error="handleError"
                 last-response="{{tripInfo}}"
                 debounce-duration="300">
         </iron-ajax>
@@ -110,6 +113,7 @@
                 data="{{routeData}}"
                 tail="{{subroute}}"></app-route>
 
+
         <app-drawer-layout fullbleed>
             <!-- Drawer content -->
             <app-drawer id="drawer">
@@ -120,6 +124,7 @@
                     <a name="route" href="/route">Route</a>
                     <a name="barcode" href="/barcode">Barcode</a>
                     <a name="qrcode" href="/qrcode">QRcode</a>
+                    <h3>Generators</h3>
                     <a name="barcodegenerator" href="/barcodegenerator">Barcode Generator</a>
                     <a name="qrcodegenerator" href="/qrcodegenerator">QRcode Generator</a>
                 </iron-selector>
@@ -138,7 +143,7 @@
 
                         <!-- http://stackoverflow.com/questions/37793271/polymer-1-0-hidden-show-not-working -->
                         <template is="dom-if" if="{{online}}">
-                            <iron-icon icon="cloud"></iron-icon>
+                            <iron-icon icon="cloud" style="fill:white"></iron-icon>
                         </template>
                         <template is="dom-if" if="{{!online}}">
                             <iron-icon icon="cloud-off"></iron-icon>
@@ -159,10 +164,10 @@
                         fallback-selection="view404"
                         role="main">
                     <dhl-home name="home"></dhl-home>
-                    <dhl-trip trip-info="[[tripInfo]]" name="trip"></dhl-trip>
+                    <dhl-trip trip-info-array="[[tripInfoArray]]" trip-info="{{tripInfo}}" name="trip"></dhl-trip>
                     <dhl-route trip-info="[[tripInfo]]" name="route"></dhl-route>
-                    <dhl-barcode trip-info="{{tripInfo}}" trip="[[tripId]]" name="barcode"></dhl-barcode>
-                    <dhl-qrcode trip-info="{{tripInfo}}" trip="[[tripId]]" name="qrcode"></dhl-qrcode>
+                    <dhl-barcode trip-info="{{tripInfo}}"  user="[[user]]" name="barcode"></dhl-barcode>
+                    <dhl-qrcode trip-info="{{tripInfo}}"  user="[[user]]" name="qrcode"></dhl-qrcode>
                     <dhl-barcodegenerator trip-info="[[tripInfo]]" name="barcodegenerator"></dhl-barcodegenerator>
                     <dhl-qrcodegenerator trip-info="[[tripInfo]]" name="qrcodegenerator"></dhl-qrcodegenerator>
                     <dhl-view404 name="view404"></dhl-view404>
@@ -187,8 +192,13 @@
                 },
                 tripInfo:{
                     type: Object,
-                    value: null,
-                    observer: 'dataChanged',
+                    value: function(){return {};},
+                    notify: true
+                },
+                tripInfoArray:{
+                    type: Array,
+                    value: function(){return [];},
+                    notify: true
                 },
                 signedIn: {
                     type: Boolean,
@@ -200,9 +210,9 @@
                     reflectToAttribute: true,
                     value: false
                 },
-                tripId: {
-                    type: String,
-                    value: '744567',
+                user: {
+                    type: Object,
+                    value: function(){return {userName: 'Joris'};},
                     notify: true,
                 }
             },
@@ -250,6 +260,30 @@
                 this.online = online;
             },
 
+            /**
+             * Handles the first AJAX response
+             * @param e - event containing the response in `e.detail.response`
+             */
+            handleTripsResponse: function(e){
+                var tripInfo = e.detail.response;
+                this.push('tripInfoArray', tripInfo);
+                var toast = document.getElementById('toastOk');
+                toast.text = 'Trips Downloaded';
+                toast.open();
+            },
+
+            /**
+             * Sends error response to toast
+             * @param event - event containing the response in `event.detail.response`
+             */
+            handleError: function(event){
+                var toast = document.getElementById('toastError');
+                var message = event.detail.request.xhr.status+' '+event.detail.request.xhr.response.message;
+                toast.text = message;
+                toast.open();
+            },
+
         });
     </script>
 </dom-module>
+

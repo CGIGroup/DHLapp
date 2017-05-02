@@ -1,93 +1,204 @@
+
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<dom-module id="barcode-scanner">
-  <style>
-    :host {
-      display: block;
-    }
 
-    video {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-  </style>
-  <template>
-    <div id="interactive" class="viewport"></div>
-  </template>
 
-  <script src="../bower_components/quagga/dist/quagga.min.js"></script>
-  <script>
-    Polymer({
-      is: 'barcode-scanner',
-      properties: {
-        result: {
-          type: Object,
-          notify: true,
-          readOnly: true,
-          value: null
-        },
-        code: {
-          type: String,
-          notify: true,
-          reflectToAttribute: true,
-          readOnly: true,
-          value: ''
-        },
-        active: {
-          type: Boolean,
-          value: true,
-          notify: true,
-          reflectToAttribute: true
-        }
-      },
+<!--
+`<barcode-scanner>` is an element to render a QR Code
 
-      attached: function() {
-        this._isReady = false;
-        var _this = this;
+Typical usage:
 
-          //https://github.com/serratus/quaggaJS/pull/89
-        Quagga.init({
-          inputStream : {
-            name : "Live",
-            type : "LiveStream",
-              target: _this.$.interactive
-          },
-          decoder : {
-            readers : ["ean_reader"]
-          }
-        }, function(err) {
-          _this.querySelector('video').className += ' barcode-scanner';
+```html
+  <barcode-scanner active="[[active]]"></barcode-scanner>
+```
 
-          if (err) {
-            console.log(err);
-            return;
-          }
+@element barcode-scanner
+@blurb An element to scan a QR Code
+@homepage index.html
+@demo demo/index.html
+-->
 
-          if (_this.active) {
-            _this._isReady = true;
-            Quagga.start();
-          }
+<!--<script src="../jsqrcode/dist/jsqrcode.js"></script>
+<script src="../quagga/dist/quagga.min.js"></script>-->
+
+<script src="../bower_components/quagga/dist/quagga.js"></script>
+
+<dom-module is="barcode-scanner">
+
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+            video {
+                position: relative;
+                width: 320px;
+                height: 240px;
+                border-radius: 10px;
+                display: flex;
+                /*top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);*/
+            }
+            .drawingBuffer {
+                display: none
+            }
+            [hide] {
+                display: none !important;
+            }
+            .media {
+                display: flex;
+                flex-flow: column nowrap;
+                align-items: center;
+            }
+            .placeholder {
+                width: var(--placeholder-width, 320px);
+                height: var(--placeholder-height, 240px);
+                border-radius: 10px;
+                background-color:var(--placeholder-background-color, #ffc107);
+                color: var(--placeholder-color, white);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                font-size: 24px;
+                font-weight: bold;
+            }
+            svg {
+                max-width: 30vw;
+                max-height: 30vw;
+            }
+            .videoContainer{
+                position: relative;
+            }
+            .pictureControls{
+                position: absolute;
+                bottom: 5px;
+                width: 100%;
+                fill: #ffc107;
+                opacity: 0.5;
+                display: flex;
+                flex-flow: row;
+                justify-content: center;
+            }
+        </style>
+        <div class="media">
+            <template is="dom-if" if="[[!active]]">
+                <div class="placeholder"  on-tap="_activate">[[placeholderMessage]]</div>
+            </template>
+            <!--<canvas id="qrCanvasDisplay" width="[[width]]" height="[[height]]" hide$="[[!active]]" on-tap="_deactivate"></canvas>-->
+            <div id="interactive" class="viewport" on-tap="_deactivate"></div>
+            <template  is="dom-if" if="[[active]]">
+
+            </template>
+
+        </div>
+    </template>
+
+    <script>
+        Polymer({
+            is: "barcode-scanner",
+
+            properties: {
+                result: {
+                    type: Object,
+                    notify: true,
+                    readOnly: true,
+                    value: null
+                },
+                code: {
+                    type: String,
+                    notify: true,
+                    reflectToAttribute: true,
+                    readOnly: true,
+                    value: ''
+                },
+                active: {
+                    type: Boolean,
+                    value: false,
+                    notify: true,
+                    reflectToAttribute: true
+                },
+                /**
+                 * If true the elements scans for QR code
+                 */
+
+
+                /**
+                 * The last decoded QRCode
+                 */
+                data: {
+                    type: String,
+                    notify: true,
+                    value: "",
+                },
+                /**
+                 * The width of the scanning window
+                 */
+                width: {
+                    type: Number,
+                    value: 320
+                },
+                /**
+                 * The height of the scanning window
+                 */
+                height: {
+                    type: Number,
+                    value: 240
+                },
+                /**
+                 * The message to show when scanner isn't activated
+                 */
+                placeholderMessage: {
+                    type: String,
+                    value: "Tap here to activate scanner",
+                } ,
+
+            },
+
+            attached: function() {
+
+                Quagga.onDetected(function(res){
+                    elem.data = res.codeResult.code;
+                    console.debug("[barcode-scanner] Quagga.onDetected", elem.data, elem);
+                    elem.fire("qrcode-decoded", res);
+                });
+            },
+
+            _activate: function() {
+                this._isReady = false;
+                var _this = this;
+                _this.active = true;
+
+                Quagga.init({
+                    inputStream : {
+                        name : "Live",
+                        type : "LiveStream",
+                        target: _this.$.interactive
+                    },
+                    constraints: {
+                        width: 320,
+                        height: 240,
+                    },
+                    decoder : {
+                        readers : ["code_128_reader"]
+                    }
+                }, function(err) {
+                    _this.querySelector('video').className += ' barcode-scanner';
+
+                    if (err) {
+                        console.log(err);
+                        return;
+                    }
+
+                    Quagga.start();
+                });
+            },
+            _deactivate: function() {
+                this.active = false;
+                Quagga.stop();
+            },
+
         });
+    </script>
 
-        Quagga.onDetected(function(result) {
-          if (_this.active) {
-            _this._setResult(result);
-            _this._setCode(result.codeResult.code);
-            _this.fire('recognize', {code: result.codeResult.code, result: result});
-          }
-        });
-      },
-
-      suspend: function() {
-        Quagga.stop();
-      },
-
-      resume: function() {
-        Quagga.start();
-      }
-    });
-  </script>
 </dom-module>

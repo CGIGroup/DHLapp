@@ -1,9 +1,5 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="dhl-icons.html">
-<!--
-<link rel="import" href="../bower_components/polymerfire/firebase-app.html">
-<link rel="import" href="../bower_components/polymerfire/firebase-auth.html">
--->
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
 <link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
@@ -22,13 +18,7 @@
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
-<link rel="import" href="dhl-home.html">
-<link rel="import" href="dhl-trip.html">
-<link rel="import" href="dhl-route.html">
-<link rel="import" href="dhl-barcode.html">
-<link rel="import" href="dhl-qrcode.html">
-<link rel="import" href="dhl-barcodegenerator.html">
-<link rel="import" href="dhl-qrcodegenerator.html">
+<link rel="import" href="../bower_components/paper-toast/paper-toast.html">
 
 <dom-module id="dhl-app">
     <template>
@@ -80,25 +70,6 @@
             }
         </style>
 
-
-        <!-- IMPORTANT: The firebase-app element needs to appear before any
-             other firebase-* elements -->
-        <!--
-        <firebase-app
-                id="firebase"
-                api-key="AIzaSyA2jOyybEfFmYNLIjR7rrwHoGZpzkPDy2U"
-                auth-domain="dhlapp-29433.firebaseapp.com"
-                database-url="https://dhlapp-29433.firebaseio.com">
-        </firebase-app>
-
-
-        <firebase-auth
-                id="auth"
-                user="{{user}}"
-                status-known="{{statusKnown}}"
-                provider="google">
-        </firebase-auth>
-        -->
         <iron-ajax
                 auto
                 url="http://localhost:8080/trips/744567"
@@ -277,7 +248,7 @@
              */
             handleError: function(event){
                 var toast = document.getElementById('toastError');
-                var message = 'No Go-Deliver';
+                var message = 'Go-Deliver Server Not Found';
                 if(event.detail.request.xhr.status != 0)
                     message = event.detail.request.xhr.status+' '+event.detail.request.xhr.response.message;
                 toast.text = message;

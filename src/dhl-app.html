@@ -22,7 +22,13 @@
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
-<link rel="import" href="dhl-backgroundsync.html">
+<link rel="import" href="dhl-home.html">
+<link rel="import" href="dhl-trip.html">
+<link rel="import" href="dhl-route.html">
+<link rel="import" href="dhl-barcode.html">
+<link rel="import" href="dhl-qrcode.html">
+<link rel="import" href="dhl-barcodegenerator.html">
+<link rel="import" href="dhl-qrcodegenerator.html">
 
 <dom-module id="dhl-app">
     <template>
@@ -103,8 +109,6 @@
                 debounce-duration="300">
         </iron-ajax>
 
-        <dhl-backgroundsync trip-info="{{tripInfo}}"></dhl-backgroundsync>
-
         <app-location route="{{route}}"></app-location>
 
         <app-route
@@ -164,7 +168,7 @@
                         fallback-selection="view404"
                         role="main">
                     <dhl-home name="home"></dhl-home>
-                    <dhl-trip trip-info-array="[[tripInfoArray]]" trip-info="{{tripInfo}}" name="trip"></dhl-trip>
+                    <dhl-trip trip-info="{{tripInfo}}" name="trip"></dhl-trip>
                     <dhl-route trip-info="[[tripInfo]]" name="route"></dhl-route>
                     <dhl-barcode trip-info="{{tripInfo}}"  user="[[user]]" name="barcode"></dhl-barcode>
                     <dhl-qrcode trip-info="{{tripInfo}}"  user="[[user]]" name="qrcode"></dhl-qrcode>
@@ -192,12 +196,7 @@
                 },
                 tripInfo:{
                     type: Object,
-                    value: function(){return {};},
-                    notify: true
-                },
-                tripInfoArray:{
-                    type: Array,
-                    value: function(){return [];},
+                    value: null,
                     notify: true
                 },
                 signedIn: {
@@ -265,8 +264,8 @@
              * @param e - event containing the response in `e.detail.response`
              */
             handleTripsResponse: function(e){
-                var tripInfo = e.detail.response;
-                this.push('tripInfoArray', tripInfo);
+                //var tripInfo = e.detail.response;
+                //this.push('tripInfoArray', tripInfo);
                 var toast = document.getElementById('toastOk');
                 toast.text = 'Trips Downloaded';
                 toast.open();

@@ -6,18 +6,42 @@
     "src/dhl-trip.html",
     "src/dhl-barcode.html",
     "src/dhl-route.html",
+    "src/dhl-barcode.html",
     "src/dhl-qrcode.html",
     "src/dhl-qrcodegenerator.html",
-    "src/dhl-backgroundsync.html",
+    "src/dhl-barcodegenerator.html",
     "src/dhl-view404.html"
   ],
-  "sourceGlobs": [
+  "sources": [
     "src/**/*",
     "images/**/*",
     "bower.json"
   ],
-  "includeDependencies": [
+  "extraDependencies": [
     "manifest.json",
     "bower_components/webcomponentsjs/webcomponents-lite.min.js"
-  ]
+  ],
+  "builds": [{
+    "name": "bundled",
+    "addServiceWorker": true,
+    "swPrecacheConfig": "sw-precache-config.js",
+    "bundle": true,
+    "js": {"minify": true},
+    "css": {"minify": true},
+    "html": {"minify": true}
+  },{
+    "name": "unbundled",
+    "addServiceWorker": true,
+    "swPrecacheConfig": "sw-precache-config.js",
+    "js": {"minify": true},
+    "css": {"minify": true},
+    "html": {"minify": true}
+  },{
+    "name": "default",
+    "addServiceWorker": true,
+    "swPrecacheConfig": "sw-precache-config.js"
+  }],
+  "lint": {
+    "rules": ["polymer-2-hybrid"]
+  }
 }

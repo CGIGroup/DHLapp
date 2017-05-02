@@ -21,6 +21,7 @@
                 id="ajax"
                 url="http://localhost:8080/trips/[[tripInfo.tripNumber]]/pieces/[[barcode]]"
                 method="PATCH"
+                content-type="application/json"
                 handle-as="json"
                 on-response="handleResponse"
                 on-error="handleError"

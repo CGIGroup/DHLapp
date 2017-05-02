@@ -35,7 +35,7 @@
             <div class="card-content">
 
                 <paper-input value="{{barcode}}"
-                             label="Scanned QR code"
+                             label="Scanned Barcode"
                              maxlength="14"
                              minlength="12"
                              required
@@ -111,7 +111,7 @@
                                 };
 
                                 //update the status in tripInfo
-                                this.set('tripInfo.stops.'+sIdx+'.pieces.'+pIdx+'.status', 'sending');
+                                this.set('tripInfo.stops.'+sIdx+'.pieces.'+pIdx+'.status', 'sending...');
 
                                 //send update to the server
                                 var body ={
@@ -132,7 +132,7 @@
                 //update the status in tripInfo
                 this.tripInfo.stops.forEach(function(stop, sIdx){
                     stop.pieces.forEach(function(piece, pIdx){
-                        if(piece.id == barcode){
+                        if(piece.id == this.barcode){
                             //update the status in tripInfo
                             this.set('tripInfo.stops.'+sIdx+'.pieces.'+pIdx+'.status', 'delivered');
                         }

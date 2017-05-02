@@ -122,8 +122,8 @@
                     <a name="home" href="/home">Home</a>
                     <a name="trip" href="/trip">Trip</a>
                     <a name="route" href="/route">Route</a>
-                    <a name="barcode" href="/barcode">Barcode</a>
-                    <a name="qrcode" href="/qrcode">QRcode</a>
+                    <a name="barcode" href="/barcode">Barcode Scanner</a>
+                    <a name="qrcode" href="/qrcode">QRcode Scanner</a>
                     <h3>Generators</h3>
                     <a name="barcodegenerator" href="/barcodegenerator">Barcode Generator</a>
                     <a name="qrcodegenerator" href="/qrcodegenerator">QRcode Generator</a>
@@ -278,7 +278,9 @@
              */
             handleError: function(event){
                 var toast = document.getElementById('toastError');
-                var message = event.detail.request.xhr.status+' '+event.detail.request.xhr.response.message;
+                var message = 'No Go-Deliver';
+                if(event.detail.request.xhr.status != 0)
+                    message = event.detail.request.xhr.status+' '+event.detail.request.xhr.response.message;
                 toast.text = message;
                 toast.open();
             },

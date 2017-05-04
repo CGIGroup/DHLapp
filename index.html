@@ -112,13 +112,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         #toastOk {
             --paper-toast-background-color: green;
             --paper-toast-color: white;
-            font-size: 20px;
+            font-size: 16px;
             font-weight: bold;
         }
         #toastError {
             --paper-toast-background-color: red;
             --paper-toast-color: white;
-            font-size: 20px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        #toastWarn {
+            --paper-toast-background-color: purple;
+            --paper-toast-color: white;
+            font-size: 16px;
             font-weight: bold;
         }
     </style>
@@ -128,6 +134,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <paper-toast id="toastOk" class="fit-bottom" text="Ok"></paper-toast>
     <paper-toast id="toastError" class="fit-bottom" text="Error"></paper-toast>
+    <paper-toast id="toastWarn" class="fit-bottom" text="Error"></paper-toast>
 
 </body>
 </html>

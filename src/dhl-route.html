@@ -22,16 +22,17 @@
             }
         </style>
 
-        <geo-location latitude="{{lat}}" longitude="{{lng}}"></geo-location>
+        <geo-location watch-pos latitude="{{lat}}" longitude="{{lng}}"></geo-location>
 
         <template is="dom-if" if="{{lat}}">
-            <template is="dom-if" if="{{tripInfo}}">
-                <google-map  map="{{map}}"
-                             latitude="[[lat]]" longitude="[[lng]]"
-                             fitToMarkers
-                             api-key="AIzaSyDrIreXFKXwprD4yBAemMUB3JZhw8rG65c">
-                </google-map>
+            <google-map  map="{{map}}"
+                         latitude="[[lat]]" longitude="[[lng]]"
+                         fitToMarkers
+                         api-key="AIzaSyDrIreXFKXwprD4yBAemMUB3JZhw8rG65c">
+                <google-map-marker latitude="[[lat]]" longitude="[[lng]]"></google-map-marker>
+            </google-map>
 
+            <template is="dom-if" if="{{tripInfo}}">
                 <google-map-directions map="{{map}}"
                                        start-address="[[computedPosition()]]"
                                        end-address="[[computedPosition()]]"
@@ -50,7 +51,6 @@
                                position="[[computedPosition()]]"   -->
             </template>
         </template>
-
     </template>
 
     <script>

@@ -19,6 +19,10 @@
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/paper-toast/paper-toast.html">
+<link rel="import" href="../bower_components/platinum-sw/platinum-sw-register.html">
+<link rel="import" href="../bower_components/platinum-sw/platinum-sw-fetch.html">
+<link rel="import" href="../bower_components/platinum-sw/platinum-sw-cache.html">
+<link rel="import" href="../bower_components/platinum-sw/platinum-sw-import-script.html">
 
 <dom-module id="dhl-app">
     <template>
@@ -69,6 +73,25 @@
                 height: 40px;
             }
         </style>
+        <!--
+                <platinum-sw-register auto-register reloadOnInstall>
+
+                    <platinum-sw-fetch path="/(.*)"
+                                       handler="cacheFirst"
+                                       origin="http://localhost:8080"></platinum-sw-fetch>
+
+                </platinum-sw-register>
+
+                <!--<platinum-sw-cache></platinum-sw-cache>
+                <platinum-sw-register auto-register>
+                    <platinum-sw-import-script href="weather-fetch-handler.js"></platinum-sw-import-script>
+                    <platinum-sw-fetch handler="weatherFetchHandler"
+                                       path="/v1/public/yql"
+                                       origin="http://localhost:8080">
+                    </platinum-sw-fetch>
+                    <platinum-sw-cache default-cache-strategy="fastest"></platinum-sw-cache>
+                </platinum-sw-register>
+                -->
 
         <iron-ajax
                 auto
@@ -139,10 +162,10 @@
                         fallback-selection="view404"
                         role="main">
                     <dhl-home name="home"></dhl-home>
-                    <dhl-trip trip-info="{{tripInfo}}" name="trip"></dhl-trip>
+                    <dhl-trip trip-info="{{tripInfo}}" online="{{online}}" name="trip"></dhl-trip>
                     <dhl-route trip-info="[[tripInfo]]" name="route"></dhl-route>
-                    <dhl-barcode trip-info="{{tripInfo}}"  user="[[user]]" name="barcode"></dhl-barcode>
-                    <dhl-qrcode trip-info="{{tripInfo}}"  user="[[user]]" name="qrcode"></dhl-qrcode>
+                    <dhl-barcode trip-info="{{tripInfo}}" user="[[user]]" name="barcode"></dhl-barcode>
+                    <dhl-qrcode trip-info="{{tripInfo}}" user="[[user]]" name="qrcode"></dhl-qrcode>
                     <dhl-barcodegenerator trip-info="[[tripInfo]]" name="barcodegenerator"></dhl-barcodegenerator>
                     <dhl-qrcodegenerator trip-info="[[tripInfo]]" name="qrcodegenerator"></dhl-qrcodegenerator>
                     <dhl-view404 name="view404"></dhl-view404>

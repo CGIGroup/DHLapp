@@ -6,6 +6,7 @@
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/iron-list/iron-list.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/fetch-element/fetch-element.html">
 
 <!--
 <link rel="import" href="../../iron-image/iron-image.html">
@@ -117,6 +118,8 @@
 
         </style>
 
+        <fetch-element id="request"></fetch-element>
+
         <iron-ajax
                 id="ajax"
                 url="http://localhost:8080/trips/[[tripInfo.tripNumber]]"
@@ -179,7 +182,10 @@
                     value: null,
                     observer: 'dataChanged',
                 },
-
+                online:{
+                    type: Boolean,
+                    observer: 'onlineChanged',
+                },
             },
 
             attached: function() {
@@ -204,16 +210,62 @@
                 var body ={
                     "operation":"start delivery"
                 };
-                this.unlisten(this.$.ajax, 'response', 'handleFinishResponse');
-                this.listen(this.$.ajax, 'response', 'handleStartResponse');
-                this.$.ajax.body = JSON.stringify(body);
-                this.$.ajax.generateRequest();
+                //this.unlisten(this.$.ajax, 'response', 'handleFinishResponse');
+                //this.listen(this.$.ajax, 'response', 'handleStartResponse');
+                //this.$.ajax.body = JSON.stringify(body);
+                //this.$.ajax.generateRequest();
+                var url = "http://localhost:8080/trips/"+this.tripInfo.tripNumber;
+                var req = new Request(url, {method: 'PATCH', body: JSON.stringify(body), bodyUsed: true});
+                var myHeaders = new Headers();
+                myHeaders.append('Content-Type', 'application/json');
+
+                var req = {
+                    url: url,
+                    method: 'PATCH',
+                    headers: myHeaders,
+                    body: JSON.stringify(body),
+                    bodyUsed: true,
+                    mode: 'cors',
+                    handleAs: "json"
+                };
+                this.$.request.fetch(req).then(function (response) {
+                        return response;
+                    })
+                    .then(function(response){
+                        if (response.status == 200){
+                            //show result in toast
+                            var toast = document.getElementById('toastOk');
+                            toast.text = "Trip Started";
+                            toast.open();
+                        }
+                        if (response.status == 202){
+                            //show result in toast
+                            var toast = document.getElementById('toastWarn');
+                            toast.text = "Trip Start Cached";
+                            toast.open();
+                        }
+                        else {
+                            //show result in toast
+                            var toast = document.getElementById('toastError');
+                            var message = request.xhr.status+' '+response.message;
+                            toast.text = message;
+                            toast.open();
+                        }
+                    })
+            },
+            onlineChanged: function(newValue, oldValue) {
+                if(newValue) this.$.request.flush().then(function (response) {
+                    //show result in toast
+                    var toast = document.getElementById('toastOk');
+                    toast.text = "Updates Sent";
+                    toast.open();
+                });
             },
 
             finishTap: function(e) {
                 //send update to the server
                 var body ={
-                    "operation":"finish delivery"
+                    "operation":"finish"
                 };
                 this.unlisten(this.$.ajax, 'response', 'handleStartResponse');
                 this.listen(this.$.ajax, 'response', 'handleFinishResponse');

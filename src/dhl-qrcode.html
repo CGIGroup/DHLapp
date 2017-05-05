@@ -20,7 +20,7 @@
 
         <fetch-element id="request"></fetch-element>
 
-        <granite-qrcode-scanner data="{{data}}" continuous></granite-qrcode-scanner>
+        <granite-qrcode-scanner data="{{barcode}}" continuous></granite-qrcode-scanner>
 
         <p></p>
 
@@ -75,6 +75,7 @@
                 barcode:{
                     type: String,
                     observer: 'processBarcode',
+                    reflectToAttribute: true,
                     notify: true,
                 },
                 
@@ -88,6 +89,7 @@
             processBarcode: function(barcode, oldValue) {
                 self.pieceInfo = {};
                 if(barcode) {
+                    console.log('barcode',barcode);
                     this.tripInfo.stops.forEach(function(stop, sIdx){
                         stop.pieces.forEach(function(piece, pIdx){
                             if(piece.id == barcode){

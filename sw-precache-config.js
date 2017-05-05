@@ -22,7 +22,7 @@ module.exports = {
         {
             origin: 'http://localhost:8080',
             urlPattern: '/(.*)',
-            handler: 'fastest',
+            handler: 'networkFirst',
             options: {
                 cache: {
                     maxEntries: 200,

@@ -103,6 +103,8 @@
                 debounce-duration="300">
         </iron-ajax>
 
+        <fetch-element id="request"></fetch-element>
+
         <app-location route="{{route}}"></app-location>
 
         <app-route
@@ -162,7 +164,7 @@
                         fallback-selection="view404"
                         role="main">
                     <dhl-home name="home"></dhl-home>
-                    <dhl-trip trip-info="{{tripInfo}}" online="{{online}}" name="trip"></dhl-trip>
+                    <dhl-trip trip-info="{{tripInfo}}" name="trip"></dhl-trip>
                     <dhl-route trip-info="[[tripInfo]]" name="route"></dhl-route>
                     <dhl-barcode trip-info="{{tripInfo}}" user="[[user]]" name="barcode"></dhl-barcode>
                     <dhl-qrcode trip-info="{{tripInfo}}" user="[[user]]" name="qrcode"></dhl-qrcode>
@@ -201,7 +203,7 @@
                 online: {
                     type: Boolean,
                     reflectToAttribute: true,
-                    value: false
+                    value: true
                 },
                 user: {
                     type: Object,
@@ -249,8 +251,23 @@
                 return this.$.auth.signOut();
             },
             _setOnline: function(online){
-                console.log('online', online);
+                var self = this;
                 this.online = online;
+                if(online){
+                    if(this.$.request.getLocalStorage) {
+                        this.$.request.getLocalStorage('queue').then(function(localStorage){
+                            //did the queue contain data?
+                            if(localStorage.length > 0) self.$.request.flush().then(function(response) {
+                                if(!response) {
+                                    //show result in toast
+                                    var toast = document.getElementById('toastOk');
+                                    toast.text = localStorage.length + " Updates Sent";
+                                    toast.open();
+                                }
+                            });
+                        });
+                    }
+                }
             },
 
             /**

@@ -126,8 +126,11 @@
                                     mode: 'cors',
                                     handleAs: "json"
                                 };
-                                this.$.request.fetch(req).then(function(response){
+                                this.$.request.fetch(req).then((response) => {
                                     if (response.status == 200){
+                                        //update the status in tripInfo
+                                        this.set('tripInfo.stops.'+sIdx+'.pieces.'+pIdx+'.status', 'delivered');
+
                                         //show result in toast
                                         var toast = document.getElementById('toastOk');
                                         toast.text = "Piece Delivered";
@@ -151,7 +154,7 @@
                         }.bind(this));
                     }.bind(this));
                 }
-            },
+            }
         });
     </script>
 </dom-module>

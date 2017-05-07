@@ -109,7 +109,7 @@
                                 this.set('tripInfo.stops.'+sIdx+'.pieces.'+pIdx+'.status', 'sending...');
 
                                 // Compose request
-                                var url = "/trips/"+this.tripInfo.tripNumber;
+                                var url = "/trips/"+this.tripInfo.tripNumber + "/pieces/" + piece.id;
 
                                 var req = new Request(url, {
                                     method: 'POST',

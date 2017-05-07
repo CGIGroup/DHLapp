@@ -195,7 +195,7 @@
 
                 var url = "/trips/"+this.tripInfo.tripNumber;
                 //hack to fix the url on test
-                //var url = "http://localhost:8080/trips/"+this.tripInfo.tripNumber;
+                //var url = "https://dhl.toefel.nl/trips/"+this.tripInfo.tripNumber;
 
                 var req = new Request(url, {
                     method: 'POST',
@@ -236,7 +236,7 @@
                 var req = new Request(url, {
                     method: 'POST',
                     headers: new Headers({'content-type': 'application/json'}),
-                    body: JSON.stringify({"operation":"finished"}),
+                    body: JSON.stringify({"operation":"finish"}),
                     mode: 'cors',
                     cache: 'default'
                 });

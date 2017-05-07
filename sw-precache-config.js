@@ -20,7 +20,7 @@ module.exports = {
     navigateFallback: 'index.html',
     runtimeCaching: [
         {
-            origin: 'http://localhost:8080',
+            origin: 'https://dhl.toefel.nl',
             urlPattern: '/(.*)',
             handler: 'networkFirst',
             options: {

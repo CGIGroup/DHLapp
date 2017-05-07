@@ -3,7 +3,7 @@
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
-<link rel="import" href="../bower_components/fetch-element/fetch-element.html">
+<link rel="import" href="fetch-element.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="dhl-qrcode">
@@ -108,24 +108,18 @@
                                 //update the status in tripInfo
                                 this.set('tripInfo.stops.'+sIdx+'.pieces.'+pIdx+'.status', 'sending...');
 
-                                //send update to the server
-                                var body ={
-                                    "operation":"start delivery"
-                                };
-                                var url = "http://localhost:8080/trips/"+this.tripInfo.tripNumber;
-                                //var req = new Request(url, {method: 'PATCH', body: JSON.stringify(body), bodyUsed: true});
-                                var headers = new Headers();
-                                headers.append('Content-Type', 'application/json');
+                                // Compose request
+                                var url = "/trips/"+this.tripInfo.tripNumber;
 
-                                var req = {
-                                    url: url,
-                                    method: 'PATCH',
-                                    headers: headers,
-                                    body: JSON.stringify(body),
-                                    bodyUsed: true,
+                                var req = new Request(url, {
+                                    method: 'POST',
+                                    headers: new Headers({'content-type': 'application/json'}),
+                                    body: JSON.stringify({"operation":"delivered", signee: this.user.userName}),
                                     mode: 'cors',
-                                    handleAs: "json"
-                                };
+                                    cache: 'default'
+                                });
+
+                                // Send update to the server
                                 this.$.request.fetch(req).then((response) => {
                                     if (response.status == 200){
                                         //update the status in tripInfo
@@ -145,11 +139,11 @@
                                     else {
                                         //show result in toast
                                         var toast = document.getElementById('toastError');
-                                        var message = request.xhr.status+' '+response.message;
-                                        toast.text = message;
+                                        if(!response.ok) toast.text = response.status + ' ' + response.statusText;
+                                        else toast.text = response.xhr.status + ' ' + response.message ? response.message : '';
                                         toast.open();
                                     }
-                                })
+                                });
                             }
                         }.bind(this));
                     }.bind(this));

@@ -24,6 +24,7 @@
 <link rel="import" href="../bower_components/platinum-sw/platinum-sw-fetch.html">
 <link rel="import" href="../bower_components/platinum-sw/platinum-sw-cache.html">
 <link rel="import" href="../bower_components/platinum-sw/platinum-sw-import-script.html">
+<link rel="import" href="fetch-element.html">
 
 <dom-module id="dhl-app">
     <template>
@@ -34,6 +35,10 @@
                 --app-secondary-color: black;
 
                 display: block;
+            }
+
+            [hide] {
+                display: none !important;
             }
 
             app-drawer {
@@ -74,25 +79,6 @@
                 height: 40px;
             }
         </style>
-        <!--
-                <platinum-sw-register auto-register reloadOnInstall>
-
-                    <platinum-sw-fetch path="/(.*)"
-                                       handler="cacheFirst"
-                                       origin="http://localhost:8080"></platinum-sw-fetch>
-
-                </platinum-sw-register>
-
-                <!--<platinum-sw-cache></platinum-sw-cache>
-                <platinum-sw-register auto-register>
-                    <platinum-sw-import-script href="weather-fetch-handler.js"></platinum-sw-import-script>
-                    <platinum-sw-fetch handler="weatherFetchHandler"
-                                       path="/v1/public/yql"
-                                       origin="http://localhost:8080">
-                    </platinum-sw-fetch>
-                    <platinum-sw-cache default-cache-strategy="fastest"></platinum-sw-cache>
-                </platinum-sw-register>
-                -->
 
         <iron-ajax
                 auto
@@ -142,27 +128,17 @@
 
                         <div class="flex"></div>
 
-                        <!-- http://stackoverflow.com/questions/37793271/polymer-1-0-hidden-show-not-working -->
-                        <template is="dom-if" if="{{online}}">
-                            <iron-icon icon="cloud" style="fill:white"></iron-icon>
-                        </template>
-                        <template is="dom-if" if="{{!online}}">
-                            <iron-icon icon="cloud-off"></iron-icon>
-                        </template>
-
-
                         <paper-icon-button
                                 icon="[[computeLockIcon(user)]]"
                                 disabled="[[!signedIn]]"
                                 on-tap="lock">
                         </paper-icon-button>
 
-                        <template is="dom-if" if="{{camera}}">
-                            <iron-icon icon="image:flash-on" on-tap="flashLight" style="fill:white"></iron-icon>
-                        </template>
-                        <template is="dom-if" if="{{!camera}}">
-                            <iron-icon icon="image:flash-off" on-tap="flashLight"></iron-icon>
-                        </template>
+                        <iron-icon icon="image:flash-on" hide$="[[!camera]]" on-tap="flashLight" style="fill:white"></iron-icon>
+                        <iron-icon icon="image:flash-off" hide$="[[camera]]" on-tap="flashLight"></iron-icon>
+
+                        <iron-icon icon="cloud" hide$="[[!online]]" style="fill:white"></iron-icon>
+                        <iron-icon icon="cloud-off" hide$="[[online]]" ></iron-icon>
 
                     </app-toolbar>
                 </app-header>
@@ -265,7 +241,9 @@
             },
 
             flashLight: function() {
-                console.alert('Flashlight doesnt work yet');
+                //window.alert('Flashlight doesnt work yet');
+                this.camera = !this.camera;
+                return;
                 if(this.camera == null){
                     this.camera = Camera.open();
                     var parameters = camera.getParameters();
@@ -279,6 +257,7 @@
                     this.camera = null;
                 }
             },
+
             _setOnline: function(online){
                 var self = this;
                 this.online = online;
@@ -286,7 +265,7 @@
                     if(this.$.request.getLocalStorage) {
                         this.$.request.getLocalStorage('queue').then(function(localStorage){
                             //did the queue contain data?
-                            if(localStorage.length > 0) self.$.request.flush().then(function(response) {
+                            if(localStorage && localStorage.length > 0) self.$.request.flush().then(function(response) {
                                 if(!response) {
                                     //show result in toast
                                     var toast = document.getElementById('toastOk');

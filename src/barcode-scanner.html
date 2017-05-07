@@ -29,6 +29,9 @@ Typical usage:
             :host {
                 display: block;
             }
+            [hide] {
+                display: none !important;
+            }
             video {
                 position: relative;
                 width: 320px;
@@ -82,14 +85,9 @@ Typical usage:
             }
         </style>
         <div class="media">
-            <template is="dom-if" if="[[!active]]">
-                <div class="placeholder"  on-tap="_activate">[[placeholderMessage]]</div>
-            </template>
-            <!--<canvas id="qrCanvasDisplay" width="[[width]]" height="[[height]]" hide$="[[!active]]" on-tap="_deactivate"></canvas>-->
-            <div id="interactive" class="viewport" on-tap="_deactivate"></div>
-            <template  is="dom-if" if="[[active]]">
 
-            </template>
+            <div class="placeholder"  hide$="[[active]]" on-tap="resume">[[placeholderMessage]]</div>
+            <div id="interactive" class="viewport"  hide$="[[!active]]" on-tap="suspend"></div>
 
         </div>
     </template>
@@ -156,44 +154,48 @@ Typical usage:
             },
 
             attached: function() {
-
-                Quagga.onDetected(function(res){
-                    elem.data = res.codeResult.code;
-                    console.debug("[barcode-scanner] Quagga.onDetected", elem.data, elem);
-                    elem.fire("qrcode-decoded", res);
-                });
-            },
-
-            _activate: function() {
                 this._isReady = false;
                 var _this = this;
-                _this.active = true;
-
+                //readers : ["code_128_reader"]
                 Quagga.init({
-                    inputStream : {
-                        name : "Live",
-                        type : "LiveStream",
+                    inputStream: {
+                        name: "Live",
+                        type: "LiveStream",
                         target: _this.$.interactive
                     },
-                    decoder : {
-                        readers : ["code_128_reader"]
+                    decoder: {
+                        readers: ["code_128_reader"]
                     }
-                }, function(err) {
+                }, function (err) {
                     _this.querySelector('video').className += ' barcode-scanner';
-
                     if (err) {
                         console.log(err);
                         return;
                     }
+                    if (_this.active) {
+                        _this._isReady = true;
+                        Quagga.start();
+                    }
+                });
+                Quagga.onDetected(function(result) {
+                    var _this = this;
+                    if (_this.active) {
+                        _this.code = result.codeResult.code;
 
-                    Quagga.start();
+                        _this._setResult(result);
+                        _this._setCode(result.codeResult.code);
+                        _this.fire('recognize', {code: result.codeResult.code, result: result});
+                    }
                 });
             },
-            _deactivate: function() {
+            suspend: function() {
                 this.active = false;
                 Quagga.stop();
             },
-
+            resume: function() {
+                this.active = true;
+                Quagga.start();
+            }
         });
     </script>
 

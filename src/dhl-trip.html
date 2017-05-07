@@ -6,7 +6,7 @@
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/iron-list/iron-list.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
-<link rel="import" href="../bower_components/fetch-element/fetch-element.html">
+<link rel="import" href="fetch-element.html">
 
 <!--
 <link rel="import" href="../../iron-image/iron-image.html">
@@ -191,24 +191,21 @@
             },
 
             startTap: function(e) {
-                //send update to the server
-                var body ={
-                    "operation":"start delivery"
-                };
-                var url = "http://localhost:8080/trips/"+this.tripInfo.tripNumber;
-                //var req = new Request(url, {method: 'PATCH', body: JSON.stringify(body), bodyUsed: true});
-                var headers = new Headers();
-                headers.append('Content-Type', 'application/json');
+                // Compose request
 
-                var req = {
-                    url: url,
-                    method: 'PATCH',
-                    headers: headers,
-                    body: JSON.stringify(body),
-                    bodyUsed: true,
+                var url = "/trips/"+this.tripInfo.tripNumber;
+                //hack to fix the url on test
+                //var url = "http://localhost:8080/trips/"+this.tripInfo.tripNumber;
+
+                var req = new Request(url, {
+                    method: 'POST',
+                    headers: new Headers({'content-type': 'application/json'}),
+                    body: JSON.stringify({"operation":"start delivery"}),
                     mode: 'cors',
-                    handleAs: "json"
-                };
+                    cache: 'default'
+                });
+
+                // Send update to the server
                 this.$.request.fetch(req).then(function(response){
                     if (response.status == 200){
                         //show result in toast
@@ -225,32 +222,25 @@
                     else {
                         //show result in toast
                         var toast = document.getElementById('toastError');
-                        var message = request.xhr.status+' '+response.message;
-                        toast.text = message;
+                        if(!response.ok) toast.text = response.status + ' ' + response.statusText;
+                        else toast.text = response.xhr.status + ' ' + response.message ? response.message : '';
                         toast.open();
                     }
                 })
             },
 
             finishTap: function(e) {
-                //send update to the server
-                var body ={
-                    "operation":"finish"
-                };
-                var url = "http://localhost:8080/trips/"+this.tripInfo.tripNumber;
-                //var req = new Request(url, {method: 'PATCH', body: JSON.stringify(body), bodyUsed: true});
-                var headers = new Headers();
-                headers.append('Content-Type', 'application/json');
+                // Compose request
+                var url = "/trips/"+this.tripInfo.tripNumber;
 
-                var req = {
-                    url: url,
-                    method: 'PATCH',
-                    headers: headers,
-                    body: JSON.stringify(body),
-                    bodyUsed: true,
+                var req = new Request(url, {
+                    method: 'POST',
+                    headers: new Headers({'content-type': 'application/json'}),
+                    body: JSON.stringify({"operation":"finished"}),
                     mode: 'cors',
-                    handleAs: "json"
-                };
+                    cache: 'default'
+                });
+                // Send update to the server
                 this.$.request.fetch(req).then(function(response){
                     if (response.status == 200){
                         //show result in toast
@@ -267,8 +257,8 @@
                     else {
                         //show result in toast
                         var toast = document.getElementById('toastError');
-                        var message = request.xhr.status+' '+response.message;
-                        toast.text = message;
+                        if(!response.ok) toast.text = response.status + ' ' + response.statusText;
+                        else toast.text = response.xhr.status + ' ' + response.message ? response.message : '';
                         toast.open();
                     }
                 })

@@ -78,6 +78,9 @@
                 width: auto;
                 height: 40px;
             }
+            .toolbarIcon {
+                margin-left: 12px;
+            }
         </style>
 
         <iron-ajax
@@ -129,16 +132,17 @@
                         <div class="flex"></div>
 
                         <paper-icon-button
+                                class="toolbarIcon"
                                 icon="[[computeLockIcon(user)]]"
                                 disabled="[[!signedIn]]"
                                 on-tap="lock">
                         </paper-icon-button>
 
-                        <iron-icon icon="dhl-icons:flashlight" hide$="[[!camera]]" on-tap="flashLight" style="fill:white"></iron-icon>
-                        <iron-icon icon="dhl-icons:flashlight" hide$="[[camera]]" on-tap="flashLight" style="fill:black"></iron-icon>
+                        <iron-icon icon="dhl-icons:flashlight" hide$="[[!camera]]" on-tap="flashLight" class="toolbarIcon" style="fill:white"></iron-icon>
+                        <iron-icon icon="dhl-icons:flashlight" hide$="[[camera]]" on-tap="flashLight" class="toolbarIcon" style="fill:black"></iron-icon>
 
-                        <iron-icon icon="dhl-icons:cloud" hide$="[[!online]]" style="fill:white"></iron-icon>
-                        <iron-icon icon="dhl-icons:cloud-off" hide$="[[online]]"></iron-icon>
+                        <iron-icon icon="dhl-icons:cloud" hide$="[[!online]]" class="toolbarIcon" style="fill:white"></iron-icon>
+                        <iron-icon icon="dhl-icons:cloud-off" hide$="[[online]]" class="toolbarIcon"></iron-icon>
 
                     </app-toolbar>
                 </app-header>

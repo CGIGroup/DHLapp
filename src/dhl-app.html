@@ -12,8 +12,8 @@
 <link rel="import" href="../bower_components/app-storage/app-network-status-behavior.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
-<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
-<link rel="import" href="../bower_components/iron-icons/image-icons.html">
+<!--<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-icons/image-icons.html">-->
 <link rel="import" href="../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
@@ -134,11 +134,11 @@
                                 on-tap="lock">
                         </paper-icon-button>
 
-                        <iron-icon icon="image:flash-on" hide$="[[!camera]]" on-tap="flashLight" style="fill:white"></iron-icon>
-                        <iron-icon icon="image:flash-off" hide$="[[camera]]" on-tap="flashLight"></iron-icon>
+                        <iron-icon icon="dhl-icons:flashlight" hide$="[[!camera]]" on-tap="flashLight" style="fill:white"></iron-icon>
+                        <iron-icon icon="dhl-icons:flashlight" hide$="[[camera]]" on-tap="flashLight" style="fill:black"></iron-icon>
 
-                        <iron-icon icon="cloud" hide$="[[!online]]" style="fill:white"></iron-icon>
-                        <iron-icon icon="cloud-off" hide$="[[online]]" ></iron-icon>
+                        <iron-icon icon="dhl-icons:cloud" hide$="[[!online]]" style="fill:white"></iron-icon>
+                        <iron-icon icon="dhl-icons:cloud-off" hide$="[[online]]"></iron-icon>
 
                     </app-toolbar>
                 </app-header>
@@ -234,7 +234,7 @@
             },
 
             computeLockIcon: function(signedIn) {
-                return signedIn ? 'lock-open' : 'lock';
+                return signedIn ? 'dhl-icons:lock-open' : 'dhl-icons:lock';
             },
             lock: function() {
                 return this.$.auth.signOut();

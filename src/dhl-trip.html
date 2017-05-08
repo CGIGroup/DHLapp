@@ -279,10 +279,8 @@
             updateTripInfo(newStatus) {
                 this.tripInfo.stops.forEach(function(stop, sIdx){
                     stop.pieces.forEach(function(piece, pIdx){
-                        if(piece.id == barcode){
-                           //update the status in tripInfo
-                            this.set('tripInfo.stops.'+sIdx+'.pieces.'+pIdx+'.status', newStatus);
-                        }
+                        //update the status in tripInfo
+                        this.set('tripInfo.stops.'+sIdx+'.pieces.'+pIdx+'.status', newStatus);
                     }.bind(this));
                 }.bind(this));
             },

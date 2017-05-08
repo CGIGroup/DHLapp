@@ -282,7 +282,7 @@
                         //update the status in tripInfo
                         var currentStatus = this.tripInfo.stops[sIdx].pieces[pIdx].status;
                         var pos = currentStatus.search("delivered");
-                        if(pos == -1 ) {
+                        if(pos != -1 ) {
                             this.set('tripInfo.stops.' + sIdx + '.pieces.' + pIdx + '.status', newStatus);
                         }
                     }.bind(this));

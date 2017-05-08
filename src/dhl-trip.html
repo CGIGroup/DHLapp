@@ -209,7 +209,7 @@
                 this.$.request.fetch(req).then((response) => {
                     if (response.status == 200){
                         //update status in tripInfo
-                        this.updateTripInfo("Trip in Delivery");
+                        this.updateTripInfo("trip in delivery");
 
                         //show result in toast
                         var toast = document.getElementById('toastOk');
@@ -218,7 +218,7 @@
                     }
                     else if (response.status == 202){
                         //update status in tripInfo
-                        this.updateTripInfo("Trip in Delivery sending...");
+                        this.updateTripInfo("trip in delivery sending...");
 
                         //show result in toast
                         var toast = document.getElementById('toastWarn');
@@ -250,7 +250,7 @@
                 this.$.request.fetch(req).then((response) => {
                     if (response.status == 200){
                         //update status in tripInfo
-                        this.updateTripInfo("Returned to Depot");
+                        this.updateTripInfo("returned to depot");
 
                         //show result in toast
                         var toast = document.getElementById('toastOk');
@@ -259,7 +259,7 @@
                     }
                     else if (response.status == 202){
                         //update status in tripInfo
-                        this.updateTripInfo("Returned to Depot sending...");
+                        this.updateTripInfo("returned to depot sending...");
 
                         //show result in toast
                         var toast = document.getElementById('toastWarn');
@@ -280,7 +280,11 @@
                 this.tripInfo.stops.forEach(function(stop, sIdx){
                     stop.pieces.forEach(function(piece, pIdx){
                         //update the status in tripInfo
-                        this.set('tripInfo.stops.'+sIdx+'.pieces.'+pIdx+'.status', newStatus);
+                        var currentStatus = this.tripInfo.stops[sIdx].pieces[pIdx].status;
+                        var pos = currentStatus.search("delivered");
+                        if(pos == -1 ) {
+                            this.set('tripInfo.stops.' + sIdx + '.pieces.' + pIdx + '.status', newStatus);
+                        }
                     }.bind(this));
                 }.bind(this));
             },

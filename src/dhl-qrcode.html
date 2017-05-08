@@ -106,7 +106,7 @@
                                 };
                                 
                                 //update the status in tripInfo
-                                this.set('tripInfo.stops.'+sIdx+'.pieces.'+pIdx+'.status', 'sending...');
+                                this.set('tripInfo.stops.'+sIdx+'.pieces.'+pIdx+'.status', 'delivered sending...');
 
                                 // Compose request
                                 var url = "/trips/"+this.tripInfo.tripNumber + "/pieces/" + piece.id;

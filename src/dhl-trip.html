@@ -208,12 +208,18 @@
                 // Send update to the server
                 this.$.request.fetch(req).then(function(response){
                     if (response.status == 200){
+                        //update status in tripInfo
+                        this.updateTripInfo("Trip in Delivery");
+
                         //show result in toast
                         var toast = document.getElementById('toastOk');
                         toast.text = "Trip Started";
                         toast.open();
                     }
                     else if (response.status == 202){
+                        //update status in tripInfo
+                        this.updateTripInfo("Trip in Delivery sending...");
+
                         //show result in toast
                         var toast = document.getElementById('toastWarn');
                         toast.text = "Trip Start sent to Queue";
@@ -243,12 +249,18 @@
                 // Send update to the server
                 this.$.request.fetch(req).then(function(response){
                     if (response.status == 200){
+                        //update status in tripInfo
+                        this.updateTripInfo("Returned to Depot");
+
                         //show result in toast
                         var toast = document.getElementById('toastOk');
                         toast.text = "Trip Finished";
                         toast.open();
                     }
                     else if (response.status == 202){
+                        //update status in tripInfo
+                        this.updateTripInfo("Returned to Depot sending...");
+
                         //show result in toast
                         var toast = document.getElementById('toastWarn');
                         toast.text = "Trip Finished sent to Queue";
@@ -262,6 +274,17 @@
                         toast.open();
                     }
                 })
+            },
+
+            updateTripInfo(newStatus) {
+                this.tripInfo.stops.forEach(function(stop, sIdx){
+                    stop.pieces.forEach(function(piece, pIdx){
+                        if(piece.id == barcode){
+                           //update the status in tripInfo
+                            this.set('tripInfo.stops.'+sIdx+'.pieces.'+pIdx+'.status', newStatus);
+                        }
+                    }.bind(this));
+                }.bind(this));
             },
 
             dataChanged: function(newValue, oldValue) {

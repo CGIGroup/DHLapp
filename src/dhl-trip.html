@@ -206,7 +206,7 @@
                 });
 
                 // Send update to the server
-                this.$.request.fetch(req).then(function(response){
+                this.$.request.fetch(req).then((response) => {
                     if (response.status == 200){
                         //update status in tripInfo
                         this.updateTripInfo("Trip in Delivery");
@@ -247,7 +247,7 @@
                     cache: 'default'
                 });
                 // Send update to the server
-                this.$.request.fetch(req).then(function(response){
+                this.$.request.fetch(req).then((response) => {
                     if (response.status == 200){
                         //update status in tripInfo
                         this.updateTripInfo("Returned to Depot");

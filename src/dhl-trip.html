@@ -122,8 +122,8 @@
 
         <h3>Trip Number: [[tripInfo.tripNumber]]</h3>
         <div>
-            <paper-button on-tap="startTap">Start</paper-button>
-            <paper-button on-tap="finishTap">Finish</paper-button>
+            <paper-button on-tap="startTap" raised>Start</paper-button>
+            <paper-button on-tap="finishTap" raised>Finish</paper-button>
         </div>
 
         <iron-list id="list" items="{{tripInfo.stops}}" as="stop" selection-enabled multi-selection>
@@ -282,7 +282,7 @@
                         //update the status in tripInfo
                         var currentStatus = this.tripInfo.stops[sIdx].pieces[pIdx].status;
                         var pos = currentStatus.search("delivered");
-                        if(pos != -1 ) {
+                        if(pos == -1 ) {
                             this.set('tripInfo.stops.' + sIdx + '.pieces.' + pIdx + '.status', newStatus);
                         }
                     }.bind(this));

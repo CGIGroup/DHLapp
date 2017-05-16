@@ -137,15 +137,14 @@
                     return this.$.btBatteryLevel.read().then((value) => {
                         this.batteryLevel = value.getUint8(0) + '%';
                     });
-                })
-                .catch(function(error) {
+                }).catch(function(error) {
                     var toast = document.getElementById('toastError');
                     toast.text = error.message;
                     toast.open();
                 });
             },
             heartRateOnTap: function(e) {
-                this.$.btHrDevice.request().then(function() {
+                this.$.btHrDevice.request().then(() => {
                     return this.$.btHeartRate.startNotifications();
                 }).catch(function(error) {
                     var toast = document.getElementById('toastError');
@@ -154,7 +153,7 @@
                 });
             },
             heartRateOffTap: function(e) {
-                this.$.btHrDevice.request().then(function() {
+                this.$.btHrDevice.request().then(() => {
                     this.$.btHeartRate.stopNotifications();
                 }).catch(function(error) {
                     var toast = document.getElementById('toastError');

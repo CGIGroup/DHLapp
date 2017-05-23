@@ -1,18 +1,17 @@
-
 <link rel="import" href="../bower_components/polymer/polymer.html">
 
 
 <!--
-`<barcode-scanner>` is an element to render a QR Code
+`<barcode-scanner>` is an element to render a Barcode
 
 Typical usage:
 
 ```html
-  <barcode-scanner active="[[active]]"></barcode-scanner>
+  <barcode-scanner code="{{barcode}}"></barcode-scanner>
 ```
 
 @element barcode-scanner
-@blurb An element to scan a QR Code
+@blurb An element to scan a Barcode
 @homepage index.html
 @demo demo/index.html
 -->
@@ -34,19 +33,10 @@ Typical usage:
             }
             video {
                 position: relative;
-                width: 320px;
-                height: 240px;
+                width: var(--placeholder-width, 320px);
+                height: var(--placeholder-height, 240px);
                 border-radius: 10px;
                 display: flex;
-                /*top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);*/
-            }
-            .drawingBuffer {
-                display: none
-            }
-            [hide] {
-                display: none !important;
             }
             .media {
                 display: flex;
@@ -66,28 +56,11 @@ Typical usage:
                 font-size: 24px;
                 font-weight: bold;
             }
-            svg {
-                max-width: 30vw;
-                max-height: 30vw;
-            }
-            .videoContainer{
-                position: relative;
-            }
-            .pictureControls{
-                position: absolute;
-                bottom: 5px;
-                width: 100%;
-                fill: #ffc107;
-                opacity: 0.5;
-                display: flex;
-                flex-flow: row;
-                justify-content: center;
-            }
         </style>
         <div class="media">
 
-            <div class="placeholder"  hide$="[[active]]" on-tap="resume">[[placeholderMessage]]</div>
-            <div id="interactive" class="viewport"  hide$="[[!active]]" on-tap="suspend"></div>
+            <div class="placeholder"  hide$="[[active]]" on-tap="activateScanner">[[placeholderMessage]]</div>
+            <div id="interactive" class="viewport"  hide$="[[!active]]" on-tap="stopScanner"></div>
 
         </div>
     </template>
@@ -97,51 +70,21 @@ Typical usage:
             is: "barcode-scanner",
 
             properties: {
-                result: {
-                    type: Object,
-                    notify: true,
-                    readOnly: true,
-                    value: null
-                },
+                /**
+                 * The last decoded Barcode
+                 */
                 code: {
                     type: String,
                     notify: true,
-                    reflectToAttribute: true,
-                    readOnly: true,
                     value: ''
                 },
+                /**
+                 * If true the element is currently scanning
+                 */
                 active: {
                     type: Boolean,
                     value: false,
-                    notify: true,
                     reflectToAttribute: true
-                },
-                /**
-                 * If true the elements scans for QR code
-                 */
-
-
-                /**
-                 * The last decoded QRCode
-                 */
-                data: {
-                    type: String,
-                    notify: true,
-                    value: "",
-                },
-                /**
-                 * The width of the scanning window
-                 */
-                width: {
-                    type: Number,
-                    value: 320
-                },
-                /**
-                 * The height of the scanning window
-                 */
-                height: {
-                    type: Number,
-                    value: 240
                 },
                 /**
                  * The message to show when scanner isn't activated
@@ -149,52 +92,56 @@ Typical usage:
                 placeholderMessage: {
                     type: String,
                     value: "Tap here to activate scanner",
-                } ,
+                },
+                /**
+                 * An Array of readers to be used
+                 */
+                readers: {
+                    type: Array,
+                    value: function(){
+                        return ['code_128_reader'];
+                    }
+                }
 
             },
 
-            attached: function() {
-                this._isReady = false;
-                var _this = this;
-                //readers : ["code_128_reader"]
-                Quagga.init({
-                    inputStream: {
-                        name: "Live",
-                        type: "LiveStream",
-                        target: _this.$.interactive
-                    },
-                    decoder: {
-                        readers: ["code_128_reader"]
-                    }
-                }, function (err) {
-                    _this.querySelector('video').className += ' barcode-scanner';
-                    if (err) {
-                        console.log(err);
-                        return;
-                    }
-                    if (_this.active) {
-                        _this._isReady = true;
-                        Quagga.start();
-                    }
-                });
-                Quagga.onDetected(function(result) {
-                    var _this = this;
-                    if (_this.active) {
-                        _this.code = result.codeResult.code;
+            activateScanner: function() {
+                this.scanner = this.configureScanner(this.$.interactive),
+                    onDetected = function (result) {
+                        this.code = result.codeResult.code;
+                        stop();
+                    }.bind(this),
+                    stop = function() {
+                        this.scanner.stop();  // should also clear all event-listeners?
+                        this.scanner.removeEventListener('detected', onDetected);
+                        this.scanner = null;
+                        this.active = false;
+                    }.bind(this);
 
-                        _this._setResult(result);
-                        _this._setCode(result.codeResult.code);
-                        _this.fire('recognize', {code: result.codeResult.code, result: result});
-                    }
-                });
-            },
-            suspend: function() {
-                this.active = false;
-                Quagga.stop();
-            },
-            resume: function() {
                 this.active = true;
-                Quagga.start();
+                this.scanner.addEventListener('detected', onDetected).start();
+            },
+
+            configureScanner: function(selector) {
+                if (!this._scanner) {
+                    this._scanner = Quagga
+                            .decoder({readers: this.readers})
+                            .locator({patchSize: 'medium'})
+                            .fromSource({
+                                target: selector,
+                                constraints: {
+                                    width: 800,
+                                    height: 600,
+                                    facingMode: "environment"
+                                }
+                            });
+                }
+                return this._scanner;
+            },
+
+            stopScanner: function() {
+                this.active = false;
+                this.scanner.stop();
             }
         });
     </script>

@@ -32,7 +32,7 @@
     "paper-item": "PolymerElements/paper-item#^1.2.2",
     "google-streetview-pano": "GoogleWebComponents/google-streetview-pano#^1.0.4",
     "granite-file-saver": "lostinbrittany/granite-file-saver#^1.0.4",
-    "quagga": "0.9.0",
+    "quagga": "1.0.0-beta.2",
     "barcode-scanner": "cgigroup/barcode-scanner#shadowdom",
     "iron-list": "PolymerElements/iron-list#^1.4.5",
     "granite-qrcode-generator": "LostInBrittany/granite-qrcode-generator#^1.0.4",
@@ -49,6 +49,6 @@
   "private": true,
   "resolutions": {
     "polymer": "^1.6.0",
-    "quagga": "0.9.0"
+    "quagga": "1.0"
   }
 }

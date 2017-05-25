@@ -1,0 +1,90 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="barcode-scanner.html">
+<link rel="import" href="dhl-xmlxhr.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="dhl-signin">
+    <template>
+        <style include="shared-styles">
+            :host {
+                display: block;
+                padding: 10px;
+            }
+            .media {
+                display: flex;
+                flex-flow: column nowrap;
+                align-items: center;
+            }
+            .card {
+                width: 320px;
+            }
+        </style>
+
+        <dhl-xmlxhr
+                url="/test/xml/replyLogon.xml"
+                method="GET"
+                body="[[body]]"
+                response="{{logonResponse}}"
+                ok-text="Aanmelden Gelukt"
+                error-text="Aanmelden Mislukt">
+        </dhl-xmlxhr>
+
+        <barcode-scanner code="{{barcode}}"
+                         placeholder-message="Scanner Activeren">
+        </barcode-scanner>
+
+        <div class="media">
+
+            <paper-card class="card">
+                <div class="card-content">
+
+                    <paper-input value="{{barcode}}"
+                                 label="P-Nummer"
+                                 required
+                                 auto-validate>
+                    </paper-input>
+
+                </div>
+            </paper-card>
+
+        </div>
+    </template>
+
+
+    <script>
+        Polymer({
+            is: 'dhl-signin',
+
+            properties:{
+
+                logonResponse: {
+                    type: Object,
+                    observer: 'logonResponse',
+                },
+
+                barcode:{
+                    type: String,
+                    observer: 'processBarcode',
+                    notify: true,
+                }
+
+            },
+
+            processBarcode: function(barcode, oldValue) {
+                if(barcode) {
+                    //send P-Number to the server
+                    this.body = {
+                        "PNUMBER": barcode
+                    };
+                }
+            },
+
+            logonResponse: function(resp, oldValue) {
+                console.dir(resp);
+            }
+
+        });
+    </script>
+</dom-module>

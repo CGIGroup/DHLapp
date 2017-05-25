@@ -6,7 +6,7 @@
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="fetch-element.html">
 
-<dom-module id="dhl-barcode">
+<dom-module id="dhl-delivery">
     <template>
         <style include="shared-styles">
             :host {
@@ -29,7 +29,7 @@
                 debounce-duration="300">
         </iron-ajax>
 
-        <barcode-scanner code="{{barcode}}" continuous></barcode-scanner>
+        <barcode-scanner code="{{barcode}}"></barcode-scanner>
 
         <p></p>
 
@@ -66,7 +66,7 @@
 
     <script>
         Polymer({
-            is: 'dhl-barcode',
+            is: 'dhl-delivery',
 
             properties:{
 

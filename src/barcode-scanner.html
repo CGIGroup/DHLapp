@@ -2,7 +2,7 @@
 
 
 <!--
-`<barcode-scanner>` is an element to render a Barcode
+`<barcode-scanner>` is an element to scan Barcodes
 
 Typical usage:
 
@@ -16,10 +16,9 @@ Typical usage:
 @demo demo/index.html
 -->
 
-<!--<script src="../jsqrcode/dist/jsqrcode.js"></script>
-<script src="../quagga/dist/quagga.min.js"></script>-->
+<!--<script src="../quagga/dist/quagga.min.js"></script>-->
 
-<script src="../bower_components/quagga/dist/quagga.js"></script>
+<script src="../bower_components/quagga/dist/quagga.min.js"></script>
 
 <dom-module is="barcode-scanner">
 
@@ -37,6 +36,7 @@ Typical usage:
                 height: var(--placeholder-height, 240px);
                 border-radius: 10px;
                 display: flex;
+                box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0);
             }
             .media {
                 display: flex;
@@ -47,7 +47,7 @@ Typical usage:
                 width: var(--placeholder-width, 320px);
                 height: var(--placeholder-height, 240px);
                 border-radius: 10px;
-                background-color:var(--placeholder-background-color, #ffc107);
+                background-color: var(--placeholder-background-color, #ffc107);
                 color: var(--placeholder-color, white);
                 display: flex;
                 justify-content: center;
@@ -55,6 +55,7 @@ Typical usage:
                 text-align: center;
                 font-size: 24px;
                 font-weight: bold;
+                box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0);
             }
         </style>
         <div class="media">

@@ -1,0 +1,102 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="dhl-xmlxhr">
+    <template>
+
+        <iron-ajax
+                id="ajax"
+                url="[[url]]"
+                method="[[method]]"
+                content-type="application/xml"
+                handle-as="xml"
+                on-response="handleResponse"
+                on-error="handleError">
+        </iron-ajax>
+
+    </template>
+
+    <script src="../bower_components/abdmob/x2js/xml2json.js"></script>
+
+    <script>
+        Polymer({
+            is: 'dhl-xmlxhr',
+
+            properties:{
+
+                /**
+                 * The url to be used
+                 */
+                url:{
+                    type: String,
+                },
+
+                /**
+                 * The method to be used
+                 */
+                method:{
+                    type: String,
+                    value: 'GET'
+                },
+
+                /**
+                 * The body to be sent, in JSON format
+                 */
+                body: {
+                    type: Object,
+                    observer: 'sendBody'
+                },
+
+                /**
+                 * The response from the server, in JSON format
+                 */
+                response:{
+                    type: Object,
+                    notify: true,
+                },
+
+                /**
+                 * OK text for the toast, default is server response text
+                 */
+                okText:{
+                    type: String
+                },
+
+                /**
+                 * Error text for the toast, default is server response text
+                 */
+                errorText:{
+                    type: String
+                }
+
+            },
+
+            sendBody: function(body) {
+                if(!body) return;
+                var parser = new X2JS();
+                var xmlBody = parser.json2xml_str(body);
+                this.$.ajax.body = xmlBody;
+                this.$.ajax.generateRequest();
+            },
+
+            handleResponse: function(event){
+                var responseXml = event.detail.xhr.response;
+                var parser = new X2JS();
+                this.response = parser.xml_str2json(responseXml);
+
+                //show result in toast
+                var toast = document.getElementById('toastOk');
+                toast.text = this.okText?this.okText:event.detail.request.xhr.response.message;
+                toast.open();
+            },
+
+            handleError: function(event){
+                //show result in toast
+                var toast = document.getElementById('toastError');
+                var message = this.errorText?this.errorText:event.detail.request.xhr.response.message;
+                toast.text = event.detail.request.xhr.status+' '+message;
+                toast.open();
+            }
+        });
+    </script>
+</dom-module>

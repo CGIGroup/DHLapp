@@ -2,14 +2,11 @@
   "entrypoint": "index.html",
   "shell": "src/dhl-app.html",
   "fragments": [
-    "src/dhl-home.html",
-    "src/dhl-trip.html",
-    "src/dhl-barcode.html",
+    "src/dhl-signin.html",
+    "src/dhl-trips.html",
     "src/dhl-route.html",
-    "src/dhl-handheld.html",
-    "src/dhl-barcode.html",
-    "src/dhl-qrcode.html",
-    "src/dhl-qrcodegenerator.html",
+    "src/dhl-delivery.html",
+    "src/dhl-home.html",
     "src/dhl-barcodegenerator.html",
     "src/dhl-view404.html"
   ],

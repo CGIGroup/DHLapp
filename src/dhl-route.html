@@ -32,7 +32,7 @@
                 <google-map-marker latitude="[[lat]]" longitude="[[lng]]"></google-map-marker>
             </google-map>
 
-            <template is="dom-if" if="{{tripInfo}}">
+            <template is="dom-if" if="{{parcelResp}}">
                 <google-map-directions map="{{map}}"
                                        start-address="[[computedPosition()]]"
                                        end-address="[[computedPosition()]]"
@@ -57,20 +57,20 @@
         Polymer({
             is: 'dhl-route',
             properties:{
-                tripInfo:{
+                parcelResp:{
                     type: Object,
                     value: null,
                 }
             },
             computedWaypoints:function(){
                 var wayPoints = [];
-                if(this.tripInfo) this.tripInfo.stops.forEach(function(stop){
-                    wayPoints.push({location: stop.address.latitude+' '+stop.address.longitude});
-                    //wayPoints.push({location: stop.address.street+' '+
-                    //stop.address.postalCode+' '+
-                    //stop.address.city
+                if(this.parcelResp) this.parcelResp.TRIPS_REPLY.REPLY_OVERVIEW_PARCELS.forEach(function(stop){
+                    //wayPoints.push({location: stop.address.latitude+' '+stop.address.longitude});
+                    wayPoints.push({location: stop.STREET+' '+
+                    stop.HOUSE_NUMBER+' '+
+                    stop.CITY
                     //stop.address.country
-                    //});
+                    });
                 });
                 return wayPoints
             },

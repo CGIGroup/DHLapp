@@ -110,14 +110,13 @@
                 <app-toolbar></app-toolbar>
                 <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
                     <a name="signin" href="/signin">Aanmelden</a>
-                    <a name="trips" href="/trips">Ritten</a>
+                    <a name="timeframe" href="/timeframe">Ritten</a>
+                    <a name="trips" href="/trips" disabled>Rit Uitvoeren</a>
                     <a name="route" href="/route">Route</a>
                     <a name="delivery" href="/delivery">Aflevering</a>
-                    <!--<a name="qrcode" href="/qrcode">QRcode Scanner</a>-->
                     <div class="flex"></div>
                     <a name="about" href="/about">About</a>
                     <a name="barcodegenerator" href="/barcodegenerator">Barcode Voorbeelden</a>
-                    <!--<a name="qrcodegenerator" href="/qrcodegenerator">QRcode Generator</a>-->
                 </iron-selector>
             </app-drawer>
 
@@ -153,15 +152,41 @@
                         attr-for-selected="name"
                         fallback-selection="view404"
                         role="main">
-                    <dhl-signin trip-info="{{tripInfo}}" user="{{user}}" name="signin"></dhl-signin>
-                    <dhl-trips trip-info="{{tripInfo}}" user="[[user]]" name="trips"></dhl-trips>
-                    <dhl-route trip-info="[[tripInfo]]" name="route"></dhl-route>
-                    <dhl-delivery trip-info="{{tripInfo}}" user="[[user]]" name="delivery"></dhl-delivery>
-                    <!--<dhl-qrcode trip-info="{{tripInfo}}" user="[[user]]" name="qrcode"></dhl-qrcode>-->
+
+                    <dhl-signin
+                            reply-logon="{{logonResp}}"
+                            timeframe-resp="{{timeframeResp}}"
+                            name="signin"></dhl-signin>
+
+                    <dhl-timeframe
+                            reply-logon="[[replyLogon]]"
+                            timeframe-resp="[[timeframeResp]]"
+                            parcel-resp="{{parcelResp}}"
+                            name="timeframe"></dhl-timeframe>
+
+                    <dhl-trips
+                            reply-logon="[[replyLogon]]"
+                            parcel-resp="[[parcelResp]]"
+                            parcel="{{parcel}}"
+                            name="trips"></dhl-trips>
+
+                    <dhl-route
+                            parcel-resp="[[parcelResp]]"
+                            name="route"></dhl-route>
+
+                    <dhl-delivery
+                            reply-logon="[[replyLogon]]"
+                            parcel="[[parcel]]"
+                            name="delivery"></dhl-delivery>
+
                     <dhl-about name="about"></dhl-about>
-                    <dhl-barcodegenerator trip-info="[[tripInfo]]" name="barcodegenerator"></dhl-barcodegenerator>
-                    <!--<dhl-qrcodegenerator trip-info="[[tripInfo]]" name="qrcodegenerator"></dhl-qrcodegenerator>-->
+
+                    <dhl-barcodegenerator
+                            parcel-resp="[[parcelResp]]"
+                            name="barcodegenerator"></dhl-barcodegenerator>
+
                     <dhl-view404 name="view404"></dhl-view404>
+
                 </iron-pages>
             </app-header-layout>
         </app-drawer-layout>

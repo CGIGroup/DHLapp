@@ -12,44 +12,45 @@
                 display: block;
                 padding: 10px;
             }
-            .media {
-                display: flex;
-                flex-flow: column nowrap;
-                align-items: center;
-            }
-            .card {
-                width: 320px;
-            }
         </style>
 
         <dhl-xmlxhr
                 url="/test/xml/replyLogon.xml"
                 method="GET"
-                body="[[body]]"
-                response="{{logonResponse}}"
+                body="[[logonBody]]"
+                response="{{logonResp}}"
                 ok-text="Aanmelden Gelukt"
                 error-text="Aanmelden Mislukt">
         </dhl-xmlxhr>
 
-        <barcode-scanner code="{{barcode}}"
-                         placeholder-message="Scanner Activeren">
-        </barcode-scanner>
+        <dhl-xmlxhr
+                url="/test/xml/replyOverviewTrips.xml"
+                method="GET"
+                body="[[timeframeBody]]"
+                response="{{timeframeResp}}"
+                ok-text="Ritten Opgehaald"
+                error-text="Ritten Ophalen Mislukt">
+        </dhl-xmlxhr>
+
+
 
         <div class="media">
 
+            <barcode-scanner code="{{barcode}}"
+                             placeholder-message="Scanner Activeren">
+            </barcode-scanner>
+
             <paper-card class="card">
-                <div class="card-content">
-
-                    <paper-input value="{{barcode}}"
-                                 label="P-Nummer"
-                                 required
-                                 auto-validate>
-                    </paper-input>
-
-                </div>
+                <paper-input value="{{barcode}}"
+                             label="P-Nummer"
+                             required
+                             auto-validate>
+                </paper-input>
             </paper-card>
 
         </div>
+
+        <a id="timeframeNav" href="/timeframe" style="display:none;">Timeframe</a>
     </template>
 
 
@@ -59,30 +60,81 @@
 
             properties:{
 
-                logonResponse: {
-                    type: Object,
-                    observer: 'logonResponse',
-                },
-
+                /**
+                 * The scanned Barcode
+                 */
                 barcode:{
                     type: String,
                     observer: 'processBarcode',
-                    notify: true,
-                }
+                    notify: true
+                },
+
+                /**
+                 * The logon response from the server in JSON format
+                 */
+                logonResp: {
+                    type: Object,
+                    observer: 'logonResponse',
+                    notify: true
+                },
+
+                /**
+                 * The trips response from the server in JSON format
+                 */
+                timeframeResp: {
+                    type: Object,
+                    observer: 'timeframeResponse',
+                    notify: true
+                },
 
             },
 
             processBarcode: function(barcode, oldValue) {
-                if(barcode) {
-                    //send P-Number to the server
-                    this.body = {
-                        "PNUMBER": barcode
-                    };
+                if(!barcode) return;
+                //send P-Number to the server
+                this.logonBody = {
+                    REQUEST_LOGON:{
+                        GENERAL_HEADER_PDA:{
+                            MESSAGE_IDENTIFIER: 100,
+                            MESSAGE_TIMESTAMP: '',
+                            IMEI_NUMBER: '',
+                            TELEPHONE_NUMBER: '',
+                            P_NUMBER: '',
+                            PDA_SOFTWARE_VERSION: '',
+                            PDA_MESSAGE_VERSION: '',
+                            TRANSMISSION_ATTEMPT_NUMBER: '',
+                            MESSAGE_SEQUENCE_SESSION_NUMBER: ''
+                        },
+                        LOGON:{
+                            P_NUMBER: barcode
+                        }
+                    }
                 }
             },
 
             logonResponse: function(resp, oldValue) {
-                console.dir(resp);
+                if(!resp) return;
+                //send request to the server
+                this.timeframeBody = {
+                    REQUEST_LOGON:{
+                        GENERAL_HEADER_PDA:{
+                            MESSAGE_IDENTIFIER: 200,
+                            MESSAGE_TIMESTAMP: '',
+                            IMEI_NUMBER: '',
+                            TELEPHONE_NUMBER: '',
+                            P_NUMBER: '',
+                            PDA_SOFTWARE_VERSION: '',
+                            PDA_MESSAGE_VERSION: '',
+                            TRANSMISSION_ATTEMPT_NUMBER: '',
+                            MESSAGE_SEQUENCE_SESSION_NUMBER: ''
+                        }
+                    }
+                }
+            },
+
+            timeframeResponse: function(resp, oldValue) {
+                if(!resp) return;
+                this.$.timeframeNav.click();
             }
 
         });

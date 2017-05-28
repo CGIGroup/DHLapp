@@ -4,18 +4,12 @@
 <link rel="import" href="../bower_components/paper-styles/color.html">
 <link rel="import" href="../bower_components/paper-styles/typography.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
-<link rel="import" href="../bower_components/iron-list/iron-list.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
-<link rel="import" href="fetch-element.html">
-
-<!--
-<link rel="import" href="../../iron-image/iron-image.html">
-<link rel="import" href="../../paper-icon-button/paper-icon-button.html">
--->
+<link rel="import" href="shared-styles.html">
 
 <dom-module id="dhl-trips">
     <template>
-        <style>
+        <style include="shared-styles">
             :host {
                 display: block;
                 height: 1000px;
@@ -24,138 +18,40 @@
                 padding: 10px;
                 @apply(--paper-font-common-base);
             }
-            paper-button {
-                background: #fc0;;
-            }
-            iron-list {
-                /*padding-top: 64px;*/
-                --iron-list-items-container: {
-                    height: 1000px;
-                    max-width: 400px;
-                    margin: auto;
-                    margin-top: 10px;
-                    margin-bottom: 10px;
-                };
-            }
-
-            .item {
-                @apply(--layout-horizontal);
-                padding: 20px;
-                background-color: white;
-                border: 1px solid #ddd;
-                cursor: pointer;
-                margin-bottom: 10px;
-            }
-
-            .pad {
-                padding: 0 16px;
-                @apply(--layout-flex);
-                @apply(--layout-vertical);
-            }
-
-            .idx {
-                width: 20px;
-                display: block;
-                float: left;
-                clear: left;
-            }
-
-            .primary {
-                font-size: 16px;
-                font-weight: bold;
-            }
-
-            .shortText, .longText {
-                font-size: 14px;
-                margin-left: 20px;
-            }
-
-            .longText {
-                color: gray;
-                display: none;
-            }
-
-            .label {
-                color: gray;
-                width: 130px;
-                display: block;
-                float: left;
-                clear: left;
-            }
-            .content {
-                color: black;
-                display: block;
-                float: left;
-            }
-            .contentbold {
-                color: black;
-                font-weight: bold;
-                display: block;
-                float: left;
-            }
-            .contentfinal {
-                color: black;
-                font-weight: bold;
-                display: block;
-                float: right;
-            }
-
-            .item.expanded .longText {
-                display: block;
-                margin-left: 20px;
-            }
-
-
-            .spacer {
-                @apply(--layout-flex);
-            }
-
-            @media (max-width: 460px) {
-                paper-toolbar .bottom.title {
-                    font-size: 14px;
-                }
-            }
 
         </style>
 
-        <fetch-element id="request"></fetch-element>
 
-        <h3>Trip Number: [[tripInfo.tripNumber]]</h3>
-        <div>
-            <paper-button on-tap="startTap" raised>Start</paper-button>
-            <paper-button on-tap="finishTap" raised>Finish</paper-button>
-        </div>
-
-        <iron-list id="list" items="{{tripInfo.stops}}" as="stop" selection-enabled multi-selection>
-            <template>
+        <div class="card">
+            <template is="dom-repeat"
+                      items="{{parcelResp.TRIPS_REPLY.REPLY_OVERVIEW_PARCELS}}"
+                      as="parcel">
                 <div>
-                    <div class$="[[getClassForItem(stop, selected)]]" tabindex$="[[tabIndex]]">
-                        <div class="pad">
-                            <div class="primary">
-                                <span class="idx">[[computedIndex(index)]]</span>
-                                <span>[[stop.address.street]] [[stop.address.houseNumber]]</span>
-                            </div>
-                            <div class="shortText">[[stop.address.postalCode]] [[stop.address.city]]</div>
-                            <div class="longText">
-                                <template is="dom-repeat" items="{{stop.pieces}}" as="piece">
-                                    <p class="indent">
-                                        <span class="label">Receiver Name:</span>
-                                        <span class="contentbold">[[piece.receiverName]]</span>
-                                        <span class="label">ID:</span>
-                                        <span class="content">[[piece.id]]</span>
-                                        <span class="label">Shipment Number:</span>
-                                        <span class="content">[[piece.shipmentNumber]]</span>
-                                        <span class="label">Status:</span>
-                                        <span class="contentfinal">[[piece.status]]</span>
-                                        <span class="label">&nbsp</span>
-                                    </p>
-                                </template>
-                            </div>
-                        </div>
-                    </div>
+                    <table>
+                        <tr>
+                            <td class="primary">[[parcel.DELIVERY_SEQUENCE_NUMBER]]</td>
+                            <td class="primary">[[parcel.STREET]] [[parcel.HOUSE_NUMBER]]</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>[[parcel.POSTAL_CODE_NUMERIC]][[parcel.POSTAL_CODE_ALPHA]] [[parcel.CITY]]</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>[[parcel.CUSTOMER_SHORT_NAME]]</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <paper-button on-tap="onDeliverTap" parcel="[[parcel]]" raised>Afleveren</paper-button>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </template>
-        </iron-list>
+        </div>
+
+        <a id="parcelNav" href="/delivery" style="display:none;">In Rit</a>
 
     </template>
 
@@ -166,131 +62,16 @@
 
             properties: {
 
-                tripInfo:{
+                parcel:{
                     type: Object,
-                    value: null,
                     observer: 'dataChanged',
+                    notify: true
                 }
             },
 
-            attached: function() {
-                // Use the document element
-                this.$.list.scrollTarget = this.ownerDocument.documentElement;
-            },
-
-            computedIndex: function(index) {
-              return index+1;
-            },
-
-            iconForItem: function(item) {
-                return item ? (item.integer < 50 ? 'star-border' : 'star') : '';
-            },
-
-            getClassForItem: function(item, selected) {
-                return selected ? 'item expanded' : 'item';
-            },
-
-            startTap: function(e) {
-                // Compose request
-
-                var url = "/trips/"+this.tripInfo.tripNumber;
-                //hack to fix the url on test
-                //var url = "https://dhl.toefel.nl/trips/"+this.tripInfo.tripNumber;
-
-                var req = new Request(url, {
-                    method: 'POST',
-                    headers: new Headers({'content-type': 'application/json'}),
-                    body: JSON.stringify({"operation":"start delivery"}),
-                    mode: 'cors',
-                    cache: 'default'
-                });
-
-                // Send update to the server
-                this.$.request.fetch(req).then((response) => {
-                    if (response.status == 200){
-                        //update status in tripInfo
-                        this.updateTripInfo("trip in delivery");
-
-                        //show result in toast
-                        var toast = document.getElementById('toastOk');
-                        toast.text = "Trip Started";
-                        toast.open();
-                    }
-                    else if (response.status == 202){
-                        //update status in tripInfo
-                        this.updateTripInfo("trip in delivery sending...");
-
-                        //show result in toast
-                        var toast = document.getElementById('toastWarn');
-                        toast.text = "Trip Start sent to Queue";
-                        toast.open();
-                    }
-                    else {
-                        //show result in toast
-                        var toast = document.getElementById('toastError');
-                        if(!response.ok) toast.text = response.status + ' ' + response.statusText;
-                        else toast.text = response.xhr.status + ' ' + response.message ? response.message : '';
-                        toast.open();
-                    }
-                });
-            },
-
-            finishTap: function(e) {
-                // Compose request
-                var url = "/trips/"+this.tripInfo.tripNumber;
-
-                var req = new Request(url, {
-                    method: 'POST',
-                    headers: new Headers({'content-type': 'application/json'}),
-                    body: JSON.stringify({"operation":"finish"}),
-                    mode: 'cors',
-                    cache: 'default'
-                });
-                // Send update to the server
-                this.$.request.fetch(req).then((response) => {
-                    if (response.status == 200){
-                        //update status in tripInfo
-                        this.updateTripInfo("returned to depot");
-
-                        //show result in toast
-                        var toast = document.getElementById('toastOk');
-                        toast.text = "Trip Finished";
-                        toast.open();
-                    }
-                    else if (response.status == 202){
-                        //update status in tripInfo
-                        this.updateTripInfo("returned to depot sending...");
-
-                        //show result in toast
-                        var toast = document.getElementById('toastWarn');
-                        toast.text = "Trip Finished sent to Queue";
-                        toast.open();
-                    }
-                    else {
-                        //show result in toast
-                        var toast = document.getElementById('toastError');
-                        if(!response.ok) toast.text = response.status + ' ' + response.statusText;
-                        else toast.text = response.xhr.status + ' ' + response.message ? response.message : '';
-                        toast.open();
-                    }
-                });
-            },
-
-            updateTripInfo(newStatus) {
-                this.tripInfo.stops.forEach(function(stop, sIdx){
-                    stop.pieces.forEach(function(piece, pIdx){
-                        //update the status in tripInfo
-                        var currentStatus = this.tripInfo.stops[sIdx].pieces[pIdx].status;
-                        var pos = currentStatus.search("delivered");
-                        if(pos == -1 ) {
-                            this.set('tripInfo.stops.' + sIdx + '.pieces.' + pIdx + '.status', newStatus);
-                        }
-                    }.bind(this));
-                }.bind(this));
-            },
-
-            dataChanged: function(newValue, oldValue) {
-                console.log('tripInfo', oldValue, 'to:', newValue);
+            onDeliverTap: function(event) {
+                this.parcel = event.target.parcel;
+                this.$.parcelNav.click();
             },
 
         });

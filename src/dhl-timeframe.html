@@ -1,0 +1,211 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-styles/color.html">
+<link rel="import" href="../bower_components/paper-styles/typography.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-list/iron-list.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="shared-styles.html">
+
+<!--
+<link rel="import" href="../../iron-image/iron-image.html">
+<link rel="import" href="../../paper-icon-button/paper-icon-button.html">
+-->
+
+<dom-module id="dhl-timeframe">
+    <template>
+        <style include="shared-styles">
+            :host {
+                display: block;
+                @apply(--paper-font-common-base);
+            }
+
+            .item {
+                outline: none;
+                cursor: pointer;
+            }
+
+            .primary {
+                font-size: 16px;
+                font-weight: bold;
+            }
+
+            .shortText, .longText {
+                font-size: 14px;
+            }
+
+            .longText {
+                color: gray;
+                display: none;
+            }
+
+            .item.expanded .longText {
+                display: block;
+            }
+
+        </style>
+
+        <dhl-xmlxhr
+                url="/test/xml/replyParcel.xml"
+                method="GET"
+                body="[[body]]"
+                response="{{parcelResp}}"
+                ok-text="Paketten Opgehaald"
+                error-text="Paketten Ophalen Mislukt">
+        </dhl-xmlxhr>
+
+
+        <iron-list id="list"
+                   items="{{timeframeResp.TRIPS_REPLY.REPLY_OVERVIEW_TIMEFRAME}}"
+                   as="timeframe"
+                   selection-enabled
+                   multi-selection>
+            <template>
+                <div>
+                    <div class="card">
+                        <div class$="[[getClassForItem(timeframe, selected)]]" tabindex$="[[tabIndex]]">
+                            <div class="primary">[[timeframe.TIMEFRAME_DESCRIPTION]]</div>
+
+                            <div class="longText">
+                                <template is="dom-repeat"
+                                          items="{{timeframeResp.TRIPS_REPLY.REPLY_OVERVIEW_TRIPS}}"
+                                          as="trip">
+                                    <div>
+                                        <table>
+                                            <tr>
+                                                <td>[[trip.TRIP_SEQUENCE_NUMBER]]</td>
+                                                <td class="primary">Rit [[trip.TRIP_NUMBER]]</td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td class="primary">[[trip.TRIP_PDA_STATUS_DESCRIPTION]] </td>
+                                                <td>[[trip.NUMBER_IN_TRIP]]</td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td>[[parcel.CUSTOMER_SHORT_NAME]]</td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td>
+                                                    <paper-button
+                                                            on-tap="onInRitTap"
+                                                            trip="[[trip]]"
+                                                            hide$="[[!compare(trip.TRIP_PDA_STATUS,100)]]"
+                                                            raised>In Rit Scannen</paper-button>
+                                                    <paper-button
+                                                            on-tap="onStartTap"
+                                                            trip="[[trip]]"
+                                                            hide$="[[!compare(trip.TRIP_PDA_STATUS,200)]]" r
+                                                            aised>Start Rit</paper-button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <p></p>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </iron-list>
+
+        <a id="inRitNav" href="/prepare" style="display:none;">In Rit</a>
+        <a id="startNav" href="/trips" style="display:none;">Start Rit</a>
+
+    </template>
+
+    <script>
+
+        Polymer({
+            is: 'dhl-timeframe',
+
+            properties: {
+
+                /**
+                 * The replyLogon object
+                 */
+                logonResp:{
+                    type: Object,
+                },
+
+                /**
+                 * The tripResp object that results from this process
+                 */
+                parcelResp:{
+                    type: Object,
+                    observer: 'parcelRespChanged',
+                    notify: true
+                }
+
+            },
+
+            attached: function() {
+                // Use the document element
+                this.$.list.scrollTarget = this.ownerDocument.documentElement;
+            },
+
+            getClassForItem: function(item, selected) {
+                return selected ? 'item expanded' : 'item';
+            },
+
+            compare: function(val1, val2) {
+                return val1 == val2;
+            },
+
+            computedIndex: function(index) {
+                return index+1;
+            },
+
+            parcelRespChanged: function(resp, oldValue) {
+                if(!resp) return;
+                this.$.startNav.click();
+            },
+
+            onStartTap: function(event) {
+                var trip = event.target.trip;
+                //send request to the server
+                this.body = {
+                    REQUEST_LOGON:{
+                        GENERAL_HEADER_PDA:{
+                            MESSAGE_IDENTIFIER: 300,
+                            MESSAGE_TIMESTAMP: '',
+                            IMEI_NUMBER: '',
+                            TELEPHONE_NUMBER: '',
+                            P_NUMBER: '',
+                            PDA_SOFTWARE_VERSION: '',
+                            PDA_MESSAGE_VERSION: '',
+                            TRANSMISSION_ATTEMPT_NUMBER: '',
+                            MESSAGE_SEQUENCE_SESSION_NUMBER: ''
+                        }
+                    }
+                };
+            },
+
+            onInRitTap: function(event) {
+                var trip = event.target.trip;
+                //send request to the server
+                this.body = {
+                    REQUEST_LOGON:{
+                        GENERAL_HEADER_PDA:{
+                            MESSAGE_IDENTIFIER: 300,
+                            MESSAGE_TIMESTAMP: '',
+                            IMEI_NUMBER: '',
+                            TELEPHONE_NUMBER: '',
+                            P_NUMBER: '',
+                            PDA_SOFTWARE_VERSION: '',
+                            PDA_MESSAGE_VERSION: '',
+                            TRANSMISSION_ATTEMPT_NUMBER: '',
+                            MESSAGE_SEQUENCE_SESSION_NUMBER: ''
+                        }
+                    }
+                };
+            },
+
+        });
+
+    </script>
+</dom-module>
+

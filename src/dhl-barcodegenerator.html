@@ -17,13 +17,10 @@
 
         <h1>Barcodes for demo purposes</h1>
 
-        <template is="dom-if" if="{{tripInfo}}">
-            <template is="dom-repeat" items="{{tripInfo.stops}}" as="stop">
-                <h2>[[stop.address.street]] [[stop.address.houseNumber]]</h2>
-                <template is="dom-repeat" items="{{stop.pieces}}" as="piece">
-                    <h3>id: [[piece.id]]</h3>
-                    <dhl-barcode-generator data="[[piece.id]]"></dhl-barcode-generator>
-                </template>
+        <template is="dom-if" if="{{parcelResp}}">
+            <template is="dom-repeat" items="{{parcelResp.TRIPS_REPLY.REPLY_OVERVIEW_PARCELS}}" as="parcel">
+                <h2>[[parcel.STREET]] [[parcel.HOUSE_NUMBER]]</h2>
+                <dhl-barcode-generator data="[[parcel.PID]]"></dhl-barcode-generator>
             </template>
         </template>
 
@@ -36,7 +33,7 @@
             is: 'dhl-barcodegenerator',
 
             properties: {
-                tripInfo: {
+                parcelResp: {
                     type: Object,
                     value: null,
                 }

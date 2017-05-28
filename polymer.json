@@ -3,10 +3,11 @@
   "shell": "src/dhl-app.html",
   "fragments": [
     "src/dhl-signin.html",
+    "src/dhl-timeframe.html",
     "src/dhl-trips.html",
     "src/dhl-route.html",
     "src/dhl-delivery.html",
-    "src/dhl-home.html",
+    "src/dhl-about.html",
     "src/dhl-barcodegenerator.html",
     "src/dhl-view404.html"
   ],

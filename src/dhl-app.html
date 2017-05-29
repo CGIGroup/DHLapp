@@ -83,18 +83,6 @@
             }
         </style>
 
-        <iron-ajax
-                auto
-                url="https://dhl.toefel.nl/trips/744567"
-                handle-as="json"
-                on-response="handleTripsResponse"
-                on-error="handleError"
-                last-response="{{tripInfo}}"
-                debounce-duration="300">
-        </iron-ajax>
-
-        <fetch-element id="request"></fetch-element>
-
         <app-location route="{{route}}"></app-location>
 
         <app-route
@@ -292,7 +280,7 @@
             _setOnline: function(online){
                 var self = this;
                 this.online = online;
-                if(online){
+                /*if(online){
                     if(this.$.request.getLocalStorage) {
                         this.$.request.getLocalStorage('queue').then(function(localStorage){
                             //did the queue contain data?
@@ -306,7 +294,7 @@
                             });
                         });
                     }
-                }
+                }*/
             },
 
             /**

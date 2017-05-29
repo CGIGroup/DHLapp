@@ -23,43 +23,48 @@
         <h2>Features</h2>
         <ul>
             <li>Works across all platforms regardless of OS/screen size</li>
-            <li>App will start up, even when offline</li>
-            <li>Displays trip information
-                <ul>
-                    <li>From cache when offline</li>
-                    <li>Includes last known status</li>
-                    <li>Trips can be Started/Finished</li>
-                    <li>Updates are stored in a Queue when offline</li>
-                </ul>
-            </li>
+            <li>App will start up, even when offline (Fastest)</li>
+            <li>Data is retrieved from the cache when offline (Network First)</li>
+            <li>Updates are stored in a queue when offline (Network First)</li>
+            <li>Interacts with server using XML</li>
+            <li>Includes EAN_128 barcode scanner</li>
+            <li>Facilitates handwritten signature</li>
             <li>Displays route in Google Map</li>
-            <li>Barcode scanner
-                <ul>
-                    <li>When the barcode is recognized an update is sent to the server</li>
-                    <li>Barcodes can be entered manually</li>
-                    <li>Updates are stored in a Queue when offline</li>
-                </ul>
-            </li>
         </ul>
-        <h2>Enhancements</h2>
+        <h2>Next Steps</h2>
+        <h3>Client</h3>
         <ul>
-            <li>Traffic Density / Travel Time / Directions / Street View</li>
-            <li>Develop an app for customers that provides ETA</li>
-            <li>Add Chat function for driver team</li>
-            <li>Weather Info</li>
-            <li>Flashlight</li>
-        </ul>
-        <h2>Challenges</h2>
-        <ul>
-            <li>Secure Login</li>
-            <li>Fix the Barcode Scanner (webRCT)</li>
-            <li>Develop Unit Tests</li>
-            <li>Test across all platforms</li>
+            <li>Obtain Sample XML files, modify data structures accordingly</li>
+            <li>Interact with the test server: Send updates, respond to errors</li>
+            <li>Need help with use cases: Product Owner</li>
             <ul>
-                <li><a href="https://www.browserstack.com/" target="_blank">Browserstack</a></li>
-                <li><a href="https://crossbrowsertesting.com/" target="_blank">Cross Browser Testing</a></li>
+                <li>Develop a list of features that need to be added</li>
+                <li>Feedback on a daily basis</li>
             </ul>
+            <li>Need help with style guide, user interaction</li>
+            <li>Secure Login</li>
+            <li>Develop Unit Tests</li>
+            <li>Test across all platforms: <a href="https://www.browserstack.com/" target="_blank">Browserstack</a></li>
+            <li>Fix comments/documentation</li>
+            <li>Develop User Guide</li>
         </ul>
+        <h3>Server</h3>
+        <ul>
+            <li>Servers must me secure (including test servers)</li>
+            <li>Secure Login</li>
+            <li>How do we send blobs?</li>
+            <li>Can we retrieve all data at once?</li>
+            <li>Can we use JSON instead of XML?</li>
+        </ul>
+        <h3>Other</h3>
+        <ul>
+            <li>Fix the service workers</li>
+            <li>Fix handwritten signature on mobile (gestures)</li>
+            <li>Setup Gulp for automatic build/test/deployment</li>
+            <li>Take a picture / Flashlight</li>
+            <li>Send GitHub Pull Requests: hand-signature, barcode-scanner</li>
+        </ul>
+
         <p>&nbsp;</p>
 
     </template>

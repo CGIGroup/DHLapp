@@ -4,8 +4,9 @@
   "fragments": [
     "src/dhl-signin.html",
     "src/dhl-timeframe.html",
-    "src/dhl-trips.html",
+    "src/dhl-tripprepare.html",
     "src/dhl-route.html",
+    "src/dhl-tripexecute.html",
     "src/dhl-delivery.html",
     "src/dhl-about.html",
     "src/dhl-barcodegenerator.html",

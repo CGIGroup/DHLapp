@@ -28,7 +28,7 @@
 
 <dom-module id="dhl-app">
     <template>
-        <style include="iron-flex iron-flex-alignment"></style>
+        <style include="iron-flex iron-flex-alignment iron-positioning"></style>
         <style>
             :host {
                 --app-primary-color: #fc0;
@@ -95,17 +95,20 @@
         <app-drawer-layout fullbleed>
             <!-- Drawer content -->
             <app-drawer id="drawer">
-                <app-toolbar></app-toolbar>
-                <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-                    <a name="signin" href="/signin">Aanmelden</a>
-                    <a name="timeframe" href="/timeframe">Ritten</a>
-                    <a name="trips" href="/trips" disabled>Rit Uitvoeren</a>
-                    <a name="route" href="/route">Route</a>
-                    <a name="delivery" href="/delivery">Aflevering</a>
-                    <div class="flex"></div>
-                    <a name="about" href="/about">About</a>
-                    <a name="barcodegenerator" href="/barcodegenerator">Barcode Voorbeelden</a>
+                <div class="layout vertical">
+                    <app-toolbar></app-toolbar>
+                    <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
+                        <a name="signin" href="/signin">Aanmelden</a>
+                        <a name="timeframe" href="/timeframe">Ritten</a>
+                        <a name="tripprepare" href="/tripprepare">Rit Voorbereiden</a>
+                        <a name="route" href="/route">Route</a>
+                        <a name="tripexecute" href="/tripexecute">Rit Uitvoeren</a>
+                        <a name="delivery" href="/delivery">Aflevering</a>
+                        <div class="flex"></div>
+                        <a name="about" href="/about">About</a>
+                        <a name="barcodegenerator" href="/barcodegenerator">Barcode Voorbeelden</a>
                 </iron-selector>
+                </div>
             </app-drawer>
 
             <!-- Main content -->
@@ -152,15 +155,21 @@
                             parcel-resp="{{parcelResp}}"
                             name="timeframe"></dhl-timeframe>
 
-                    <dhl-trips
+                    <dhl-tripprepare
                             reply-logon="[[replyLogon]]"
                             parcel-resp="[[parcelResp]]"
                             parcel="{{parcel}}"
-                            name="trips"></dhl-trips>
+                            name="tripprepare"></dhl-tripprepare>
 
                     <dhl-route
                             parcel-resp="[[parcelResp]]"
                             name="route"></dhl-route>
+
+                    <dhl-tripexecute
+                            reply-logon="[[replyLogon]]"
+                            parcel-resp="[[parcelResp]]"
+                            parcel="{{parcel}}"
+                            name="tripexecute"></dhl-tripexecute>
 
                     <dhl-delivery
                             reply-logon="[[replyLogon]]"
@@ -225,7 +234,7 @@
             ],
 
             _routePageChanged: function(page) {
-                this.page = page || 'home';
+                this.page = page || 'signin';
 
                 if (!this.$.drawer.persistent) {
                     this.$.drawer.close();

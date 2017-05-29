@@ -31,10 +31,7 @@ Web Component for handwritten signatures.
                 id="signature"
                 width="300px"
                 height="200px"
-                on-mousedown="onMouseDown"
-                on-mousemove="onSign"
-                on-mouseup="onStopSign"
-                on-mouseleave="onStopSign"
+                on-track="onTrack"
                 >
             </canvas>
 
@@ -145,24 +142,34 @@ Web Component for handwritten signatures.
                 this.fillBackground();
             },
 
-            onMouseDown: function () {
-                this.signing = true;
-                this.lines.push([]);
-            },
+            onTrack: function(e) {
+                switch(e.detail.state) {
+                    case 'start':
+                        this.signing = true;
+                        this.lines.push([]);
+                        break;
 
-            onSign: function (event) {
-                var rect = this.$.signature.getBoundingClientRect();
-                var mouseX = event.clientX - rect.left;
-                var mouseY = event.clientY - rect.top;
+                    case 'track':
+                        //console.log('Tracking in progress... ' + e.detail.x + ', ' + e.detail.y);
+                        var rect = this.$.signature.getBoundingClientRect();
+                        var mouseX = e.detail.x - rect.left;
+                        var mouseY = e.detail.y - rect.top;
 
-                if (this.signing) {
-                    this.lines[this.lines.length - 1].push({
-                        x: mouseX,
-                        y: mouseY
-                    });
+                        if (this.signing) {
+                            this.lines[this.lines.length - 1].push({
+                                x: mouseX,
+                                y: mouseY
+                            });
 
-                    this.doDraw();
-                    this.updateData();
+                            this.doDraw();
+                            this.updateData();
+                        }
+                        break;
+
+                    case 'end':
+                        this.signing = false;
+                        this.lines.push([]);
+                        break;
                 }
             },
 
@@ -185,11 +192,6 @@ Web Component for handwritten signatures.
                     this.context.closePath();
                     this.context.stroke();
                 }
-            },
-
-            onStopSign: function () {
-                this.signing = false;
-                this.lines.push([]);
             },
 
             clear: function () {

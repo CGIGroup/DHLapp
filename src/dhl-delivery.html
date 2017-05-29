@@ -3,7 +3,7 @@
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
-<link rel="import" href="../bower_components/hand-signature/hand-signature.html">
+<link rel="import" href="hand-signature.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="fetch-element.html">
 
@@ -52,9 +52,9 @@
                              auto-validate>
                 </paper-input>
 
-                <p>[[parcel.CUSTOMER_SHORT_NAME]]</p>
-                <p>[[parcel.STREET]] [[parcel.HOUSE_NUMBER]]</p>
-                <p>[[parcel.POSTAL_CODE_NUMERIC]][[parcel.POSTAL_CODE_ALPHA]] [[parcel.CITY]]</p>
+                <div>[[parcel.CUSTOMER_SHORT_NAME]]</div>
+                <div>[[parcel.STREET]] [[parcel.HOUSE_NUMBER]]</div>
+                <div>[[parcel.POSTAL_CODE_NUMERIC]][[parcel.POSTAL_CODE_ALPHA]] [[parcel.CITY]]</div>
 
                 <p>Rembours: 25,00 Euro</p>
 

@@ -12,43 +12,39 @@
         <style include="shared-styles">
             :host {
                 display: block;
-                height: 1000px;
-                position: relative;
-                overflow-y: auto;
-                padding: 10px;
-                @apply(--paper-font-common-base);
             }
 
         </style>
 
-
-        <div class="card">
-            <template is="dom-repeat"
-                      items="{{parcelResp.TRIPS_REPLY.REPLY_OVERVIEW_PARCELS}}"
-                      as="parcel">
-                <div>
-                    <table>
-                        <tr>
-                            <td class="primary">[[parcel.DELIVERY_SEQUENCE_NUMBER]]</td>
-                            <td class="primary">[[parcel.STREET]] [[parcel.HOUSE_NUMBER]]</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>[[parcel.POSTAL_CODE_NUMERIC]][[parcel.POSTAL_CODE_ALPHA]] [[parcel.CITY]]</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>[[parcel.CUSTOMER_SHORT_NAME]]</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>
-                                <paper-button on-tap="onDeliverTap" parcel="[[parcel]]" raised>Afleveren</paper-button>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </template>
+        <div class="media">
+            <div class="card">
+                <template is="dom-repeat"
+                          items="{{parcelResp.TRIPS_REPLY.REPLY_OVERVIEW_PARCELS}}"
+                          as="parcel">
+                    <div>
+                        <table>
+                            <tr>
+                                <td class="primary">[[parcel.DELIVERY_SEQUENCE_NUMBER]]</td>
+                                <td class="primary">[[parcel.STREET]] [[parcel.HOUSE_NUMBER]]</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>[[parcel.POSTAL_CODE_NUMERIC]][[parcel.POSTAL_CODE_ALPHA]] [[parcel.CITY]]</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>[[parcel.CUSTOMER_SHORT_NAME]]</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <paper-button on-tap="onDeliverTap" parcel="[[parcel]]" raised>Afleveren</paper-button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </template>
+            </div>
         </div>
 
         <a id="parcelNav" href="/delivery" style="display:none;">In Rit</a>

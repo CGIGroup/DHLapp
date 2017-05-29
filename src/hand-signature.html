@@ -7,7 +7,7 @@ For the full copyright and license information, please view the LICENSE
 file that was distributed with this source code.
 -->
 
-<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../bower_components/polymer/polymer.html">
 
 <!--
 Web Component for handwritten signatures.
@@ -29,11 +29,16 @@ Web Component for handwritten signatures.
 
             <canvas
                 id="signature"
-                width="300px"
+                width="288px"
                 height="200px"
-                on-track="onTrack"
-                >
+                on-track="onTrack">
             </canvas>
+
+            <!--
+                Still have some issues with setting width height
+                width="[[width]]"
+                height="[[height]]"
+            -->
 
             <template if="{{clearable}}">
                 <footer>
@@ -54,7 +59,7 @@ Web Component for handwritten signatures.
                  */
                 width: {
                     type: String,
-                    value: '300px',
+                    value: '288px',
                     notify: true
                 },
 
@@ -133,6 +138,8 @@ Web Component for handwritten signatures.
 
             attached: function () {
                 this.context = this.$.signature.getContext('2d');
+                this.context.width = this.width;
+                this.context.height = this.height;
                 this.context.strokeStyle = this.lineColor;
                 this.context.fillStyle = this.backgroundColor;
                 this.context.lineJoin = this.lineJoin;

@@ -14,6 +14,9 @@
                 display: block;
                 padding: 10px;
             }
+            paper-button {
+                margin-top: 5px;
+            }
         </style>
 
         <dhl-xmlxhr
@@ -53,7 +56,7 @@
                 <p>[[parcel.STREET]] [[parcel.HOUSE_NUMBER]]</p>
                 <p>[[parcel.POSTAL_CODE_NUMERIC]][[parcel.POSTAL_CODE_ALPHA]] [[parcel.CITY]]</p>
 
-                <p>Bedrag [[parcel.AMOUNT]]</p>
+                <p>Rembours: 25,00 Euro</p>
 
                 <paper-input value="{{pin}}"
                              label="Pincode"
@@ -62,9 +65,8 @@
                              auto-validate>
                 </paper-input>
 
-                <hand-signature data="{{signature}}">
-                    <h1>Zet Hier Uw Handtekenning</h1>
-                </hand-signature>
+                <div>Zet Hier Uw Handtekenning:</div>
+                <hand-signature data="{{signature}}"></hand-signature>
 
                 <paper-button raised>Op Adres</paper-button>
                 <paper-button raised>Bij Buren (KIB)</paper-button>

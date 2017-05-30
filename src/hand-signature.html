@@ -29,8 +29,6 @@ Web Component for handwritten signatures.
 
             <canvas
                 id="signature"
-                width="288px"
-                height="200px"
                 on-track="onTrack">
             </canvas>
 
@@ -59,7 +57,7 @@ Web Component for handwritten signatures.
                  */
                 width: {
                     type: String,
-                    value: '288px',
+                    value: '300px',
                     notify: true
                 },
 
@@ -137,6 +135,8 @@ Web Component for handwritten signatures.
             },
 
             attached: function () {
+                this.$.signature.width = this.getWidthWithoutUnit();
+                this.$.signature.height = this.getHeightWithoutUnit();
                 this.context = this.$.signature.getContext('2d');
                 this.context.width = this.width;
                 this.context.height = this.height;
@@ -202,13 +202,13 @@ Web Component for handwritten signatures.
             },
 
             clear: function () {
-                this.context.clearRect(0, 0, this.getWithWithoutUnit(), this.getHeightWithoutUnit());
+                this.context.clearRect(0, 0, this.getWidthWithoutUnit(), this.getHeightWithoutUnit());
                 this.lines = [];
                 this.fillBackground();
             },
 
             fillBackground: function () {
-                this.context.fillRect(0, 0, this.getWithWithoutUnit(), this.getHeightWithoutUnit());
+                this.context.fillRect(0, 0, this.getWidthWithoutUnit(), this.getHeightWithoutUnit());
             },
 
             updateData: function () {
@@ -226,7 +226,7 @@ Web Component for handwritten signatures.
                 return parseInt(this.height.slice(0, this.height.indexOf('px')));
             },
 
-            getWithWithoutUnit: function () {
+            getWidthWithoutUnit: function () {
                 return parseInt(this.width.slice(0, this.width.indexOf('px')));
             }
         });

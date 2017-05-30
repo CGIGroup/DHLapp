@@ -42,9 +42,7 @@
         <div class="media">
 
             <barcode-scanner code="{{barcode}}"
-                             placeholder-message="Scanner Activeren"
-                             width="288px"
-                             height="200px">
+                             placeholder-message="Scanner Activeren">
             </barcode-scanner>
 
             <paper-card class="card">
@@ -68,7 +66,9 @@
                 </paper-input>
 
                 <div>Zet Hier Uw Handtekenning:</div>
-                <hand-signature data="{{signature}}"></hand-signature>
+                <hand-signature data="{{signature}}"
+                                width="288px"
+                                height="200px"></hand-signature>
 
                 <paper-button raised>Op Adres</paper-button>
                 <paper-button raised>Bij Buren (KIB)</paper-button>

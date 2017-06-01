@@ -46,9 +46,19 @@
                              required
                              auto-validate>
                 </paper-input>
+
+                <paper-input value="{{IMEI}}"
+                             label="PIN"
+                             required
+                             auto-validate
+                             type="number">
+                </paper-input>
+
             </paper-card>
 
         </div>
+
+        <audio id="audio" src="../images/censor-beep-01.mp3" preload="true"></audio>
 
         <a id="timeframeNav" href="/timeframe" style="display:none;">Timeframe</a>
     </template>
@@ -91,6 +101,8 @@
 
             processBarcode: function(barcode, oldValue) {
                 if(!barcode) return;
+                //beep
+                this.$.audio.play();
                 //send P-Number to the server
                 this.logonBody = {
                     REQUEST_LOGON:{

@@ -1,0 +1,903 @@
+<xml-fragment>
+    <svd:GENERAL_HEADER_SVD xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:MESSAGE_IDENTIFIER>1001</svd:MESSAGE_IDENTIFIER>
+        <svd:MESSAGE_TIMESTAMP>2017-05-31T11:01:00.236+02:00</svd:MESSAGE_TIMESTAMP>
+        <svd:REQUEST_RESULT>OK</svd:REQUEST_RESULT>
+        <svd:DEPOT_CODE>SPYPAK</svd:DEPOT_CODE>
+        <svd:DEPOT_NUMBER>144</svd:DEPOT_NUMBER>
+    </svd:GENERAL_HEADER_SVD>
+    <svd:PARCEL_STATUS xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PARCEL_STATUS_KEY>1</svd:PARCEL_STATUS_KEY>
+        <svd:PARCEL_STATUS_DESCRIPTION>Adres onbekend</svd:PARCEL_STATUS_DESCRIPTION>
+    </svd:PARCEL_STATUS>
+    <svd:PARCEL_STATUS xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PARCEL_STATUS_KEY>3</svd:PARCEL_STATUS_KEY>
+        <svd:PARCEL_STATUS_DESCRIPTION>Afhaalopdracht geweigerd</svd:PARCEL_STATUS_DESCRIPTION>
+    </svd:PARCEL_STATUS>
+    <svd:PARCEL_STATUS xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PARCEL_STATUS_KEY>10</svd:PARCEL_STATUS_KEY>
+        <svd:PARCEL_STATUS_DESCRIPTION>Geadresseerde niet thuis</svd:PARCEL_STATUS_DESCRIPTION>
+    </svd:PARCEL_STATUS>
+    <svd:PARCEL_STATUS xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PARCEL_STATUS_KEY>11</svd:PARCEL_STATUS_KEY>
+        <svd:PARCEL_STATUS_DESCRIPTION>Geadresseerde onbekend/verhuisd</svd:PARCEL_STATUS_DESCRIPTION>
+    </svd:PARCEL_STATUS>
+    <svd:PARCEL_STATUS xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PARCEL_STATUS_KEY>12</svd:PARCEL_STATUS_KEY>
+        <svd:PARCEL_STATUS_DESCRIPTION>Geen geld nogmaals aanbieden</svd:PARCEL_STATUS_DESCRIPTION>
+    </svd:PARCEL_STATUS>
+    <svd:PARCEL_STATUS xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PARCEL_STATUS_KEY>13</svd:PARCEL_STATUS_KEY>
+        <svd:PARCEL_STATUS_DESCRIPTION>Geen geld retour klant</svd:PARCEL_STATUS_DESCRIPTION>
+    </svd:PARCEL_STATUS>
+    <svd:PARCEL_STATUS xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PARCEL_STATUS_KEY>21</svd:PARCEL_STATUS_KEY>
+        <svd:PARCEL_STATUS_DESCRIPTION>Pakket afgeleverd bij buren</svd:PARCEL_STATUS_DESCRIPTION>
+    </svd:PARCEL_STATUS>
+    <svd:PARCEL_STATUS xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PARCEL_STATUS_KEY>22</svd:PARCEL_STATUS_KEY>
+        <svd:PARCEL_STATUS_DESCRIPTION>Pakket afgeleverd bij geadresseerde</svd:PARCEL_STATUS_DESCRIPTION>
+    </svd:PARCEL_STATUS>
+    <svd:PARCEL_STATUS xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PARCEL_STATUS_KEY>24</svd:PARCEL_STATUS_KEY>
+        <svd:PARCEL_STATUS_DESCRIPTION>Pakket beschadigd retour naar klant</svd:PARCEL_STATUS_DESCRIPTION>
+    </svd:PARCEL_STATUS>
+    <svd:PARCEL_STATUS xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PARCEL_STATUS_KEY>25</svd:PARCEL_STATUS_KEY>
+        <svd:PARCEL_STATUS_DESCRIPTION xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+    </svd:PARCEL_STATUS>
+    <svd:PARCEL_STATUS xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PARCEL_STATUS_KEY>30</svd:PARCEL_STATUS_KEY>
+        <svd:PARCEL_STATUS_DESCRIPTION>Pakket geweigerd</svd:PARCEL_STATUS_DESCRIPTION>
+    </svd:PARCEL_STATUS>
+    <svd:PARCEL_STATUS xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PARCEL_STATUS_KEY>36</svd:PARCEL_STATUS_KEY>
+        <svd:PARCEL_STATUS_DESCRIPTION>Pakket reeds retour</svd:PARCEL_STATUS_DESCRIPTION>
+    </svd:PARCEL_STATUS>
+    <svd:PARCEL_STATUS xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PARCEL_STATUS_KEY>41</svd:PARCEL_STATUS_KEY>
+        <svd:PARCEL_STATUS_DESCRIPTION>Postbus</svd:PARCEL_STATUS_DESCRIPTION>
+    </svd:PARCEL_STATUS>
+    <svd:PARCEL_STATUS xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PARCEL_STATUS_KEY>44</svd:PARCEL_STATUS_KEY>
+        <svd:PARCEL_STATUS_DESCRIPTION>Via buren afgehaald</svd:PARCEL_STATUS_DESCRIPTION>
+    </svd:PARCEL_STATUS>
+    <svd:PARCEL_STATUS xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PARCEL_STATUS_KEY>100</svd:PARCEL_STATUS_KEY>
+        <svd:PARCEL_STATUS_DESCRIPTION>Pincode foutief/onbekend</svd:PARCEL_STATUS_DESCRIPTION>
+    </svd:PARCEL_STATUS>
+    <svd:PARCEL_STATUS xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PARCEL_STATUS_KEY>111</svd:PARCEL_STATUS_KEY>
+        <svd:PARCEL_STATUS_DESCRIPTION>PDA Scan Last mile</svd:PARCEL_STATUS_DESCRIPTION>
+    </svd:PARCEL_STATUS>
+    <svd:PARCEL_STATUS xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PARCEL_STATUS_KEY>112</svd:PARCEL_STATUS_KEY>
+        <svd:PARCEL_STATUS_DESCRIPTION>PDA Scan Afhaalopdracht</svd:PARCEL_STATUS_DESCRIPTION>
+    </svd:PARCEL_STATUS>
+    <svd:PARCEL_STATUS xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PARCEL_STATUS_KEY>113</svd:PARCEL_STATUS_KEY>
+        <svd:PARCEL_STATUS_DESCRIPTION>PDA Scan Bezorgopdracht</svd:PARCEL_STATUS_DESCRIPTION>
+    </svd:PARCEL_STATUS>
+    <svd:DEPOT_AREA xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:POSTAL_CODE_NUMERIC>3542</svd:POSTAL_CODE_NUMERIC>
+        <svd:POSTAL_CODE_ALPHA>AB</svd:POSTAL_CODE_ALPHA>
+        <svd:POSTAL_CODE_SEQUENCE_NUMBER>1</svd:POSTAL_CODE_SEQUENCE_NUMBER>
+        <svd:STREET>Atoomweg</svd:STREET>
+        <svd:HOUSENUMBER_EVEN_FROM>2</svd:HOUSENUMBER_EVEN_FROM>
+        <svd:HOUSENUMBER_EVEN_TO>40</svd:HOUSENUMBER_EVEN_TO>
+        <svd:CITY>Utrecht</svd:CITY>
+    </svd:DEPOT_AREA>
+    <svd:DEPOT_AREA xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:POSTAL_CODE_NUMERIC>3542</svd:POSTAL_CODE_NUMERIC>
+        <svd:POSTAL_CODE_ALPHA>AA</svd:POSTAL_CODE_ALPHA>
+        <svd:POSTAL_CODE_SEQUENCE_NUMBER>1</svd:POSTAL_CODE_SEQUENCE_NUMBER>
+        <svd:STREET>Atoomweg</svd:STREET>
+        <svd:HOUSENUMBER_ODD_FROM>1</svd:HOUSENUMBER_ODD_FROM>
+        <svd:HOUSENUMBER_ODD_TO>39</svd:HOUSENUMBER_ODD_TO>
+        <svd:CITY>Utrecht</svd:CITY>
+    </svd:DEPOT_AREA>
+    <svd:CONTRACT_SPRET_ALLOWED xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:CONTRACTDETAILSKEY>278170</svd:CONTRACTDETAILSKEY>
+        <svd:CUSTOMER_SHORT_NAME>BCC</svd:CUSTOMER_SHORT_NAME>
+    </svd:CONTRACT_SPRET_ALLOWED>
+    <svd:CONTRACT_SPRET_ALLOWED xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:CONTRACTDETAILSKEY>274401</svd:CONTRACTDETAILSKEY>
+        <svd:CUSTOMER_SHORT_NAME>DHL PARCEL</svd:CUSTOMER_SHORT_NAME>
+    </svd:CONTRACT_SPRET_ALLOWED>
+    <svd:CONTRACT_SPRET_ALLOWED xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:CONTRACTDETAILSKEY>271191</svd:CONTRACTDETAILSKEY>
+        <svd:CUSTOMER_SHORT_NAME>IT RETOUR SPRET</svd:CUSTOMER_SHORT_NAME>
+    </svd:CONTRACT_SPRET_ALLOWED>
+    <svd:CONTRACT_SPRET_ALLOWED xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:CONTRACTDETAILSKEY>286886</svd:CONTRACTDETAILSKEY>
+        <svd:CUSTOMER_SHORT_NAME>KLINGEL SPRETS</svd:CUSTOMER_SHORT_NAME>
+    </svd:CONTRACT_SPRET_ALLOWED>
+    <svd:CONTRACT_SPRET_ALLOWED xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:CONTRACTDETAILSKEY>286884</svd:CONTRACTDETAILSKEY>
+        <svd:CUSTOMER_SHORT_NAME>MEYER KLINGEL SPRET</svd:CUSTOMER_SHORT_NAME>
+    </svd:CONTRACT_SPRET_ALLOWED>
+    <svd:CONTRACT_SPRET_ALLOWED xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:CONTRACTDETAILSKEY>286717</svd:CONTRACTDETAILSKEY>
+        <svd:CUSTOMER_SHORT_NAME>NESPRESSO</svd:CUSTOMER_SHORT_NAME>
+    </svd:CONTRACT_SPRET_ALLOWED>
+    <svd:CONTRACT_SPRET_ALLOWED xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:CONTRACTDETAILSKEY>270807</svd:CONTRACTDETAILSKEY>
+        <svd:CUSTOMER_SHORT_NAME>PAARDEN- DROGIST</svd:CUSTOMER_SHORT_NAME>
+    </svd:CONTRACT_SPRET_ALLOWED>
+    <svd:CONTRACT_SPRET_ALLOWED xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:CONTRACTDETAILSKEY>271820</svd:CONTRACTDETAILSKEY>
+        <svd:CUSTOMER_SHORT_NAME>PPO</svd:CUSTOMER_SHORT_NAME>
+    </svd:CONTRACT_SPRET_ALLOWED>
+    <svd:CONTRACT_SPRET_ALLOWED xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:CONTRACTDETAILSKEY>271821</svd:CONTRACTDETAILSKEY>
+        <svd:CUSTOMER_SHORT_NAME>CLD</svd:CUSTOMER_SHORT_NAME>
+    </svd:CONTRACT_SPRET_ALLOWED>
+    <svd:CONTRACT_SPRET_ALLOWED xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:CONTRACTDETAILSKEY>285004</svd:CONTRACTDETAILSKEY>
+        <svd:CUSTOMER_SHORT_NAME>WK RECYCLE</svd:CUSTOMER_SHORT_NAME>
+    </svd:CONTRACT_SPRET_ALLOWED>
+    <svd:CONTRACT_SPRET_ALLOWED xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:CONTRACTDETAILSKEY>287950</svd:CONTRACTDETAILSKEY>
+        <svd:CUSTOMER_SHORT_NAME>WK MAURIK</svd:CUSTOMER_SHORT_NAME>
+    </svd:CONTRACT_SPRET_ALLOWED>
+    <svd:CONTRACT_SPRET_ALLOWED xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:CONTRACTDETAILSKEY>280369</svd:CONTRACTDETAILSKEY>
+        <svd:CUSTOMER_SHORT_NAME>WEHKAMP</svd:CUSTOMER_SHORT_NAME>
+    </svd:CONTRACT_SPRET_ALLOWED>
+    <svd:CONTRACT_SPRET_ALLOWED xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:CONTRACTDETAILSKEY>286887</svd:CONTRACTDETAILSKEY>
+        <svd:CUSTOMER_SHORT_NAME>WELLSANA KLINGEL SPRET</svd:CUSTOMER_SHORT_NAME>
+    </svd:CONTRACT_SPRET_ALLOWED>
+    <svd:CONTRACT_SPRET_ALLOWED xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:CONTRACTDETAILSKEY>286885</svd:CONTRACTDETAILSKEY>
+        <svd:CUSTOMER_SHORT_NAME>WENZE KLINGEL SPRET</svd:CUSTOMER_SHORT_NAME>
+    </svd:CONTRACT_SPRET_ALLOWED>
+    <svd:PIN_CALCULATION xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PIN_CHARACTER>A</svd:PIN_CHARACTER>
+        <svd:PIN_CHARACTER_VALUE>45201</svd:PIN_CHARACTER_VALUE>
+    </svd:PIN_CALCULATION>
+    <svd:PIN_CALCULATION xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PIN_CHARACTER>B</svd:PIN_CHARACTER>
+        <svd:PIN_CHARACTER_VALUE>1901</svd:PIN_CHARACTER_VALUE>
+    </svd:PIN_CALCULATION>
+    <svd:PIN_CALCULATION xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PIN_CHARACTER>C</svd:PIN_CHARACTER>
+        <svd:PIN_CHARACTER_VALUE>1000</svd:PIN_CHARACTER_VALUE>
+    </svd:PIN_CALCULATION>
+    <svd:PIN_CALCULATION xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PIN_CHARACTER>D</svd:PIN_CHARACTER>
+        <svd:PIN_CHARACTER_VALUE>1241</svd:PIN_CHARACTER_VALUE>
+    </svd:PIN_CALCULATION>
+    <svd:PIN_CALCULATION xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PIN_CHARACTER>E</svd:PIN_CHARACTER>
+        <svd:PIN_CHARACTER_VALUE>89453</svd:PIN_CHARACTER_VALUE>
+    </svd:PIN_CALCULATION>
+    <svd:PIN_CALCULATION xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PIN_CHARACTER>F</svd:PIN_CHARACTER>
+        <svd:PIN_CHARACTER_VALUE>2345</svd:PIN_CHARACTER_VALUE>
+    </svd:PIN_CALCULATION>
+    <svd:PIN_CALCULATION xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PIN_CHARACTER>G</svd:PIN_CHARACTER>
+        <svd:PIN_CHARACTER_VALUE>7302</svd:PIN_CHARACTER_VALUE>
+    </svd:PIN_CALCULATION>
+    <svd:PIN_CALCULATION xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PIN_CHARACTER>H</svd:PIN_CHARACTER>
+        <svd:PIN_CHARACTER_VALUE>5219</svd:PIN_CHARACTER_VALUE>
+    </svd:PIN_CALCULATION>
+    <svd:PIN_CALCULATION xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PIN_CHARACTER>I</svd:PIN_CHARACTER>
+        <svd:PIN_CHARACTER_VALUE>7621</svd:PIN_CHARACTER_VALUE>
+    </svd:PIN_CALCULATION>
+    <svd:PIN_CALCULATION xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PIN_CHARACTER>J</svd:PIN_CHARACTER>
+        <svd:PIN_CHARACTER_VALUE>8491</svd:PIN_CHARACTER_VALUE>
+    </svd:PIN_CALCULATION>
+    <svd:PIN_CALCULATION xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PIN_CHARACTER>K</svd:PIN_CHARACTER>
+        <svd:PIN_CHARACTER_VALUE>1823</svd:PIN_CHARACTER_VALUE>
+    </svd:PIN_CALCULATION>
+    <svd:PIN_CALCULATION xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PIN_CHARACTER>L</svd:PIN_CHARACTER>
+        <svd:PIN_CHARACTER_VALUE>1781</svd:PIN_CHARACTER_VALUE>
+    </svd:PIN_CALCULATION>
+    <svd:PIN_CALCULATION xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PIN_CHARACTER>M</svd:PIN_CHARACTER>
+        <svd:PIN_CHARACTER_VALUE>7834</svd:PIN_CHARACTER_VALUE>
+    </svd:PIN_CALCULATION>
+    <svd:PIN_CALCULATION xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PIN_CHARACTER>N</svd:PIN_CHARACTER>
+        <svd:PIN_CHARACTER_VALUE>1284</svd:PIN_CHARACTER_VALUE>
+    </svd:PIN_CALCULATION>
+    <svd:PIN_CALCULATION xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PIN_CHARACTER>O</svd:PIN_CHARACTER>
+        <svd:PIN_CHARACTER_VALUE>7654</svd:PIN_CHARACTER_VALUE>
+    </svd:PIN_CALCULATION>
+    <svd:PIN_CALCULATION xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PIN_CHARACTER>P</svd:PIN_CHARACTER>
+        <svd:PIN_CHARACTER_VALUE>67901</svd:PIN_CHARACTER_VALUE>
+    </svd:PIN_CALCULATION>
+    <svd:PIN_CALCULATION xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PIN_CHARACTER>Q</svd:PIN_CHARACTER>
+        <svd:PIN_CHARACTER_VALUE>8965</svd:PIN_CHARACTER_VALUE>
+    </svd:PIN_CALCULATION>
+    <svd:PIN_CALCULATION xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PIN_CHARACTER>R</svd:PIN_CHARACTER>
+        <svd:PIN_CHARACTER_VALUE>74735</svd:PIN_CHARACTER_VALUE>
+    </svd:PIN_CALCULATION>
+    <svd:PIN_CALCULATION xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PIN_CHARACTER>S</svd:PIN_CHARACTER>
+        <svd:PIN_CHARACTER_VALUE>4443</svd:PIN_CHARACTER_VALUE>
+    </svd:PIN_CALCULATION>
+    <svd:PIN_CALCULATION xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PIN_CHARACTER>T</svd:PIN_CHARACTER>
+        <svd:PIN_CHARACTER_VALUE>3218</svd:PIN_CHARACTER_VALUE>
+    </svd:PIN_CALCULATION>
+    <svd:PIN_CALCULATION xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PIN_CHARACTER>U</svd:PIN_CHARACTER>
+        <svd:PIN_CHARACTER_VALUE>6789</svd:PIN_CHARACTER_VALUE>
+    </svd:PIN_CALCULATION>
+    <svd:PIN_CALCULATION xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PIN_CHARACTER>V</svd:PIN_CHARACTER>
+        <svd:PIN_CHARACTER_VALUE>7784</svd:PIN_CHARACTER_VALUE>
+    </svd:PIN_CALCULATION>
+    <svd:PIN_CALCULATION xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PIN_CHARACTER>W</svd:PIN_CHARACTER>
+        <svd:PIN_CHARACTER_VALUE>2239</svd:PIN_CHARACTER_VALUE>
+    </svd:PIN_CALCULATION>
+    <svd:PIN_CALCULATION xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PIN_CHARACTER>X</svd:PIN_CHARACTER>
+        <svd:PIN_CHARACTER_VALUE>66545</svd:PIN_CHARACTER_VALUE>
+    </svd:PIN_CALCULATION>
+    <svd:PIN_CALCULATION xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PIN_CHARACTER>Y</svd:PIN_CHARACTER>
+        <svd:PIN_CHARACTER_VALUE>4531</svd:PIN_CHARACTER_VALUE>
+    </svd:PIN_CALCULATION>
+    <svd:PIN_CALCULATION xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PIN_CHARACTER>Z</svd:PIN_CHARACTER>
+        <svd:PIN_CHARACTER_VALUE>8719</svd:PIN_CHARACTER_VALUE>
+    </svd:PIN_CALCULATION>
+    <svd:PIN_CALCULATION xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PIN_CHARACTER>0</svd:PIN_CHARACTER>
+        <svd:PIN_CHARACTER_VALUE>3991</svd:PIN_CHARACTER_VALUE>
+    </svd:PIN_CALCULATION>
+    <svd:PIN_CALCULATION xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PIN_CHARACTER>1</svd:PIN_CHARACTER>
+        <svd:PIN_CHARACTER_VALUE>3328</svd:PIN_CHARACTER_VALUE>
+    </svd:PIN_CALCULATION>
+    <svd:PIN_CALCULATION xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PIN_CHARACTER>2</svd:PIN_CHARACTER>
+        <svd:PIN_CHARACTER_VALUE>7191</svd:PIN_CHARACTER_VALUE>
+    </svd:PIN_CALCULATION>
+    <svd:PIN_CALCULATION xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PIN_CHARACTER>3</svd:PIN_CHARACTER>
+        <svd:PIN_CHARACTER_VALUE>7612</svd:PIN_CHARACTER_VALUE>
+    </svd:PIN_CALCULATION>
+    <svd:PIN_CALCULATION xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PIN_CHARACTER>4</svd:PIN_CHARACTER>
+        <svd:PIN_CHARACTER_VALUE>8910</svd:PIN_CHARACTER_VALUE>
+    </svd:PIN_CALCULATION>
+    <svd:PIN_CALCULATION xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PIN_CHARACTER>5</svd:PIN_CHARACTER>
+        <svd:PIN_CHARACTER_VALUE>2714</svd:PIN_CHARACTER_VALUE>
+    </svd:PIN_CALCULATION>
+    <svd:PIN_CALCULATION xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PIN_CHARACTER>6</svd:PIN_CHARACTER>
+        <svd:PIN_CHARACTER_VALUE>89334</svd:PIN_CHARACTER_VALUE>
+    </svd:PIN_CALCULATION>
+    <svd:PIN_CALCULATION xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PIN_CHARACTER>7</svd:PIN_CHARACTER>
+        <svd:PIN_CHARACTER_VALUE>6529</svd:PIN_CHARACTER_VALUE>
+    </svd:PIN_CALCULATION>
+    <svd:PIN_CALCULATION xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PIN_CHARACTER>8</svd:PIN_CHARACTER>
+        <svd:PIN_CHARACTER_VALUE>4234</svd:PIN_CHARACTER_VALUE>
+    </svd:PIN_CALCULATION>
+    <svd:PIN_CALCULATION xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PIN_CHARACTER>9</svd:PIN_CHARACTER>
+        <svd:PIN_CHARACTER_VALUE>16759</svd:PIN_CHARACTER_VALUE>
+    </svd:PIN_CALCULATION>
+    <svd:BEGIN_END_WORKING_TIME xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:START_TIME_WORKING_HOURS>2017-05-31T11:01:00.308+02:00</svd:START_TIME_WORKING_HOURS>
+        <svd:END_TIME_WORKING_HOURS>2017-05-31T11:01:00.308+02:00</svd:END_TIME_WORKING_HOURS>
+    </svd:BEGIN_END_WORKING_TIME>
+    <svd:DELIVERY_TIMEFRAME xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:TIMEFRAME_KEY>48089</svd:TIMEFRAME_KEY>
+        <svd:TIMEFRAME_DESCRIPTION>EVA: --:--</svd:TIMEFRAME_DESCRIPTION>
+    </svd:DELIVERY_TIMEFRAME>
+    <svd:DELIVERY_TRIPS xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:TIMEFRAME_KEY>48089</svd:TIMEFRAME_KEY>
+        <svd:TRIP_KEY>7448089</svd:TRIP_KEY>
+        <svd:TRIP_NUMBER>33</svd:TRIP_NUMBER>
+        <svd:TRIP_SEQUENCE_NUMBER>1</svd:TRIP_SEQUENCE_NUMBER>
+    </svd:DELIVERY_TRIPS>
+    <svd:DELIVERY_PARCELS xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:TIMEFRAME_KEY>48089</svd:TIMEFRAME_KEY>
+        <svd:TRIP_KEY>7448089</svd:TRIP_KEY>
+        <svd:PARCEL_KEY>293678977</svd:PARCEL_KEY>
+        <svd:PID>3SRPS090026422</svd:PID>
+        <svd:POSTAL_CODE_NUMERIC>3201</svd:POSTAL_CODE_NUMERIC>
+        <svd:POSTAL_CODE_ALPHA>SH</svd:POSTAL_CODE_ALPHA>
+        <svd:STREET>HAVIKHOEK</svd:STREET>
+        <svd:HOUSE_NUMBER>6</svd:HOUSE_NUMBER>
+        <svd:HOUSE_NUMBER_ADDITION xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:CITY>SPYKENISSE</svd:CITY>
+        <svd:CUSTOMER_SHORT_NAME>YOURSURPRI SE</svd:CUSTOMER_SHORT_NAME>
+        <svd:PRODUCT_TYPE_DESCRIPTION/>
+        <svd:INDICATION_TRIGGER_BOOKING>false</svd:INDICATION_TRIGGER_BOOKING>
+        <svd:DELIVERY_SEQUENCE_NUMBER>6</svd:DELIVERY_SEQUENCE_NUMBER>
+        <svd:DELIVERY_MOMENT>2017-05-31T11:15:00.000+02:00</svd:DELIVERY_MOMENT>
+        <svd:BEGIN_DELIVERY_PICKUP_WINDOW>2017-05-31T11:00:00.000+02:00</svd:BEGIN_DELIVERY_PICKUP_WINDOW>
+        <svd:END_DELIVERY_PICKUP_WINDOW>2017-05-31T15:00:00.000+02:00</svd:END_DELIVERY_PICKUP_WINDOW>
+        <svd:CASH_AMOUNT>0</svd:CASH_AMOUNT>
+        <svd:CASH_AMOUNT_CURRENCY>EUR</svd:CASH_AMOUNT_CURRENCY>
+        <svd:PIN_REQUIRED>false</svd:PIN_REQUIRED>
+        <svd:DELIVERY_INSTRUCTION xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:PARCEL_DELIVERY_REMARK xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:COURIER_REMARK xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:SERVICE_TYPE>1</svd:SERVICE_TYPE>
+        <svd:SERVICEPOINT_PARCEL>false</svd:SERVICEPOINT_PARCEL>
+        <svd:SERVICEPOINTID>0</svd:SERVICEPOINTID>
+        <svd:CURRENT_CONTRACT_STEP>1</svd:CURRENT_CONTRACT_STEP>
+        <svd:NEXT_TIMEFRAME_DESCR_ABBREVATION>14:00-18:00</svd:NEXT_TIMEFRAME_DESCR_ABBREVATION>
+        <svd:NEXT_TIMEFRAME_DESCR_FULL>MIDDAG2</svd:NEXT_TIMEFRAME_DESCR_FULL>
+        <svd:NEXT_DELIVERY_DAY>do</svd:NEXT_DELIVERY_DAY>
+        <svd:INDICATION_ORIGINAL_AT_HOME>false</svd:INDICATION_ORIGINAL_AT_HOME>
+        <svd:INDICATION_PARCEL_IN_GROUP>false</svd:INDICATION_PARCEL_IN_GROUP>
+        <svd:PARCEL_STATUS_KEY>31</svd:PARCEL_STATUS_KEY>
+    </svd:DELIVERY_PARCELS>
+    <svd:DELIVERY_PARCELS xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:TIMEFRAME_KEY>48089</svd:TIMEFRAME_KEY>
+        <svd:TRIP_KEY>7448089</svd:TRIP_KEY>
+        <svd:PARCEL_KEY>293756558</svd:PARCEL_KEY>
+        <svd:PID>3SMPK709087201</svd:PID>
+        <svd:POSTAL_CODE_NUMERIC>3201</svd:POSTAL_CODE_NUMERIC>
+        <svd:POSTAL_CODE_ALPHA>PJ</svd:POSTAL_CODE_ALPHA>
+        <svd:STREET>TOEKANHOEK</svd:STREET>
+        <svd:HOUSE_NUMBER>11</svd:HOUSE_NUMBER>
+        <svd:HOUSE_NUMBER_ADDITION xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:CITY>SPYKENISSE</svd:CITY>
+        <svd:CUSTOMER_SHORT_NAME>MONTA- PACKING</svd:CUSTOMER_SHORT_NAME>
+        <svd:PRODUCT_TYPE_DESCRIPTION>PA</svd:PRODUCT_TYPE_DESCRIPTION>
+        <svd:INDICATION_TRIGGER_BOOKING>false</svd:INDICATION_TRIGGER_BOOKING>
+        <svd:DELIVERY_SEQUENCE_NUMBER>7</svd:DELIVERY_SEQUENCE_NUMBER>
+        <svd:DELIVERY_MOMENT>2017-05-31T11:18:00.000+02:00</svd:DELIVERY_MOMENT>
+        <svd:BEGIN_DELIVERY_PICKUP_WINDOW>2017-05-31T11:00:00.000+02:00</svd:BEGIN_DELIVERY_PICKUP_WINDOW>
+        <svd:END_DELIVERY_PICKUP_WINDOW>2017-05-31T15:00:00.000+02:00</svd:END_DELIVERY_PICKUP_WINDOW>
+        <svd:CASH_AMOUNT>0</svd:CASH_AMOUNT>
+        <svd:CASH_AMOUNT_CURRENCY>EUR</svd:CASH_AMOUNT_CURRENCY>
+        <svd:PIN_REQUIRED>false</svd:PIN_REQUIRED>
+        <svd:DELIVERY_INSTRUCTION xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:PARCEL_DELIVERY_REMARK xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:COURIER_REMARK xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:SERVICE_TYPE>1</svd:SERVICE_TYPE>
+        <svd:SERVICEPOINT_PARCEL>false</svd:SERVICEPOINT_PARCEL>
+        <svd:SERVICEPOINTID>0</svd:SERVICEPOINTID>
+        <svd:CURRENT_CONTRACT_STEP>1</svd:CURRENT_CONTRACT_STEP>
+        <svd:NEXT_TIMEFRAME_DESCR_ABBREVATION>14:00-18:00</svd:NEXT_TIMEFRAME_DESCR_ABBREVATION>
+        <svd:NEXT_TIMEFRAME_DESCR_FULL>MIDDAG2</svd:NEXT_TIMEFRAME_DESCR_FULL>
+        <svd:NEXT_DELIVERY_DAY>do</svd:NEXT_DELIVERY_DAY>
+        <svd:INDICATION_ORIGINAL_AT_HOME>false</svd:INDICATION_ORIGINAL_AT_HOME>
+        <svd:INDICATION_PARCEL_IN_GROUP>false</svd:INDICATION_PARCEL_IN_GROUP>
+        <svd:PARCEL_STATUS_KEY>31</svd:PARCEL_STATUS_KEY>
+    </svd:DELIVERY_PARCELS>
+    <svd:DELIVERY_PARCELS xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:TIMEFRAME_KEY>48089</svd:TIMEFRAME_KEY>
+        <svd:TRIP_KEY>7448089</svd:TRIP_KEY>
+        <svd:PARCEL_KEY>293751688</svd:PARCEL_KEY>
+        <svd:PID>3SMTS0000182078</svd:PID>
+        <svd:POSTAL_CODE_NUMERIC>3201</svd:POSTAL_CODE_NUMERIC>
+        <svd:POSTAL_CODE_ALPHA>SM</svd:POSTAL_CODE_ALPHA>
+        <svd:STREET>VALKHOEK</svd:STREET>
+        <svd:HOUSE_NUMBER>22</svd:HOUSE_NUMBER>
+        <svd:HOUSE_NUMBER_ADDITION xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:CITY>SPYKENISSE</svd:CITY>
+        <svd:CUSTOMER_SHORT_NAME>MISTER AUT DHL PARCEL FR.&amp; SP.</svd:CUSTOMER_SHORT_NAME>
+        <svd:PRODUCT_TYPE_DESCRIPTION/>
+        <svd:INDICATION_TRIGGER_BOOKING>false</svd:INDICATION_TRIGGER_BOOKING>
+        <svd:DELIVERY_SEQUENCE_NUMBER>8</svd:DELIVERY_SEQUENCE_NUMBER>
+        <svd:DELIVERY_MOMENT>2017-05-31T11:21:00.000+02:00</svd:DELIVERY_MOMENT>
+        <svd:BEGIN_DELIVERY_PICKUP_WINDOW>2017-05-31T11:00:00.000+02:00</svd:BEGIN_DELIVERY_PICKUP_WINDOW>
+        <svd:END_DELIVERY_PICKUP_WINDOW>2017-05-31T15:00:00.000+02:00</svd:END_DELIVERY_PICKUP_WINDOW>
+        <svd:CASH_AMOUNT>0</svd:CASH_AMOUNT>
+        <svd:CASH_AMOUNT_CURRENCY>EUR</svd:CASH_AMOUNT_CURRENCY>
+        <svd:PIN_REQUIRED>false</svd:PIN_REQUIRED>
+        <svd:DELIVERY_INSTRUCTION xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:PARCEL_DELIVERY_REMARK xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:COURIER_REMARK xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:SERVICE_TYPE>1</svd:SERVICE_TYPE>
+        <svd:SERVICEPOINT_PARCEL>false</svd:SERVICEPOINT_PARCEL>
+        <svd:SERVICEPOINTID>0</svd:SERVICEPOINTID>
+        <svd:CURRENT_CONTRACT_STEP>1</svd:CURRENT_CONTRACT_STEP>
+        <svd:NEXT_TIMEFRAME_DESCR_ABBREVATION>14:00-18:00</svd:NEXT_TIMEFRAME_DESCR_ABBREVATION>
+        <svd:NEXT_TIMEFRAME_DESCR_FULL>MIDDAG2</svd:NEXT_TIMEFRAME_DESCR_FULL>
+        <svd:NEXT_DELIVERY_DAY>do</svd:NEXT_DELIVERY_DAY>
+        <svd:INDICATION_ORIGINAL_AT_HOME>false</svd:INDICATION_ORIGINAL_AT_HOME>
+        <svd:INDICATION_PARCEL_IN_GROUP>false</svd:INDICATION_PARCEL_IN_GROUP>
+        <svd:PARCEL_STATUS_KEY>31</svd:PARCEL_STATUS_KEY>
+    </svd:DELIVERY_PARCELS>
+    <svd:DELIVERY_PARCELS xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:TIMEFRAME_KEY>48089</svd:TIMEFRAME_KEY>
+        <svd:TRIP_KEY>7448089</svd:TRIP_KEY>
+        <svd:PARCEL_KEY>294050063</svd:PARCEL_KEY>
+        <svd:PID>3SDSD1245271</svd:PID>
+        <svd:POSTAL_CODE_NUMERIC>3201</svd:POSTAL_CODE_NUMERIC>
+        <svd:POSTAL_CODE_ALPHA>SJ</svd:POSTAL_CODE_ALPHA>
+        <svd:STREET>KIEKENDIEFHOEK</svd:STREET>
+        <svd:HOUSE_NUMBER>17</svd:HOUSE_NUMBER>
+        <svd:HOUSE_NUMBER_ADDITION xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:CITY>SPYKENISSE</svd:CITY>
+        <svd:CUSTOMER_SHORT_NAME>DEPOT ETT KEUZEPAKKET</svd:CUSTOMER_SHORT_NAME>
+        <svd:PRODUCT_TYPE_DESCRIPTION/>
+        <svd:INDICATION_TRIGGER_BOOKING>false</svd:INDICATION_TRIGGER_BOOKING>
+        <svd:DELIVERY_SEQUENCE_NUMBER>10</svd:DELIVERY_SEQUENCE_NUMBER>
+        <svd:DELIVERY_MOMENT>2017-05-31T11:26:00.000+02:00</svd:DELIVERY_MOMENT>
+        <svd:BEGIN_DELIVERY_PICKUP_WINDOW>2017-05-31T11:00:00.000+02:00</svd:BEGIN_DELIVERY_PICKUP_WINDOW>
+        <svd:END_DELIVERY_PICKUP_WINDOW>2017-05-31T15:00:00.000+02:00</svd:END_DELIVERY_PICKUP_WINDOW>
+        <svd:CASH_AMOUNT>0</svd:CASH_AMOUNT>
+        <svd:CASH_AMOUNT_CURRENCY>EUR</svd:CASH_AMOUNT_CURRENCY>
+        <svd:PIN_REQUIRED>false</svd:PIN_REQUIRED>
+        <svd:DELIVERY_INSTRUCTION>Handt</svd:DELIVERY_INSTRUCTION>
+        <svd:INDICATION_NOT_AT_NEIGHBOURS>false</svd:INDICATION_NOT_AT_NEIGHBOURS>
+        <svd:INDICATION_SIGNATURE_REQUIRED>true</svd:INDICATION_SIGNATURE_REQUIRED>
+        <svd:INDICATION_RING_ADDRESS_REQUIRED>false</svd:INDICATION_RING_ADDRESS_REQUIRED>
+        <svd:INDICATION_POSTAL_ITEM_WITH_PARCEL>false</svd:INDICATION_POSTAL_ITEM_WITH_PARCEL>
+        <svd:INDICATION_SWITCH>false</svd:INDICATION_SWITCH>
+        <svd:INDICATION_REMARK>false</svd:INDICATION_REMARK>
+        <svd:PARCEL_DELIVERY_REMARK xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:COURIER_REMARK xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:SERVICE_TYPE>1</svd:SERVICE_TYPE>
+        <svd:SERVICEPOINT_PARCEL>false</svd:SERVICEPOINT_PARCEL>
+        <svd:SERVICEPOINTID>0</svd:SERVICEPOINTID>
+        <svd:CURRENT_CONTRACT_STEP>1</svd:CURRENT_CONTRACT_STEP>
+        <svd:NEXT_TIMEFRAME_DESCR_ABBREVATION>14:00-18:00</svd:NEXT_TIMEFRAME_DESCR_ABBREVATION>
+        <svd:NEXT_TIMEFRAME_DESCR_FULL>MIDDAG2</svd:NEXT_TIMEFRAME_DESCR_FULL>
+        <svd:NEXT_DELIVERY_DAY>do</svd:NEXT_DELIVERY_DAY>
+        <svd:INDICATION_ORIGINAL_AT_HOME>false</svd:INDICATION_ORIGINAL_AT_HOME>
+        <svd:INDICATION_PARCEL_IN_GROUP>false</svd:INDICATION_PARCEL_IN_GROUP>
+        <svd:PARCEL_STATUS_KEY>31</svd:PARCEL_STATUS_KEY>
+    </svd:DELIVERY_PARCELS>
+    <svd:DELIVERY_PARCELS xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:TIMEFRAME_KEY>48089</svd:TIMEFRAME_KEY>
+        <svd:TRIP_KEY>7448089</svd:TRIP_KEY>
+        <svd:PARCEL_KEY>294103811</svd:PARCEL_KEY>
+        <svd:PID>3SMD36195569962</svd:PID>
+        <svd:POSTAL_CODE_NUMERIC>3201</svd:POSTAL_CODE_NUMERIC>
+        <svd:POSTAL_CODE_ALPHA>SH</svd:POSTAL_CODE_ALPHA>
+        <svd:STREET>HAVIKHOEK</svd:STREET>
+        <svd:HOUSE_NUMBER>30</svd:HOUSE_NUMBER>
+        <svd:HOUSE_NUMBER_ADDITION xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:CITY>SPYKENISSE</svd:CITY>
+        <svd:CUSTOMER_SHORT_NAME>MS MODE</svd:CUSTOMER_SHORT_NAME>
+        <svd:PRODUCT_TYPE_DESCRIPTION/>
+        <svd:INDICATION_TRIGGER_BOOKING>false</svd:INDICATION_TRIGGER_BOOKING>
+        <svd:DELIVERY_SEQUENCE_NUMBER>5</svd:DELIVERY_SEQUENCE_NUMBER>
+        <svd:DELIVERY_MOMENT>2017-05-31T11:13:00.000+02:00</svd:DELIVERY_MOMENT>
+        <svd:BEGIN_DELIVERY_PICKUP_WINDOW>2017-05-31T11:00:00.000+02:00</svd:BEGIN_DELIVERY_PICKUP_WINDOW>
+        <svd:END_DELIVERY_PICKUP_WINDOW>2017-05-31T15:00:00.000+02:00</svd:END_DELIVERY_PICKUP_WINDOW>
+        <svd:CASH_AMOUNT>0</svd:CASH_AMOUNT>
+        <svd:CASH_AMOUNT_CURRENCY>EUR</svd:CASH_AMOUNT_CURRENCY>
+        <svd:PIN_REQUIRED>false</svd:PIN_REQUIRED>
+        <svd:DELIVERY_INSTRUCTION xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:PARCEL_DELIVERY_REMARK xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:COURIER_REMARK xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:SERVICE_TYPE>1</svd:SERVICE_TYPE>
+        <svd:SERVICEPOINT_PARCEL>false</svd:SERVICEPOINT_PARCEL>
+        <svd:SERVICEPOINTID>0</svd:SERVICEPOINTID>
+        <svd:CURRENT_CONTRACT_STEP>1</svd:CURRENT_CONTRACT_STEP>
+        <svd:NEXT_TIMEFRAME_DESCR_ABBREVATION>14:00-18:00</svd:NEXT_TIMEFRAME_DESCR_ABBREVATION>
+        <svd:NEXT_TIMEFRAME_DESCR_FULL>MIDDAG2</svd:NEXT_TIMEFRAME_DESCR_FULL>
+        <svd:NEXT_DELIVERY_DAY>do</svd:NEXT_DELIVERY_DAY>
+        <svd:INDICATION_ORIGINAL_AT_HOME>false</svd:INDICATION_ORIGINAL_AT_HOME>
+        <svd:INDICATION_PARCEL_IN_GROUP>false</svd:INDICATION_PARCEL_IN_GROUP>
+        <svd:PARCEL_STATUS_KEY>31</svd:PARCEL_STATUS_KEY>
+    </svd:DELIVERY_PARCELS>
+    <svd:DELIVERY_PARCELS xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:TIMEFRAME_KEY>48089</svd:TIMEFRAME_KEY>
+        <svd:TRIP_KEY>7448089</svd:TRIP_KEY>
+        <svd:PARCEL_KEY>294061254</svd:PARCEL_KEY>
+        <svd:PID>3SRM388721</svd:PID>
+        <svd:POSTAL_CODE_NUMERIC>3201</svd:POSTAL_CODE_NUMERIC>
+        <svd:POSTAL_CODE_ALPHA>HT</svd:POSTAL_CODE_ALPHA>
+        <svd:STREET>ZWANENHOEK</svd:STREET>
+        <svd:HOUSE_NUMBER>5</svd:HOUSE_NUMBER>
+        <svd:HOUSE_NUMBER_ADDITION xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:CITY>SPYKENISSE</svd:CITY>
+        <svd:CUSTOMER_SHORT_NAME>ROYAL MAIL NETHERLANDS</svd:CUSTOMER_SHORT_NAME>
+        <svd:PRODUCT_TYPE_DESCRIPTION/>
+        <svd:INDICATION_TRIGGER_BOOKING>false</svd:INDICATION_TRIGGER_BOOKING>
+        <svd:DELIVERY_SEQUENCE_NUMBER>4</svd:DELIVERY_SEQUENCE_NUMBER>
+        <svd:DELIVERY_MOMENT>2017-05-31T11:09:00.000+02:00</svd:DELIVERY_MOMENT>
+        <svd:BEGIN_DELIVERY_PICKUP_WINDOW>2017-05-31T11:00:00.000+02:00</svd:BEGIN_DELIVERY_PICKUP_WINDOW>
+        <svd:END_DELIVERY_PICKUP_WINDOW>2017-05-31T15:00:00.000+02:00</svd:END_DELIVERY_PICKUP_WINDOW>
+        <svd:CASH_AMOUNT>0</svd:CASH_AMOUNT>
+        <svd:CASH_AMOUNT_CURRENCY>EUR</svd:CASH_AMOUNT_CURRENCY>
+        <svd:PIN_REQUIRED>false</svd:PIN_REQUIRED>
+        <svd:DELIVERY_INSTRUCTION xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:PARCEL_DELIVERY_REMARK xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:COURIER_REMARK xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:SERVICE_TYPE>1</svd:SERVICE_TYPE>
+        <svd:SERVICEPOINT_PARCEL>false</svd:SERVICEPOINT_PARCEL>
+        <svd:SERVICEPOINTID>0</svd:SERVICEPOINTID>
+        <svd:CURRENT_CONTRACT_STEP>1</svd:CURRENT_CONTRACT_STEP>
+        <svd:NEXT_TIMEFRAME_DESCR_ABBREVATION>14:00-18:00</svd:NEXT_TIMEFRAME_DESCR_ABBREVATION>
+        <svd:NEXT_TIMEFRAME_DESCR_FULL>MIDDAG2</svd:NEXT_TIMEFRAME_DESCR_FULL>
+        <svd:NEXT_DELIVERY_DAY>do</svd:NEXT_DELIVERY_DAY>
+        <svd:INDICATION_ORIGINAL_AT_HOME>false</svd:INDICATION_ORIGINAL_AT_HOME>
+        <svd:INDICATION_PARCEL_IN_GROUP>false</svd:INDICATION_PARCEL_IN_GROUP>
+        <svd:PARCEL_STATUS_KEY>31</svd:PARCEL_STATUS_KEY>
+    </svd:DELIVERY_PARCELS>
+    <svd:DELIVERY_PARCELS xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:TIMEFRAME_KEY>48089</svd:TIMEFRAME_KEY>
+        <svd:TRIP_KEY>7448089</svd:TRIP_KEY>
+        <svd:PARCEL_KEY>294044945</svd:PARCEL_KEY>
+        <svd:PID>3SDPAG499215975</svd:PID>
+        <svd:POSTAL_CODE_NUMERIC>3201</svd:POSTAL_CODE_NUMERIC>
+        <svd:POSTAL_CODE_ALPHA>HL</svd:POSTAL_CODE_ALPHA>
+        <svd:STREET>RIETGORSHOEK</svd:STREET>
+        <svd:HOUSE_NUMBER>2</svd:HOUSE_NUMBER>
+        <svd:HOUSE_NUMBER_ADDITION xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:CITY>SPYKENISSE</svd:CITY>
+        <svd:CUSTOMER_SHORT_NAME>DEUTSCHE POST AG</svd:CUSTOMER_SHORT_NAME>
+        <svd:PRODUCT_TYPE_DESCRIPTION/>
+        <svd:INDICATION_TRIGGER_BOOKING>false</svd:INDICATION_TRIGGER_BOOKING>
+        <svd:DELIVERY_SEQUENCE_NUMBER>15</svd:DELIVERY_SEQUENCE_NUMBER>
+        <svd:DELIVERY_MOMENT>2017-05-31T11:37:00.000+02:00</svd:DELIVERY_MOMENT>
+        <svd:BEGIN_DELIVERY_PICKUP_WINDOW>2017-05-31T11:00:00.000+02:00</svd:BEGIN_DELIVERY_PICKUP_WINDOW>
+        <svd:END_DELIVERY_PICKUP_WINDOW>2017-05-31T15:00:00.000+02:00</svd:END_DELIVERY_PICKUP_WINDOW>
+        <svd:CASH_AMOUNT>0</svd:CASH_AMOUNT>
+        <svd:CASH_AMOUNT_CURRENCY>EUR</svd:CASH_AMOUNT_CURRENCY>
+        <svd:PIN_REQUIRED>false</svd:PIN_REQUIRED>
+        <svd:DELIVERY_INSTRUCTION xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:PARCEL_DELIVERY_REMARK xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:COURIER_REMARK xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:SERVICE_TYPE>1</svd:SERVICE_TYPE>
+        <svd:SERVICEPOINT_PARCEL>false</svd:SERVICEPOINT_PARCEL>
+        <svd:SERVICEPOINTID>0</svd:SERVICEPOINTID>
+        <svd:CURRENT_CONTRACT_STEP>1</svd:CURRENT_CONTRACT_STEP>
+        <svd:NEXT_TIMEFRAME_DESCR_ABBREVATION>14:00-18:00</svd:NEXT_TIMEFRAME_DESCR_ABBREVATION>
+        <svd:NEXT_TIMEFRAME_DESCR_FULL>MIDDAG2</svd:NEXT_TIMEFRAME_DESCR_FULL>
+        <svd:NEXT_DELIVERY_DAY>do</svd:NEXT_DELIVERY_DAY>
+        <svd:INDICATION_ORIGINAL_AT_HOME>false</svd:INDICATION_ORIGINAL_AT_HOME>
+        <svd:INDICATION_PARCEL_IN_GROUP>false</svd:INDICATION_PARCEL_IN_GROUP>
+        <svd:PARCEL_STATUS_KEY>31</svd:PARCEL_STATUS_KEY>
+    </svd:DELIVERY_PARCELS>
+    <svd:DELIVERY_PARCELS xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:TIMEFRAME_KEY>48089</svd:TIMEFRAME_KEY>
+        <svd:TRIP_KEY>7448089</svd:TRIP_KEY>
+        <svd:PARCEL_KEY>294136314</svd:PARCEL_KEY>
+        <svd:PID>3SBADG001514331</svd:PID>
+        <svd:POSTAL_CODE_NUMERIC>3201</svd:POSTAL_CODE_NUMERIC>
+        <svd:POSTAL_CODE_ALPHA>SE</svd:POSTAL_CODE_ALPHA>
+        <svd:STREET>BUIZERDHOEK</svd:STREET>
+        <svd:HOUSE_NUMBER>47</svd:HOUSE_NUMBER>
+        <svd:HOUSE_NUMBER_ADDITION xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:CITY>SPYKENISSE</svd:CITY>
+        <svd:CUSTOMER_SHORT_NAME>VOETBALSHO P</svd:CUSTOMER_SHORT_NAME>
+        <svd:PRODUCT_TYPE_DESCRIPTION/>
+        <svd:INDICATION_TRIGGER_BOOKING>false</svd:INDICATION_TRIGGER_BOOKING>
+        <svd:DELIVERY_SEQUENCE_NUMBER>13</svd:DELIVERY_SEQUENCE_NUMBER>
+        <svd:DELIVERY_MOMENT>2017-05-31T11:32:00.000+02:00</svd:DELIVERY_MOMENT>
+        <svd:BEGIN_DELIVERY_PICKUP_WINDOW>2017-05-31T11:00:00.000+02:00</svd:BEGIN_DELIVERY_PICKUP_WINDOW>
+        <svd:END_DELIVERY_PICKUP_WINDOW>2017-05-31T15:00:00.000+02:00</svd:END_DELIVERY_PICKUP_WINDOW>
+        <svd:CASH_AMOUNT>0</svd:CASH_AMOUNT>
+        <svd:CASH_AMOUNT_CURRENCY>EUR</svd:CASH_AMOUNT_CURRENCY>
+        <svd:PIN_REQUIRED>false</svd:PIN_REQUIRED>
+        <svd:DELIVERY_INSTRUCTION>BEL</svd:DELIVERY_INSTRUCTION>
+        <svd:INDICATION_NOT_AT_NEIGHBOURS>false</svd:INDICATION_NOT_AT_NEIGHBOURS>
+        <svd:INDICATION_SIGNATURE_REQUIRED>false</svd:INDICATION_SIGNATURE_REQUIRED>
+        <svd:INDICATION_RING_ADDRESS_REQUIRED>true</svd:INDICATION_RING_ADDRESS_REQUIRED>
+        <svd:INDICATION_POSTAL_ITEM_WITH_PARCEL>false</svd:INDICATION_POSTAL_ITEM_WITH_PARCEL>
+        <svd:INDICATION_SWITCH>false</svd:INDICATION_SWITCH>
+        <svd:INDICATION_REMARK>false</svd:INDICATION_REMARK>
+        <svd:PARCEL_DELIVERY_REMARK xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:COURIER_REMARK xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:SERVICE_TYPE>1</svd:SERVICE_TYPE>
+        <svd:SERVICEPOINT_PARCEL>false</svd:SERVICEPOINT_PARCEL>
+        <svd:SERVICEPOINTID>0</svd:SERVICEPOINTID>
+        <svd:CURRENT_CONTRACT_STEP>1</svd:CURRENT_CONTRACT_STEP>
+        <svd:NEXT_TIMEFRAME_DESCR_ABBREVATION>14:00-18:00</svd:NEXT_TIMEFRAME_DESCR_ABBREVATION>
+        <svd:NEXT_TIMEFRAME_DESCR_FULL>MIDDAG2</svd:NEXT_TIMEFRAME_DESCR_FULL>
+        <svd:NEXT_DELIVERY_DAY>do</svd:NEXT_DELIVERY_DAY>
+        <svd:INDICATION_ORIGINAL_AT_HOME>false</svd:INDICATION_ORIGINAL_AT_HOME>
+        <svd:INDICATION_PARCEL_IN_GROUP>true</svd:INDICATION_PARCEL_IN_GROUP>
+        <svd:PARCEL_STATUS_KEY>31</svd:PARCEL_STATUS_KEY>
+    </svd:DELIVERY_PARCELS>
+    <svd:DELIVERY_PARCELS xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:TIMEFRAME_KEY>48089</svd:TIMEFRAME_KEY>
+        <svd:TRIP_KEY>7448089</svd:TRIP_KEY>
+        <svd:PARCEL_KEY>294150020</svd:PARCEL_KEY>
+        <svd:PID>3SFND7649266</svd:PID>
+        <svd:POSTAL_CODE_NUMERIC>3201</svd:POSTAL_CODE_NUMERIC>
+        <svd:POSTAL_CODE_ALPHA>HJ</svd:POSTAL_CODE_ALPHA>
+        <svd:STREET>OOIEVAARSHOEK</svd:STREET>
+        <svd:HOUSE_NUMBER>8</svd:HOUSE_NUMBER>
+        <svd:HOUSE_NUMBER_ADDITION xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:CITY>SPYKENISSE</svd:CITY>
+        <svd:CUSTOMER_SHORT_NAME>FEYENOORD</svd:CUSTOMER_SHORT_NAME>
+        <svd:PRODUCT_TYPE_DESCRIPTION/>
+        <svd:INDICATION_TRIGGER_BOOKING>false</svd:INDICATION_TRIGGER_BOOKING>
+        <svd:DELIVERY_SEQUENCE_NUMBER>2</svd:DELIVERY_SEQUENCE_NUMBER>
+        <svd:DELIVERY_MOMENT>2017-05-31T11:04:00.000+02:00</svd:DELIVERY_MOMENT>
+        <svd:BEGIN_DELIVERY_PICKUP_WINDOW>2017-05-31T11:00:00.000+02:00</svd:BEGIN_DELIVERY_PICKUP_WINDOW>
+        <svd:END_DELIVERY_PICKUP_WINDOW>2017-05-31T15:00:00.000+02:00</svd:END_DELIVERY_PICKUP_WINDOW>
+        <svd:CASH_AMOUNT>0</svd:CASH_AMOUNT>
+        <svd:CASH_AMOUNT_CURRENCY>EUR</svd:CASH_AMOUNT_CURRENCY>
+        <svd:PIN_REQUIRED>false</svd:PIN_REQUIRED>
+        <svd:DELIVERY_INSTRUCTION xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:PARCEL_DELIVERY_REMARK xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:COURIER_REMARK xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:SERVICE_TYPE>1</svd:SERVICE_TYPE>
+        <svd:SERVICEPOINT_PARCEL>false</svd:SERVICEPOINT_PARCEL>
+        <svd:SERVICEPOINTID>0</svd:SERVICEPOINTID>
+        <svd:CURRENT_CONTRACT_STEP>1</svd:CURRENT_CONTRACT_STEP>
+        <svd:NEXT_TIMEFRAME_DESCR_ABBREVATION>14:00-18:00</svd:NEXT_TIMEFRAME_DESCR_ABBREVATION>
+        <svd:NEXT_TIMEFRAME_DESCR_FULL>MIDDAG2</svd:NEXT_TIMEFRAME_DESCR_FULL>
+        <svd:NEXT_DELIVERY_DAY>do</svd:NEXT_DELIVERY_DAY>
+        <svd:INDICATION_ORIGINAL_AT_HOME>false</svd:INDICATION_ORIGINAL_AT_HOME>
+        <svd:INDICATION_PARCEL_IN_GROUP>false</svd:INDICATION_PARCEL_IN_GROUP>
+        <svd:PARCEL_STATUS_KEY>31</svd:PARCEL_STATUS_KEY>
+    </svd:DELIVERY_PARCELS>
+    <svd:DELIVERY_PARCELS xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:TIMEFRAME_KEY>48089</svd:TIMEFRAME_KEY>
+        <svd:TRIP_KEY>7448089</svd:TRIP_KEY>
+        <svd:PARCEL_KEY>294134583</svd:PARCEL_KEY>
+        <svd:PID>3SMPK711433801</svd:PID>
+        <svd:POSTAL_CODE_NUMERIC>3201</svd:POSTAL_CODE_NUMERIC>
+        <svd:POSTAL_CODE_ALPHA>JP</svd:POSTAL_CODE_ALPHA>
+        <svd:STREET>WULPHOEK</svd:STREET>
+        <svd:HOUSE_NUMBER>26</svd:HOUSE_NUMBER>
+        <svd:HOUSE_NUMBER_ADDITION xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:CITY>SPYKENISSE</svd:CITY>
+        <svd:CUSTOMER_SHORT_NAME>MONTAPACK. ROOSENDAAL</svd:CUSTOMER_SHORT_NAME>
+        <svd:PRODUCT_TYPE_DESCRIPTION/>
+        <svd:INDICATION_TRIGGER_BOOKING>false</svd:INDICATION_TRIGGER_BOOKING>
+        <svd:DELIVERY_SEQUENCE_NUMBER>1</svd:DELIVERY_SEQUENCE_NUMBER>
+        <svd:DELIVERY_MOMENT>2017-05-31T11:00:00.000+02:00</svd:DELIVERY_MOMENT>
+        <svd:BEGIN_DELIVERY_PICKUP_WINDOW>2017-05-31T11:00:00.000+02:00</svd:BEGIN_DELIVERY_PICKUP_WINDOW>
+        <svd:END_DELIVERY_PICKUP_WINDOW>2017-05-31T15:00:00.000+02:00</svd:END_DELIVERY_PICKUP_WINDOW>
+        <svd:CASH_AMOUNT>0</svd:CASH_AMOUNT>
+        <svd:CASH_AMOUNT_CURRENCY>EUR</svd:CASH_AMOUNT_CURRENCY>
+        <svd:PIN_REQUIRED>false</svd:PIN_REQUIRED>
+        <svd:DELIVERY_INSTRUCTION xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:PARCEL_DELIVERY_REMARK xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:COURIER_REMARK xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:SERVICE_TYPE>1</svd:SERVICE_TYPE>
+        <svd:SERVICEPOINT_PARCEL>false</svd:SERVICEPOINT_PARCEL>
+        <svd:SERVICEPOINTID>0</svd:SERVICEPOINTID>
+        <svd:CURRENT_CONTRACT_STEP>1</svd:CURRENT_CONTRACT_STEP>
+        <svd:NEXT_TIMEFRAME_DESCR_ABBREVATION>14:00-18:00</svd:NEXT_TIMEFRAME_DESCR_ABBREVATION>
+        <svd:NEXT_TIMEFRAME_DESCR_FULL>MIDDAG2</svd:NEXT_TIMEFRAME_DESCR_FULL>
+        <svd:NEXT_DELIVERY_DAY>do</svd:NEXT_DELIVERY_DAY>
+        <svd:INDICATION_ORIGINAL_AT_HOME>false</svd:INDICATION_ORIGINAL_AT_HOME>
+        <svd:INDICATION_PARCEL_IN_GROUP>false</svd:INDICATION_PARCEL_IN_GROUP>
+        <svd:PARCEL_STATUS_KEY>31</svd:PARCEL_STATUS_KEY>
+    </svd:DELIVERY_PARCELS>
+    <svd:DELIVERY_PARCELS xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:TIMEFRAME_KEY>48089</svd:TIMEFRAME_KEY>
+        <svd:TRIP_KEY>7448089</svd:TRIP_KEY>
+        <svd:PARCEL_KEY>294174550</svd:PARCEL_KEY>
+        <svd:PID>JUN491599949030025970846</svd:PID>
+        <svd:POSTAL_CODE_NUMERIC>3201</svd:POSTAL_CODE_NUMERIC>
+        <svd:POSTAL_CODE_ALPHA>HG</svd:POSTAL_CODE_ALPHA>
+        <svd:STREET>Lepelaarhoek</svd:STREET>
+        <svd:HOUSE_NUMBER>12</svd:HOUSE_NUMBER>
+        <svd:HOUSE_NUMBER_ADDITION xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:CITY>Spijkenisse</svd:CITY>
+        <svd:CUSTOMER_SHORT_NAME>WEHKAMP</svd:CUSTOMER_SHORT_NAME>
+        <svd:PRODUCT_TYPE_DESCRIPTION/>
+        <svd:INDICATION_TRIGGER_BOOKING>false</svd:INDICATION_TRIGGER_BOOKING>
+        <svd:DELIVERY_SEQUENCE_NUMBER>14</svd:DELIVERY_SEQUENCE_NUMBER>
+        <svd:DELIVERY_MOMENT>2017-05-31T11:35:00.000+02:00</svd:DELIVERY_MOMENT>
+        <svd:BEGIN_DELIVERY_PICKUP_WINDOW>2017-05-31T11:00:00.000+02:00</svd:BEGIN_DELIVERY_PICKUP_WINDOW>
+        <svd:END_DELIVERY_PICKUP_WINDOW>2017-05-31T15:00:00.000+02:00</svd:END_DELIVERY_PICKUP_WINDOW>
+        <svd:CASH_AMOUNT>0</svd:CASH_AMOUNT>
+        <svd:CASH_AMOUNT_CURRENCY>EUR</svd:CASH_AMOUNT_CURRENCY>
+        <svd:PIN_REQUIRED>false</svd:PIN_REQUIRED>
+        <svd:DELIVERY_INSTRUCTION xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:PARCEL_DELIVERY_REMARK xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:COURIER_REMARK xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:SERVICE_TYPE>1</svd:SERVICE_TYPE>
+        <svd:SERVICEPOINT_PARCEL>false</svd:SERVICEPOINT_PARCEL>
+        <svd:SERVICEPOINTID>0</svd:SERVICEPOINTID>
+        <svd:CURRENT_CONTRACT_STEP>1</svd:CURRENT_CONTRACT_STEP>
+        <svd:NEXT_TIMEFRAME_DESCR_ABBREVATION>14:00-18:00</svd:NEXT_TIMEFRAME_DESCR_ABBREVATION>
+        <svd:NEXT_TIMEFRAME_DESCR_FULL>MIDDAG2</svd:NEXT_TIMEFRAME_DESCR_FULL>
+        <svd:NEXT_DELIVERY_DAY>do</svd:NEXT_DELIVERY_DAY>
+        <svd:INDICATION_ORIGINAL_AT_HOME>false</svd:INDICATION_ORIGINAL_AT_HOME>
+        <svd:INDICATION_PARCEL_IN_GROUP>false</svd:INDICATION_PARCEL_IN_GROUP>
+        <svd:PARCEL_STATUS_KEY>31</svd:PARCEL_STATUS_KEY>
+    </svd:DELIVERY_PARCELS>
+    <svd:DELIVERY_PARCELS xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:TIMEFRAME_KEY>48089</svd:TIMEFRAME_KEY>
+        <svd:TRIP_KEY>7448089</svd:TRIP_KEY>
+        <svd:PARCEL_KEY>294060255</svd:PARCEL_KEY>
+        <svd:PID>JVGL059616510000949337</svd:PID>
+        <svd:POSTAL_CODE_NUMERIC>3201</svd:POSTAL_CODE_NUMERIC>
+        <svd:POSTAL_CODE_ALPHA>SE</svd:POSTAL_CODE_ALPHA>
+        <svd:STREET>BUIZERDHOEK</svd:STREET>
+        <svd:HOUSE_NUMBER>33</svd:HOUSE_NUMBER>
+        <svd:HOUSE_NUMBER_ADDITION xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:CITY>SPYKENISSE</svd:CITY>
+        <svd:CUSTOMER_SHORT_NAME>DHLFORYOU</svd:CUSTOMER_SHORT_NAME>
+        <svd:PRODUCT_TYPE_DESCRIPTION/>
+        <svd:INDICATION_TRIGGER_BOOKING>false</svd:INDICATION_TRIGGER_BOOKING>
+        <svd:DELIVERY_SEQUENCE_NUMBER>11</svd:DELIVERY_SEQUENCE_NUMBER>
+        <svd:DELIVERY_MOMENT>2017-05-31T11:30:00.000+02:00</svd:DELIVERY_MOMENT>
+        <svd:BEGIN_DELIVERY_PICKUP_WINDOW>2017-05-31T11:00:00.000+02:00</svd:BEGIN_DELIVERY_PICKUP_WINDOW>
+        <svd:END_DELIVERY_PICKUP_WINDOW>2017-05-31T15:00:00.000+02:00</svd:END_DELIVERY_PICKUP_WINDOW>
+        <svd:CASH_AMOUNT>0</svd:CASH_AMOUNT>
+        <svd:CASH_AMOUNT_CURRENCY>EUR</svd:CASH_AMOUNT_CURRENCY>
+        <svd:PIN_REQUIRED>false</svd:PIN_REQUIRED>
+        <svd:DELIVERY_INSTRUCTION xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:PARCEL_DELIVERY_REMARK xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:COURIER_REMARK xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:SERVICE_TYPE>1</svd:SERVICE_TYPE>
+        <svd:SERVICEPOINT_PARCEL>false</svd:SERVICEPOINT_PARCEL>
+        <svd:SERVICEPOINTID>0</svd:SERVICEPOINTID>
+        <svd:CURRENT_CONTRACT_STEP>1</svd:CURRENT_CONTRACT_STEP>
+        <svd:NEXT_TIMEFRAME_DESCR_ABBREVATION>14:00-18:00</svd:NEXT_TIMEFRAME_DESCR_ABBREVATION>
+        <svd:NEXT_TIMEFRAME_DESCR_FULL>MIDDAG2</svd:NEXT_TIMEFRAME_DESCR_FULL>
+        <svd:NEXT_DELIVERY_DAY>do</svd:NEXT_DELIVERY_DAY>
+        <svd:INDICATION_ORIGINAL_AT_HOME>false</svd:INDICATION_ORIGINAL_AT_HOME>
+        <svd:INDICATION_PARCEL_IN_GROUP>false</svd:INDICATION_PARCEL_IN_GROUP>
+        <svd:PARCEL_STATUS_KEY>31</svd:PARCEL_STATUS_KEY>
+    </svd:DELIVERY_PARCELS>
+    <svd:DELIVERY_PARCELS xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:TIMEFRAME_KEY>48089</svd:TIMEFRAME_KEY>
+        <svd:TRIP_KEY>7448089</svd:TRIP_KEY>
+        <svd:PARCEL_KEY>294121695</svd:PARCEL_KEY>
+        <svd:PID>3SBCC000399481</svd:PID>
+        <svd:POSTAL_CODE_NUMERIC>3201</svd:POSTAL_CODE_NUMERIC>
+        <svd:POSTAL_CODE_ALPHA>SE</svd:POSTAL_CODE_ALPHA>
+        <svd:STREET>BUIZERDHOEK</svd:STREET>
+        <svd:HOUSE_NUMBER>47</svd:HOUSE_NUMBER>
+        <svd:HOUSE_NUMBER_ADDITION xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:CITY>SPYKENISSE</svd:CITY>
+        <svd:CUSTOMER_SHORT_NAME>BCC</svd:CUSTOMER_SHORT_NAME>
+        <svd:PRODUCT_TYPE_DESCRIPTION/>
+        <svd:INDICATION_TRIGGER_BOOKING>false</svd:INDICATION_TRIGGER_BOOKING>
+        <svd:DELIVERY_SEQUENCE_NUMBER>12</svd:DELIVERY_SEQUENCE_NUMBER>
+        <svd:DELIVERY_MOMENT>2017-05-31T11:32:00.000+02:00</svd:DELIVERY_MOMENT>
+        <svd:BEGIN_DELIVERY_PICKUP_WINDOW>2017-05-31T11:00:00.000+02:00</svd:BEGIN_DELIVERY_PICKUP_WINDOW>
+        <svd:END_DELIVERY_PICKUP_WINDOW>2017-05-31T15:00:00.000+02:00</svd:END_DELIVERY_PICKUP_WINDOW>
+        <svd:CASH_AMOUNT>0</svd:CASH_AMOUNT>
+        <svd:CASH_AMOUNT_CURRENCY>EUR</svd:CASH_AMOUNT_CURRENCY>
+        <svd:PIN_REQUIRED>false</svd:PIN_REQUIRED>
+        <svd:DELIVERY_INSTRUCTION>Handt</svd:DELIVERY_INSTRUCTION>
+        <svd:INDICATION_NOT_AT_NEIGHBOURS>false</svd:INDICATION_NOT_AT_NEIGHBOURS>
+        <svd:INDICATION_SIGNATURE_REQUIRED>true</svd:INDICATION_SIGNATURE_REQUIRED>
+        <svd:INDICATION_RING_ADDRESS_REQUIRED>false</svd:INDICATION_RING_ADDRESS_REQUIRED>
+        <svd:INDICATION_POSTAL_ITEM_WITH_PARCEL>false</svd:INDICATION_POSTAL_ITEM_WITH_PARCEL>
+        <svd:INDICATION_SWITCH>false</svd:INDICATION_SWITCH>
+        <svd:INDICATION_REMARK>false</svd:INDICATION_REMARK>
+        <svd:PARCEL_DELIVERY_REMARK xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:COURIER_REMARK xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:SERVICE_TYPE>1</svd:SERVICE_TYPE>
+        <svd:SERVICEPOINT_PARCEL>false</svd:SERVICEPOINT_PARCEL>
+        <svd:SERVICEPOINTID>0</svd:SERVICEPOINTID>
+        <svd:CURRENT_CONTRACT_STEP>1</svd:CURRENT_CONTRACT_STEP>
+        <svd:NEXT_TIMEFRAME_DESCR_ABBREVATION>14:00-18:00</svd:NEXT_TIMEFRAME_DESCR_ABBREVATION>
+        <svd:NEXT_TIMEFRAME_DESCR_FULL>MIDDAG2</svd:NEXT_TIMEFRAME_DESCR_FULL>
+        <svd:NEXT_DELIVERY_DAY>do</svd:NEXT_DELIVERY_DAY>
+        <svd:INDICATION_ORIGINAL_AT_HOME>false</svd:INDICATION_ORIGINAL_AT_HOME>
+        <svd:INDICATION_PARCEL_IN_GROUP>true</svd:INDICATION_PARCEL_IN_GROUP>
+        <svd:PARCEL_STATUS_KEY>31</svd:PARCEL_STATUS_KEY>
+    </svd:DELIVERY_PARCELS>
+    <svd:DELIVERY_PARCELS xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:TIMEFRAME_KEY>48089</svd:TIMEFRAME_KEY>
+        <svd:TRIP_KEY>7448089</svd:TRIP_KEY>
+        <svd:PARCEL_KEY>294000398</svd:PARCEL_KEY>
+        <svd:PID>3SDOCD191944901</svd:PID>
+        <svd:POSTAL_CODE_NUMERIC>3201</svd:POSTAL_CODE_NUMERIC>
+        <svd:POSTAL_CODE_ALPHA>SK</svd:POSTAL_CODE_ALPHA>
+        <svd:STREET>SPERWERHOEK</svd:STREET>
+        <svd:HOUSE_NUMBER>40</svd:HOUSE_NUMBER>
+        <svd:HOUSE_NUMBER_ADDITION xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:CITY>SPYKENISSE</svd:CITY>
+        <svd:CUSTOMER_SHORT_NAME>IBOOD INGRAM MICRO</svd:CUSTOMER_SHORT_NAME>
+        <svd:PRODUCT_TYPE_DESCRIPTION/>
+        <svd:INDICATION_TRIGGER_BOOKING>false</svd:INDICATION_TRIGGER_BOOKING>
+        <svd:DELIVERY_SEQUENCE_NUMBER>9</svd:DELIVERY_SEQUENCE_NUMBER>
+        <svd:DELIVERY_MOMENT>2017-05-31T11:24:00.000+02:00</svd:DELIVERY_MOMENT>
+        <svd:BEGIN_DELIVERY_PICKUP_WINDOW>2017-05-31T11:00:00.000+02:00</svd:BEGIN_DELIVERY_PICKUP_WINDOW>
+        <svd:END_DELIVERY_PICKUP_WINDOW>2017-05-31T15:00:00.000+02:00</svd:END_DELIVERY_PICKUP_WINDOW>
+        <svd:CASH_AMOUNT>0</svd:CASH_AMOUNT>
+        <svd:CASH_AMOUNT_CURRENCY>EUR</svd:CASH_AMOUNT_CURRENCY>
+        <svd:PIN_REQUIRED>false</svd:PIN_REQUIRED>
+        <svd:DELIVERY_INSTRUCTION>Handt</svd:DELIVERY_INSTRUCTION>
+        <svd:INDICATION_NOT_AT_NEIGHBOURS>false</svd:INDICATION_NOT_AT_NEIGHBOURS>
+        <svd:INDICATION_SIGNATURE_REQUIRED>true</svd:INDICATION_SIGNATURE_REQUIRED>
+        <svd:INDICATION_RING_ADDRESS_REQUIRED>false</svd:INDICATION_RING_ADDRESS_REQUIRED>
+        <svd:INDICATION_POSTAL_ITEM_WITH_PARCEL>false</svd:INDICATION_POSTAL_ITEM_WITH_PARCEL>
+        <svd:INDICATION_SWITCH>false</svd:INDICATION_SWITCH>
+        <svd:INDICATION_REMARK>false</svd:INDICATION_REMARK>
+        <svd:PARCEL_DELIVERY_REMARK xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:COURIER_REMARK xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:SERVICE_TYPE>1</svd:SERVICE_TYPE>
+        <svd:SERVICEPOINT_PARCEL>false</svd:SERVICEPOINT_PARCEL>
+        <svd:SERVICEPOINTID>0</svd:SERVICEPOINTID>
+        <svd:CURRENT_CONTRACT_STEP>1</svd:CURRENT_CONTRACT_STEP>
+        <svd:NEXT_TIMEFRAME_DESCR_ABBREVATION>14:00-18:00</svd:NEXT_TIMEFRAME_DESCR_ABBREVATION>
+        <svd:NEXT_TIMEFRAME_DESCR_FULL>MIDDAG2</svd:NEXT_TIMEFRAME_DESCR_FULL>
+        <svd:NEXT_DELIVERY_DAY>do</svd:NEXT_DELIVERY_DAY>
+        <svd:INDICATION_ORIGINAL_AT_HOME>false</svd:INDICATION_ORIGINAL_AT_HOME>
+        <svd:INDICATION_PARCEL_IN_GROUP>false</svd:INDICATION_PARCEL_IN_GROUP>
+        <svd:PARCEL_STATUS_KEY>31</svd:PARCEL_STATUS_KEY>
+    </svd:DELIVERY_PARCELS>
+    <svd:DELIVERY_PARCELS xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:TIMEFRAME_KEY>48089</svd:TIMEFRAME_KEY>
+        <svd:TRIP_KEY>7448089</svd:TRIP_KEY>
+        <svd:PARCEL_KEY>294018231</svd:PARCEL_KEY>
+        <svd:PID>3SDSD1243721</svd:PID>
+        <svd:POSTAL_CODE_NUMERIC>3201</svd:POSTAL_CODE_NUMERIC>
+        <svd:POSTAL_CODE_ALPHA>HD</svd:POSTAL_CODE_ALPHA>
+        <svd:STREET>IBISHOEK</svd:STREET>
+        <svd:HOUSE_NUMBER>19</svd:HOUSE_NUMBER>
+        <svd:HOUSE_NUMBER_ADDITION xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:CITY>SPYKENISSE</svd:CITY>
+        <svd:CUSTOMER_SHORT_NAME>DEPOT ETT KEUZEPAKKET</svd:CUSTOMER_SHORT_NAME>
+        <svd:PRODUCT_TYPE_DESCRIPTION/>
+        <svd:INDICATION_TRIGGER_BOOKING>false</svd:INDICATION_TRIGGER_BOOKING>
+        <svd:DELIVERY_SEQUENCE_NUMBER>16</svd:DELIVERY_SEQUENCE_NUMBER>
+        <svd:DELIVERY_MOMENT>2017-05-31T11:40:00.000+02:00</svd:DELIVERY_MOMENT>
+        <svd:BEGIN_DELIVERY_PICKUP_WINDOW>2017-05-31T11:00:00.000+02:00</svd:BEGIN_DELIVERY_PICKUP_WINDOW>
+        <svd:END_DELIVERY_PICKUP_WINDOW>2017-05-31T15:00:00.000+02:00</svd:END_DELIVERY_PICKUP_WINDOW>
+        <svd:CASH_AMOUNT>0</svd:CASH_AMOUNT>
+        <svd:CASH_AMOUNT_CURRENCY>EUR</svd:CASH_AMOUNT_CURRENCY>
+        <svd:PIN_REQUIRED>false</svd:PIN_REQUIRED>
+        <svd:DELIVERY_INSTRUCTION>Handt</svd:DELIVERY_INSTRUCTION>
+        <svd:INDICATION_NOT_AT_NEIGHBOURS>false</svd:INDICATION_NOT_AT_NEIGHBOURS>
+        <svd:INDICATION_SIGNATURE_REQUIRED>true</svd:INDICATION_SIGNATURE_REQUIRED>
+        <svd:INDICATION_RING_ADDRESS_REQUIRED>false</svd:INDICATION_RING_ADDRESS_REQUIRED>
+        <svd:INDICATION_POSTAL_ITEM_WITH_PARCEL>false</svd:INDICATION_POSTAL_ITEM_WITH_PARCEL>
+        <svd:INDICATION_SWITCH>false</svd:INDICATION_SWITCH>
+        <svd:INDICATION_REMARK>false</svd:INDICATION_REMARK>
+        <svd:PARCEL_DELIVERY_REMARK xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:COURIER_REMARK xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:SERVICE_TYPE>1</svd:SERVICE_TYPE>
+        <svd:SERVICEPOINT_PARCEL>false</svd:SERVICEPOINT_PARCEL>
+        <svd:SERVICEPOINTID>0</svd:SERVICEPOINTID>
+        <svd:CURRENT_CONTRACT_STEP>1</svd:CURRENT_CONTRACT_STEP>
+        <svd:NEXT_TIMEFRAME_DESCR_ABBREVATION>14:00-18:00</svd:NEXT_TIMEFRAME_DESCR_ABBREVATION>
+        <svd:NEXT_TIMEFRAME_DESCR_FULL>MIDDAG2</svd:NEXT_TIMEFRAME_DESCR_FULL>
+        <svd:NEXT_DELIVERY_DAY>do</svd:NEXT_DELIVERY_DAY>
+        <svd:INDICATION_ORIGINAL_AT_HOME>false</svd:INDICATION_ORIGINAL_AT_HOME>
+        <svd:INDICATION_PARCEL_IN_GROUP>false</svd:INDICATION_PARCEL_IN_GROUP>
+        <svd:PARCEL_STATUS_KEY>31</svd:PARCEL_STATUS_KEY>
+    </svd:DELIVERY_PARCELS>
+    <svd:DELIVERY_PARCELS xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:TIMEFRAME_KEY>48089</svd:TIMEFRAME_KEY>
+        <svd:TRIP_KEY>7448089</svd:TRIP_KEY>
+        <svd:PARCEL_KEY>293963906</svd:PARCEL_KEY>
+        <svd:PID>3SHMB0000745052</svd:PID>
+        <svd:POSTAL_CODE_NUMERIC>3201</svd:POSTAL_CODE_NUMERIC>
+        <svd:POSTAL_CODE_ALPHA>HK</svd:POSTAL_CODE_ALPHA>
+        <svd:STREET>PELIKAANHOEK</svd:STREET>
+        <svd:HOUSE_NUMBER>17</svd:HOUSE_NUMBER>
+        <svd:HOUSE_NUMBER_ADDITION xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:CITY>SPYKENISSE</svd:CITY>
+        <svd:CUSTOMER_SHORT_NAME>HUNKEMOLLE R</svd:CUSTOMER_SHORT_NAME>
+        <svd:PRODUCT_TYPE_DESCRIPTION/>
+        <svd:INDICATION_TRIGGER_BOOKING>false</svd:INDICATION_TRIGGER_BOOKING>
+        <svd:DELIVERY_SEQUENCE_NUMBER>3</svd:DELIVERY_SEQUENCE_NUMBER>
+        <svd:DELIVERY_MOMENT>2017-05-31T11:06:00.000+02:00</svd:DELIVERY_MOMENT>
+        <svd:BEGIN_DELIVERY_PICKUP_WINDOW>2017-05-31T11:00:00.000+02:00</svd:BEGIN_DELIVERY_PICKUP_WINDOW>
+        <svd:END_DELIVERY_PICKUP_WINDOW>2017-05-31T15:00:00.000+02:00</svd:END_DELIVERY_PICKUP_WINDOW>
+        <svd:CASH_AMOUNT>0</svd:CASH_AMOUNT>
+        <svd:CASH_AMOUNT_CURRENCY>EUR</svd:CASH_AMOUNT_CURRENCY>
+        <svd:PIN_REQUIRED>false</svd:PIN_REQUIRED>
+        <svd:DELIVERY_INSTRUCTION xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:PARCEL_DELIVERY_REMARK xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:COURIER_REMARK xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <svd:SERVICE_TYPE>1</svd:SERVICE_TYPE>
+        <svd:SERVICEPOINT_PARCEL>false</svd:SERVICEPOINT_PARCEL>
+        <svd:SERVICEPOINTID>0</svd:SERVICEPOINTID>
+        <svd:CURRENT_CONTRACT_STEP>1</svd:CURRENT_CONTRACT_STEP>
+        <svd:NEXT_TIMEFRAME_DESCR_ABBREVATION>14:00-18:00</svd:NEXT_TIMEFRAME_DESCR_ABBREVATION>
+        <svd:NEXT_TIMEFRAME_DESCR_FULL>MIDDAG2</svd:NEXT_TIMEFRAME_DESCR_FULL>
+        <svd:NEXT_DELIVERY_DAY>do</svd:NEXT_DELIVERY_DAY>
+        <svd:INDICATION_ORIGINAL_AT_HOME>false</svd:INDICATION_ORIGINAL_AT_HOME>
+        <svd:INDICATION_PARCEL_IN_GROUP>false</svd:INDICATION_PARCEL_IN_GROUP>
+        <svd:PARCEL_STATUS_KEY>31</svd:PARCEL_STATUS_KEY>
+    </svd:DELIVERY_PARCELS>
+</xml-fragment>

@@ -1,0 +1,21 @@
+<xml-fragment>
+    <svd:GENERAL_HEADER_SVD xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:MESSAGE_IDENTIFIER>101</svd:MESSAGE_IDENTIFIER>
+        <svd:MESSAGE_TIMESTAMP>2017-05-31T09:55:03.119+02:00</svd:MESSAGE_TIMESTAMP>
+        <svd:REQUEST_RESULT>OK</svd:REQUEST_RESULT>
+        <svd:DEPOT_CODE>SPYPAK</svd:DEPOT_CODE>
+        <svd:DEPOT_NUMBER>144</svd:DEPOT_NUMBER>
+    </svd:GENERAL_HEADER_SVD>
+    <svd:REPLY_LOGON xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PDA_LOGON_SUCCESS>OK</svd:PDA_LOGON_SUCCESS>
+    </svd:REPLY_LOGON>
+    <svd:BEGIN_END_WORKING_TIME xmlns:svd="http://selektvracht.nl/SVDepotPDAWs"/>
+    <svd:APPLICATION_SETTINGS xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:PDA_REFRESH_RATE_1>20</svd:PDA_REFRESH_RATE_1>
+        <svd:PDA_REFRESH_RATE_2>1440</svd:PDA_REFRESH_RATE_2>
+        <svd:CAPTURE_WORKING_HOURS>true</svd:CAPTURE_WORKING_HOURS>
+        <svd:BARCODE_DELIVERY_BREAK>ritpauze 00:15</svd:BARCODE_DELIVERY_BREAK>
+        <svd:STANDARD_DURATION_DELIVERY_BREAK>15</svd:STANDARD_DURATION_DELIVERY_BREAK>
+        <svd:BARCODE_ADDITIONAL_LOAD>bijladen op depot</svd:BARCODE_ADDITIONAL_LOAD>
+    </svd:APPLICATION_SETTINGS>
+</xml-fragment>

@@ -1,5 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/paper-styles/color.html">
 <link rel="import" href="../bower_components/paper-styles/typography.html">
@@ -9,39 +10,48 @@
 
 <dom-module id="dhl-tripexecute">
     <template>
+        <style include="iron-flex iron-flex-alignment iron-positioning"></style>
         <style include="shared-styles">
             :host {
                 display: block;
             }
 
+            .details{
+                margin-bottom: 40px;
+            }
+
+            .leading {
+                width: 30px;
+            }
         </style>
 
         <div class="media">
             <div class="card">
                 <template is="dom-repeat"
-                          items="{{parcelResp.TRIPS_REPLY.REPLY_OVERVIEW_PARCELS}}"
-                          as="parcel">
-                    <div>
-                        <table>
-                            <tr>
-                                <td class="primary">[[parcel.DELIVERY_SEQUENCE_NUMBER]]</td>
-                                <td class="primary">[[parcel.STREET]] [[parcel.HOUSE_NUMBER]]</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>[[parcel.POSTAL_CODE_NUMERIC]][[parcel.POSTAL_CODE_ALPHA]] [[parcel.CITY]]</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>[[parcel.CUSTOMER_SHORT_NAME]]</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>
-                                    <paper-button on-tap="onDeliverTap" parcel="[[parcel]]" raised>Afleveren</paper-button>
-                                </td>
-                            </tr>
-                        </table>
+                          items="{{resp301.xml-fragment.REPLY_OVERVIEW_PARCELS}}"
+                          as="parcel"
+                          filter="isOurTrip"
+                          sort="sortBySeqNum">
+                    <div class="details">
+                        <div class="layout horizontal">
+                            <div class="leading">[[parcel.DELIVERY_SEQUENCE_NUMBER]]</div>
+                            <div class="flex">[[parcel.CUSTOMER_SHORT_NAME]]</div>
+                        </div>
+
+                        <div class="layout horizontal">
+                            <div class="leading"></div>
+                            <div class="flex">[[parcel.STREET]] [[parcel.HOUSE_NUMBER]]</div>
+                        </div>
+
+                        <div class="layout horizontal">
+                            <div class="leading"></div>
+                            <div class="flex">[[parcel.POSTAL_CODE_NUMERIC]][[parcel.POSTAL_CODE_ALPHA]] [[parcel.CITY]]</div>
+                        </div>
+
+                        <div class="layout horizontal">
+                            <div class="leading"></div>
+                            <paper-button on-tap="onDeliverTap" parcel="[[parcel]]" raised>Afleveren</paper-button>
+                        </div>
                     </div>
                 </template>
             </div>
@@ -58,16 +68,34 @@
 
             properties: {
 
-                parcel:{
+                selectedParcel:{
                     type: Object,
                     notify: true
+                },
+
+                resp301:{
+                    type: Object
+                },
+
+                selectedTripId:{
+                    type: String
                 }
             },
 
             onDeliverTap: function(event) {
-                this.parcel = event.target.parcel;
+                this.selectedParcel = event.target.parcel;
                 this.$.parcelNav.click();
             },
+
+            isOurTrip: function(parcel) {
+                return this.selectedTripId == parcel.TRIP_KEY;
+            },
+            sortBySeqNum: function(v1, v2) {
+                var val1 = parseInt(v1.DELIVERY_SEQUENCE_NUMBER), val2 = parseInt(v2.DELIVERY_SEQUENCE_NUMBER);
+                if (val1 == val2) return 0;
+                if (val1 > val2) return 1;
+                if (val1 < val2) return -1;
+            }
 
         });
 

@@ -1,0 +1,12 @@
+<xml-fragment>
+    <svd:GENERAL_HEADER_SVD xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:MESSAGE_IDENTIFIER>1501</svd:MESSAGE_IDENTIFIER>
+        <svd:MESSAGE_TIMESTAMP>2017-05-31T11:12:53.822+02:00</svd:MESSAGE_TIMESTAMP>
+        <svd:REQUEST_RESULT>OK</svd:REQUEST_RESULT>
+        <svd:DEPOT_CODE>SPYPAK</svd:DEPOT_CODE>
+        <svd:DEPOT_NUMBER>144</svd:DEPOT_NUMBER>
+    </svd:GENERAL_HEADER_SVD>
+    <svd:REPLY_TO_DELIVERY_RESULTS xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:UNITS_RECEIVED>1</svd:UNITS_RECEIVED>
+    </svd:REPLY_TO_DELIVERY_RESULTS>
+</xml-fragment>

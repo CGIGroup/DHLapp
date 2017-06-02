@@ -20,10 +20,10 @@
         </style>
 
         <dhl-xmlxhr
-                url="/test/xml/replyLogon.xml"
+                url="/test/xml/resp101.xml"
                 method="GET"
                 body="[[logonBody]]"
-                response="{{logonResp}}"
+                response="{{resp101}}"
                 ok-text="Aanmelden Gelukt"
                 error-text="Aanmelden Mislukt">
         </dhl-xmlxhr>
@@ -32,7 +32,7 @@
                 url="/test/xml/replyOverviewTrips.xml"
                 method="GET"
                 body="[[timeframeBody]]"
-                response="{{timeframeResp}}"
+                response="{{resp301}}"
                 ok-text="Ritten Opgehaald"
                 error-text="Ritten Ophalen Mislukt">
         </dhl-xmlxhr>
@@ -52,9 +52,9 @@
                              auto-validate>
                 </paper-input>
 
-                <div>[[parcel.CUSTOMER_SHORT_NAME]]</div>
-                <div>[[parcel.STREET]] [[parcel.HOUSE_NUMBER]]</div>
-                <div>[[parcel.POSTAL_CODE_NUMERIC]][[parcel.POSTAL_CODE_ALPHA]] [[parcel.CITY]]</div>
+                <div>[[selectedParcel.CUSTOMER_SHORT_NAME]]</div>
+                <div>[[selectedParcel.STREET]] [[selectedParcel.HOUSE_NUMBER]]</div>
+                <div>[[selectedParcel.POSTAL_CODE_NUMERIC]][[selectedParcel.POSTAL_CODE_ALPHA]] [[selectedParcel.CITY]]</div>
 
                 <p>Rembours: 25,00 Euro</p>
 
@@ -95,10 +95,9 @@
                     notify: true,
                 },
 
-                pieceInfo: {
+                selectedParcel: {
                     type: Object,
-                    value: function(){return {};},
-                    notify:true,
+                    value: function(){return {};}
                 },
 
                 signature: {

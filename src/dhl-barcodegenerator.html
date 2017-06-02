@@ -17,8 +17,8 @@
 
         <h1>Barcodes for demo purposes</h1>
 
-        <template is="dom-if" if="{{parcelResp}}">
-            <template is="dom-repeat" items="{{parcelResp.TRIPS_REPLY.REPLY_OVERVIEW_PARCELS}}" as="parcel">
+        <template is="dom-if" if="{{resp301}}">
+            <template is="dom-repeat" items="{{resp301.xml-fragment.REPLY_OVERVIEW_PARCELS}}" as="parcel">
                 <h2>[[parcel.STREET]] [[parcel.HOUSE_NUMBER]]</h2>
                 <dhl-barcode-generator data="[[parcel.PID]]"></dhl-barcode-generator>
             </template>
@@ -33,11 +33,11 @@
             is: 'dhl-barcodegenerator',
 
             properties: {
-                parcelResp: {
+                resp301: {
                     type: Object,
                     value: null,
                 }
-            },
+            }
         });
     </script>
 

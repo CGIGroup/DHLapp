@@ -15,19 +15,19 @@
         </style>
 
         <dhl-xmlxhr
-                url="/src/xml/replyLogon.xml"
+                url="/src/xml/101.xml"
                 method="GET"
-                body="[[logonBody]]"
-                response="{{logonResp}}"
+                body="[[body100]]"
+                response="{{resp101}}"
                 ok-text="Aanmelden Gelukt"
                 error-text="Aanmelden Mislukt">
         </dhl-xmlxhr>
 
         <dhl-xmlxhr
-                url="/src/xml/replyOverviewTrips.xml"
+                url="/src/xml/201.xml"
                 method="GET"
-                body="[[timeframeBody]]"
-                response="{{timeframeResp}}"
+                body="[[body200]]"
+                response="{{resp201}}"
                 ok-text="Ritten Opgehaald"
                 error-text="Ritten Ophalen Mislukt">
         </dhl-xmlxhr>
@@ -82,18 +82,18 @@
                 /**
                  * The logon response from the server in JSON format
                  */
-                logonResp: {
+                resp101: {
                     type: Object,
-                    observer: 'logonResponse',
+                    observer: 'resp101Changed',
                     notify: true
                 },
 
                 /**
                  * The trips response from the server in JSON format
                  */
-                timeframeResp: {
+                resp201: {
                     type: Object,
-                    observer: 'timeframeResponse',
+                    observer: 'resp201Changed',
                     notify: true
                 },
 
@@ -104,7 +104,7 @@
                 //beep
                 this.$.audio.play();
                 //send P-Number to the server
-                this.logonBody = {
+                this.body100 = {
                     REQUEST_LOGON:{
                         GENERAL_HEADER_PDA:{
                             MESSAGE_IDENTIFIER: 100,
@@ -124,10 +124,10 @@
                 }
             },
 
-            logonResponse: function(resp, oldValue) {
+            resp101Changed: function(resp, oldValue) {
                 if(!resp) return;
                 //send request to the server
-                this.timeframeBody = {
+                this.body200 = {
                     REQUEST_LOGON:{
                         GENERAL_HEADER_PDA:{
                             MESSAGE_IDENTIFIER: 200,
@@ -144,7 +144,7 @@
                 }
             },
 
-            timeframeResponse: function(resp, oldValue) {
+            resp201Changed: function(resp, oldValue) {
                 if(!resp) return;
                 this.$.timeframeNav.click();
             }

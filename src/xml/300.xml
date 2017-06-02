@@ -1,0 +1,34 @@
+<xml-fragment>
+    <svd:GENERAL_HEADER_PDA xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:MESSAGE_IDENTIFIER>300</svd:MESSAGE_IDENTIFIER>
+        <svd:MESSAGE_TIMESTAMP>2017-05-31T09:55:28.533+02:00</svd:MESSAGE_TIMESTAMP>
+        <svd:IMEI_NUMBER>980067001198202</svd:IMEI_NUMBER>
+        <svd:TELEPHONE_NUMBER>0612345678</svd:TELEPHONE_NUMBER>
+        <svd:P_NUMBER>622624</svd:P_NUMBER>
+        <svd:PDA_SOFTWARE_VERSION>1.7.2.18607</svd:PDA_SOFTWARE_VERSION>
+        <svd:PDA_MESSAGE_VERSION>1.4.0</svd:PDA_MESSAGE_VERSION>
+        <svd:TRANSMISSION_ATTEMPT_NUMBER>1</svd:TRANSMISSION_ATTEMPT_NUMBER>
+        <svd:MESSAGE_SEQUENCE_SESSION_NUMBER>3</svd:MESSAGE_SEQUENCE_SESSION_NUMBER>
+    </svd:GENERAL_HEADER_PDA>
+    <svd:PDA_DATA_INDICATION xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">true</svd:PDA_DATA_INDICATION>
+    <svd:TIMEFRAME xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:TIMEFRAME_KEY>48089</svd:TIMEFRAME_KEY>
+        <svd:EXPECTED_ARRIVAL_TIME_FIRST_ADDRESS>2017-05-31T09:55:28.536+02:00</svd:EXPECTED_ARRIVAL_TIME_FIRST_ADDRESS>
+    </svd:TIMEFRAME>
+    <svd:TIMEFRAME xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:TIMEFRAME_KEY>48229</svd:TIMEFRAME_KEY>
+        <svd:EXPECTED_ARRIVAL_TIME_FIRST_ADDRESS>2017-05-31T09:55:28.537+02:00</svd:EXPECTED_ARRIVAL_TIME_FIRST_ADDRESS>
+    </svd:TIMEFRAME>
+    <svd:TRIP xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:TIMEFRAME_KEY>48089</svd:TIMEFRAME_KEY>
+        <svd:TRIP_KEY>7448089</svd:TRIP_KEY>
+        <svd:TRIP_NUMBER>33</svd:TRIP_NUMBER>
+        <svd:TRIP_SEQUENCE_NUMBER>0</svd:TRIP_SEQUENCE_NUMBER>
+    </svd:TRIP>
+    <svd:TRIP xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:TIMEFRAME_KEY>48229</svd:TIMEFRAME_KEY>
+        <svd:TRIP_KEY>7448229</svd:TRIP_KEY>
+        <svd:TRIP_NUMBER>37</svd:TRIP_NUMBER>
+        <svd:TRIP_SEQUENCE_NUMBER>0</svd:TRIP_SEQUENCE_NUMBER>
+    </svd:TRIP>
+</xml-fragment>

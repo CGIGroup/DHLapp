@@ -144,41 +144,44 @@
                         role="main">
 
                     <dhl-signin
-                            reply-logon="{{logonResp}}"
-                            timeframe-resp="{{timeframeResp}}"
+                            resp101="{{resp101}}"
+                            resp201="{{resp201}}"
                             name="signin"></dhl-signin>
 
                     <dhl-timeframe
-                            reply-logon="[[replyLogon]]"
-                            timeframe-resp="[[timeframeResp]]"
-                            parcel-resp="{{parcelResp}}"
+                            resp101="[[resp101]]"
+                            resp201="[[resp201]]"
+                            resp301="{{resp301}}"
+                            selected-trip-id="{{selectedTripId}}"
                             name="timeframe"></dhl-timeframe>
 
                     <dhl-tripprepare
-                            reply-logon="[[replyLogon]]"
-                            parcel-resp="[[parcelResp]]"
-                            parcel="{{parcel}}"
+                            resp101="[[resp101]]"
+                            resp301="{{resp301}}"
+                            selected-trip-id="{{selectedTripId}}"
                             name="tripprepare"></dhl-tripprepare>
 
                     <dhl-route
-                            parcel-resp="[[parcelResp]]"
+                            resp301="[[resp301]]"
+                            selected-trip-id="{{selectedTripId}}"
                             name="route"></dhl-route>
 
                     <dhl-tripexecute
-                            reply-logon="[[replyLogon]]"
-                            parcel-resp="[[parcelResp]]"
-                            parcel="{{parcel}}"
+                            resp101="[[resp101]]"
+                            resp301="[[resp301]]"
+                            selected-trip-id="{{selectedTripId}}"
+                            selected-parcel="{{selectedParcel}}"
                             name="tripexecute"></dhl-tripexecute>
 
                     <dhl-delivery
-                            reply-logon="[[replyLogon]]"
-                            parcel="[[parcel]]"
+                            resp101="[[resp101]]"
+                            selected-parcel="[[selectedParcel]]"
                             name="delivery"></dhl-delivery>
 
                     <dhl-about name="about"></dhl-about>
 
                     <dhl-barcodegenerator
-                            parcel-resp="[[parcelResp]]"
+                            resp301="[[resp301]]"
                             name="barcodegenerator"></dhl-barcodegenerator>
 
                     <dhl-view404 name="view404"></dhl-view404>

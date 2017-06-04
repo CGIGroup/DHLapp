@@ -38,10 +38,8 @@ Typical usage:
                 display: flex;
                 box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0);
             }
-            .media {
-                display: flex;
-                flex-flow: column nowrap;
-                align-items: center;
+            canvas {
+                display: none;
             }
             .placeholder {
                 width: var(--placeholder-width, 320px);
@@ -105,6 +103,53 @@ Typical usage:
                 }
 
             },
+            activateScanner: function() {
+                Quagga.init({
+                    inputStream : {
+                        name : "Live",
+                        type : "LiveStream",
+                        target: this.$.interactive,
+                        constraints: {
+                            width: 640,
+                            height: 480,
+                            facingMode: "environment",
+                        }
+                    },
+                    decoder : {
+                        readers : this.readers
+                    },
+                    debug: false
+                }, function(err) {
+                    if (err) {
+                        console.log(err);
+                        return;
+                    }
+                    this.active = true;
+                    Quagga.start();
+                }.bind(this));
+
+                Quagga.onDetected(function(result) {
+                    this.code = result.codeResult.code;
+                    this.fire('recognize', {code: result.codeResult.code});
+                    this.stopScanner();
+                }.bind(this));
+            },
+            stopScanner: function() {
+                this.active = false;
+                Quagga.stop();
+            }
+            /*
+             The following code applies to Beta 1.0 (major API change)
+             It works fine except on Android Mobile. It doesn't find the backfacing cam. something to do with
+             getMediaDevices and a bug in chrome
+
+             backfacing camera does not work on VideoScan to InputField Beta test #151
+             https://github.com/serratus/quaggaJS/issues/151
+             https://github.com/serratus/quaggaJS/issues/179
+
+             Also: drawingBuffer wrong width on Android
+             https://github.com/serratus/quaggaJS/issues/201
+
 
             activateScanner: function() {
                 this.scanner = this.configureScanner(this.$.interactive),
@@ -132,6 +177,7 @@ Typical usage:
                                 constraints: {
                                     width: 640,
                                     height: 480,
+                                    facingMode: "environment",
                                 }
                             });
                 }
@@ -142,6 +188,7 @@ Typical usage:
                 this.active = false;
                 this.scanner.stop();
             }
+            */
         });
     </script>
 

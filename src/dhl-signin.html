@@ -3,6 +3,7 @@
 <link rel="import" href="dhl-xmlxhr.html">
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/hand-signature/hand-signature.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="dhl-signin">
@@ -37,7 +38,9 @@
         <div class="media">
 
             <barcode-scanner code="{{barcode}}"
-                             placeholder-message="Scanner Activeren">
+                             placeholder-message="Scanner Activeren"
+                             on-tap="initializeAudio"
+                             on-recognize="onRecognize">
             </barcode-scanner>
 
             <paper-card class="card">
@@ -54,11 +57,13 @@
                              type="number">
                 </paper-input>
 
+                <paper-button on-tap="signIn" raised>Aanmelden</paper-button>
+
             </paper-card>
 
         </div>
 
-        <audio id="audio" src="../images/censor-beep-01.mp3" preload="true"></audio>
+        <audio id="audio"></audio>
 
         <a id="timeframeNav" href="/timeframe" style="display:none;">Timeframe</a>
     </template>
@@ -100,9 +105,11 @@
             },
 
             processBarcode: function(barcode, oldValue) {
-                if(!barcode) return;
-                //beep
-                this.$.audio.play();
+
+            },
+
+            signIn: function(e) {
+                //if(!barcode) return;
                 //send P-Number to the server
                 this.body100 = {
                     REQUEST_LOGON:{
@@ -118,7 +125,7 @@
                             MESSAGE_SEQUENCE_SESSION_NUMBER: ''
                         },
                         LOGON:{
-                            P_NUMBER: barcode
+                            P_NUMBER: this.barcode
                         }
                     }
                 }
@@ -147,8 +154,19 @@
             resp201Changed: function(resp, oldValue) {
                 if(!resp) return;
                 this.$.timeframeNav.click();
-            }
+            },
 
+            onRecognize: function(e){
+                this.$.audio.src = '../images/censor-beep-01.mp3';
+                this.$.audio.play();// beep
+            },
+
+            initializeAudio: function(e){
+                // On mobile, audio must be initialized by a human.
+                // This is to prevent spontaneous video/audio download .
+                // We just play empty sound here
+                this.$.audio.play();// no sound
+            }
         });
     </script>
 </dom-module>

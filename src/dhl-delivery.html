@@ -42,7 +42,8 @@
         <div class="media">
 
             <barcode-scanner code="{{barcode}}"
-                             placeholder-message="Scanner Activeren">
+                             placeholder-message="Scanner Activeren"
+                             on-recognize="onRecognize">
             </barcode-scanner>
 
             <paper-card class="card">
@@ -79,7 +80,7 @@
 
         </div>
 
-        <audio id="audio" src="../images/censor-beep-01.mp3" preload="true"></audio>
+        <audio id="audio" src="../images/censor-beep-01.mp3"></audio>
 
     </template>
 
@@ -119,7 +120,11 @@
             signatureChanged: function (newValue, oldValue) {
                 //console.log('signature', newValue);
                 // The newValue contains the image data
-            }
+            },
+
+            onRecognize: function(e){
+                this.$.audio.play();// beep
+            },
         });
     </script>
 </dom-module>

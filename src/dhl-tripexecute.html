@@ -27,11 +27,13 @@
 
         <div class="media">
             <div class="card">
+                <h3>Rit Uitvoeren</h3>
                 <template is="dom-repeat"
                           items="{{resp301.xml-fragment.REPLY_OVERVIEW_PARCELS}}"
                           as="parcel"
                           filter="isOurTrip"
-                          sort="sortBySeqNum">
+                          sort="sortBySeqNum"
+                          observe="DELIVERY_SEQUENCE_NUMBER">
                     <div class="details">
                         <div class="layout horizontal">
                             <div class="leading">[[parcel.DELIVERY_SEQUENCE_NUMBER]]</div>

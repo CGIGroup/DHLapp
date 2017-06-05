@@ -75,8 +75,79 @@
                 ok-text="Rit Gestart"
                 error-text="Rit Starten Mislukt">
         </dhl-xmlxhr>
+HI
+        <template is="dom-repeat"
+                   items="{{resp201.xml-fragment.REPLY_OVERVIEW_TIMEFRAME}}"
+                   as="timeframe">
+            <div class="media">
+                <div class="card">
+                    <div class$="[[getClassForItem(timeframe, selected)]]" tabindex$="[[tabIndex]]">
+                        <div class="timeframe">[[timeframe.TIMEFRAME_DESCRIPTION]]</div>
+                        <template is="dom-repeat"
+                                  items="{{resp201.xml-fragment.REPLY_OVERVIEW_TRIPS}}"
+                                  as="trip">
+                            <div class="layout horizontal">
+                                <div class="leading">[[index]]</div>
+                                <!--<div class="leading">[[trip.TRIP_SEQUENCE_NUMBER]]</div>-->
+                                <div class="details">
+                                    <div class="layout horizontal">
+                                        <div>Rit [[trip.TRIP_NUMBER]]</div>
+                                        <div class="status">[[trip.TRIP_PDA_STATUS_DESCRIPTION]]</div>
+                                        <div class="flex"></div>
+                                        <div>0/[[trip.NUMBER_IN_TRIP]]</div>
+                                    </div>
+                                    <div class="layout horizontal">
+                                        <paper-button
+                                                on-tap="onPrepareTap"
+                                                trip="[[trip]]"
+                                                raised>Voorbereiden Overdracht</paper-button>
+                                    </div>
+
+                                    <div class="layout horizontal">
+                                        <paper-input
+                                                label="Start km"
+                                                slot="suffix" suffix
+                                                type="number"
+                                                autoValidate
+                                                mandatory>km</paper-input>
+                                        <paper-input
+                                                label="Eind km"
+                                                type="number"
+                                                autoValidate
+                                                mandatory
+                                                type="number"
+                                                disabled="true"></paper-input>
+                                        <paper-input
+                                                label="Prive km"
+                                                type="number"
+                                                autoValidate
+                                                mandatory
+                                                type="number"
+                                                disabled="true"></paper-input>
+                                    </div>
+                                    <div class="layout horizontal">
+                                        <paper-button
+                                                on-tap="onStartTap"
+                                                trip="[[trip]]"
+                                                raised>
+                                            <iron-icon icon="dhl-icons:starttrip"></iron-icon> Start Rit</paper-button>
+                                        <paper-button
+                                                on-tap="onStartTap"
+                                                trip="[[trip]]"
+                                                raised
+                                                disabled>
+                                            <iron-icon icon="dhl-icons:endtrip"></iron-icon> Einde Rit</paper-button>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </template>
 
 
+<!--
         <iron-list id="list"
                    items="{{resp201.xml-fragment.REPLY_OVERVIEW_TIMEFRAME}}"
                    as="timeframe"
@@ -94,13 +165,21 @@
                                           as="trip">
                                     <div class="details">
                                         <div class="layout horizontal">
-                                            <!--<div class="leading">[[trip.TRIP_SEQUENCE_NUMBER]]</div>-->
+                                            <!--<div class="leading">[[trip.TRIP_SEQUENCE_NUMBER]]</div>-- >
                                             <div class="leading">[[index]]</div>
                                             <div>Rit [[trip.TRIP_NUMBER]]</div>
                                             <div class="status">[[trip.TRIP_PDA_STATUS_DESCRIPTION]]</div>
                                             <div class="flex"></div>
                                             <div>0/[[trip.NUMBER_IN_TRIP]]</div>
                                         </div>
+                                        <div class="layout horizontal">
+                                            <div class="leading"></div>
+                                            <paper-button
+                                                on-tap="onPrepareTap"
+                                                trip="[[trip]]"
+                                                raised>Voorbereiden Overdracht</paper-button>
+                                        </div>
+
                                         <div class="layout horizontal">
                                             <div class="leading"></div>
                                             <paper-input
@@ -147,8 +226,8 @@
                 </div>
             </template>
         </iron-list>
-
-        <a id="inRitNav" href="/tripprepare" style="display:none;">In Rit</a>
+-->
+        <a id="prepareNav" href="/tripprepare" style="display:none;">In Rit</a>
         <a id="startNav" href="/tripexecute" style="display:none;">Start Rit</a>
 
     </template>
@@ -188,7 +267,7 @@
 
             attached: function() {
                 // Use the document element
-                this.$.list.scrollTarget = this.ownerDocument.documentElement;
+                // this.$.list.scrollTarget = this.ownerDocument.documentElement;
             },
 
             getClassForItem: function(item, selected) {
@@ -206,10 +285,10 @@
             resp301Changed: function(resp, oldValue) {
                 if(!resp) return;
                 this.selectedTripId = this.tripKey;
-                this.$.startNav.click();
+                this.$.prepareNav.click();
             },
 
-            onStartTap: function(event) {
+            onPrepareTap: function(event) {
                 this.tripKey = event.target.trip.TRIP_KEY.toString();
                 //send start trip to the server
                 this.body = {
@@ -229,24 +308,16 @@
                 };
             },
 
-            onInRitTap: function(event) {
+            onStartTap: function(event) {
+                this.tripKey = event.target.trip.TRIP_KEY.toString();
+                //send start trip to the server
+                this.$.startNav.click();
+            },
+
+            onEndTap: function(event) {
                 this.trip = event.target.trip;
                 //send request to the server
-                this.body = {
-                    REQUEST_LOGON:{
-                        GENERAL_HEADER_PDA:{
-                            MESSAGE_IDENTIFIER: 300,
-                            MESSAGE_TIMESTAMP: '',
-                            IMEI_NUMBER: '',
-                            TELEPHONE_NUMBER: '',
-                            P_NUMBER: '',
-                            PDA_SOFTWARE_VERSION: '',
-                            PDA_MESSAGE_VERSION: '',
-                            TRANSMISSION_ATTEMPT_NUMBER: '',
-                            MESSAGE_SEQUENCE_SESSION_NUMBER: ''
-                        }
-                    }
-                };
+
             },
 
         });

@@ -42,7 +42,9 @@
     "x2js": "abdmob/x2js#^1.2.0",
     "quagga": "^0.11.6",
     "hand-signature": "CGIGroup/hand-signature#Polymer1.0",
-    "barcode-scanner": "CGIGroup/barcode-scanner#shadowdom"
+    "barcode-scanner": "CGIGroup/barcode-scanner#shadowdom",
+    "sortable-list": "afloesch/sortable-list#^1.0.1",
+    "paper-time-input": "ryanburns23/paper-time-input#^1.0.4"
   },
   "devDependencies": {
     "web-component-tester": "^4.0.0"

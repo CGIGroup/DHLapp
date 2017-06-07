@@ -33,6 +33,7 @@
                 <paper-time-input label="Eerste Verwachte Aankomst" format="24"></paper-time-input>
                 <paper-button on-tap="onSortSave" raised>Sortering Opslaan</paper-button>
             </div>
+            <!--
             <div class="card">
                 <sortable-list>
                     <template is="dom-repeat"
@@ -56,6 +57,7 @@
                     </template>
                 </sortable-list>
             </div>
+            -->
         </div>
 
     </template>
@@ -84,7 +86,7 @@
             onSortSave: function(event) {
                 window.history.back();
             },
-
+/*
             onUpTap: function(event) {
                 var selectedParcel = event.target.parcel;
 
@@ -127,7 +129,7 @@
                             swap);
                 }
             },
-
+*/
             isOurTrip: function(parcel) {
                 return this.selectedTripId == parcel.TRIP_KEY;
             },

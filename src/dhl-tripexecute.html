@@ -6,6 +6,7 @@
 <link rel="import" href="../bower_components/paper-styles/typography.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="barcode-scanner.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="dhl-tripexecute">
@@ -17,17 +18,32 @@
             }
 
             .details{
-                margin-bottom: 40px;
+                margin-bottom: 20px;
+                outline: #cc0201;
+                outline-style: solid;
+                padding: 3px;
             }
 
             .leading {
-                width: 30px;
+                width: 50px;
             }
         </style>
 
         <div class="media">
+
+            <barcode-scanner code="{{barcode}}"
+                             placeholder-message="Scanner Activeren"
+                             on-recognize="onRecognize">
+            </barcode-scanner>
+
             <div class="card">
-                <h3>Rit Uitvoeren</h3>
+                <paper-input value="{{barcode}}"
+                             label="PID"
+                             required
+                             auto-validate>
+                </paper-input>
+
+                <h3>Niet afgehandelde opdrachten</h3>
                 <template is="dom-repeat"
                           items="{{resp301.xml-fragment.REPLY_OVERVIEW_PARCELS}}"
                           as="parcel"
@@ -36,29 +52,31 @@
                           observe="DELIVERY_SEQUENCE_NUMBER">
                     <div class="details">
                         <div class="layout horizontal">
-                            <div class="leading">[[parcel.DELIVERY_SEQUENCE_NUMBER]]</div>
-                            <div class="flex">[[parcel.CUSTOMER_SHORT_NAME]]</div>
-                        </div>
-
-                        <div class="layout horizontal">
-                            <div class="leading"></div>
-                            <div class="flex">[[parcel.STREET]] [[parcel.HOUSE_NUMBER]]</div>
-                        </div>
-
-                        <div class="layout horizontal">
-                            <div class="leading"></div>
-                            <div class="flex">[[parcel.POSTAL_CODE_NUMERIC]][[parcel.POSTAL_CODE_ALPHA]] [[parcel.CITY]]</div>
-                        </div>
-
-                        <div class="layout horizontal">
-                            <div class="leading"></div>
-                            <paper-button on-tap="onDeliverTap" parcel="[[parcel]]" raised>Afleveren</paper-button>
+                            <div class="leading">
+                                <div class="layout vertical">
+                                    <div>[[parcel.DELIVERY_SEQUENCE_NUMBER]]</div>
+                                    <div>19:18</div>
+                                </div>
+                            </div>
+                            <div class="flex">
+                                <div class="layout vertical">
+                                    <div>[[parcel.STREET]] [[parcel.HOUSE_NUMBER]]</div>
+                                    <div>[[parcel.POSTAL_CODE_NUMERIC]][[parcel.POSTAL_CODE_ALPHA]] [[parcel.CITY]]</div>
+                                    <div>[[parcel.CUSTOMER_SHORT_NAME]]</div>
+                                </div>
+                            </div>
+                            <div class="layout vertical">
+                                <div>PA</div>
+                                <div>Icon</div>
+                                <div>...1234</div>
+                            </div>
                         </div>
                     </div>
                 </template>
             </div>
         </div>
 
+        <audio id="audio" src="../images/censor-beep-01.mp3"></audio>
         <a id="parcelNav" href="/delivery" style="display:none;">In Rit</a>
 
     </template>
@@ -69,6 +87,11 @@
             is: 'dhl-tripexecute',
 
             properties: {
+
+                barcode:{
+                    type: String,
+                    observer: 'processBarcode',
+                },
 
                 selectedParcel:{
                     type: Object,
@@ -84,8 +107,14 @@
                 }
             },
 
-            onDeliverTap: function(event) {
-                this.selectedParcel = event.target.parcel;
+            processBarcode: function(barcode, oldValue) {
+                if(!barcode) return;
+                //beep
+                this.$.audio.play();
+
+                //update the status in tripInfo
+                //this.set('tripInfo.stops.'+sIdx+'.pieces.'+pIdx+'.status', 'sending...');
+
                 this.$.parcelNav.click();
             },
 

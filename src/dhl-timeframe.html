@@ -6,6 +6,7 @@
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../bower_components/paper-styles/color.html">
 <link rel="import" href="../bower_components/paper-styles/typography.html">
+<link rel="import" href="../bower_components/paper-time-input/paper-time-input.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/iron-list/iron-list.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
@@ -28,6 +29,7 @@
 
             paper-button {
                 height: 60px;
+                margin-bottom: 5px;
             }
             .item {
                 outline: none;
@@ -75,76 +77,79 @@
                 ok-text="Rit Gestart"
                 error-text="Rit Starten Mislukt">
         </dhl-xmlxhr>
-HI
-        <template is="dom-repeat"
-                   items="{{resp201.xml-fragment.REPLY_OVERVIEW_TIMEFRAME}}"
-                   as="timeframe">
-            <div class="media">
-                <div class="card">
-                    <div class$="[[getClassForItem(timeframe, selected)]]" tabindex$="[[tabIndex]]">
-                        <div class="timeframe">[[timeframe.TIMEFRAME_DESCRIPTION]]</div>
-                        <template is="dom-repeat"
-                                  items="{{resp201.xml-fragment.REPLY_OVERVIEW_TRIPS}}"
-                                  as="trip">
-                            <div class="layout horizontal">
-                                <div class="leading">[[index]]</div>
-                                <!--<div class="leading">[[trip.TRIP_SEQUENCE_NUMBER]]</div>-->
-                                <div class="details">
-                                    <div class="layout horizontal">
-                                        <div>Rit [[trip.TRIP_NUMBER]]</div>
-                                        <div class="status">[[trip.TRIP_PDA_STATUS_DESCRIPTION]]</div>
-                                        <div class="flex"></div>
-                                        <div>0/[[trip.NUMBER_IN_TRIP]]</div>
-                                    </div>
-                                    <div class="layout horizontal">
-                                        <paper-button
-                                                on-tap="onPrepareTap"
-                                                trip="[[trip]]"
-                                                raised>Voorbereiden Overdracht</paper-button>
-                                    </div>
 
-                                    <div class="layout horizontal">
-                                        <paper-input
-                                                label="Start km"
-                                                slot="suffix" suffix
-                                                type="number"
-                                                autoValidate
-                                                mandatory>km</paper-input>
-                                        <paper-input
-                                                label="Eind km"
-                                                type="number"
-                                                autoValidate
-                                                mandatory
-                                                type="number"
-                                                disabled="true"></paper-input>
-                                        <paper-input
-                                                label="Prive km"
-                                                type="number"
-                                                autoValidate
-                                                mandatory
-                                                type="number"
-                                                disabled="true"></paper-input>
-                                    </div>
-                                    <div class="layout horizontal">
-                                        <paper-button
-                                                on-tap="onStartTap"
-                                                trip="[[trip]]"
-                                                raised>
-                                            <iron-icon icon="dhl-icons:starttrip"></iron-icon> Start Rit</paper-button>
-                                        <paper-button
-                                                on-tap="onStartTap"
-                                                trip="[[trip]]"
-                                                raised
-                                                disabled>
-                                            <iron-icon icon="dhl-icons:endtrip"></iron-icon> Einde Rit</paper-button>
-                                    </div>
-                                </div>
+        <div class="media">
+            <div class="card">
+                <template is="dom-repeat"
+                          items="{{resp201.xml-fragment.REPLY_OVERVIEW_TRIPS}}"
+                          as="trip">
+                    <div class="timeframe">EVA: --:--</div> <!--[[timeframe.TIMEFRAME_DESCRIPTION]]-->
+                    <div class="layout horizontal">
+                        <div class="leading">[[index]]</div>
+                        <!--<div class="leading">[[trip.TRIP_SEQUENCE_NUMBER]]</div>-->
+                        <div class="details">
+                            <div class="layout horizontal">
+                                <div>Rit [[trip.TRIP_NUMBER]]</div>
+                                <div class="status">[[trip.TRIP_PDA_STATUS_DESCRIPTION]]</div>
+                                <div class="flex"></div>
+                                <div>0/[[trip.NUMBER_IN_TRIP]]</div>
                             </div>
-                        </template>
+                            <div class="layout vertical">
+                                <paper-time-input label="Eerste Verwachte Aankomst" format="24"></paper-time-input>
+                                <paper-button
+                                        on-tap=""
+                                        trip="[[trip]]"
+                                        raised>EVA invullen</paper-button>
+                            </div>
+
+                            <div class="layout horizontal">
+                                <paper-input
+                                        label="Start km"
+                                        slot="suffix" suffix
+                                        type="number"
+                                        autoValidate
+                                        mandatory>km</paper-input>
+                                <paper-input
+                                        label="Eind km"
+                                        type="number"
+                                        autoValidate
+                                        mandatory
+                                        type="number"
+                                        disabled="true"></paper-input>
+                                <paper-input
+                                        label="Prive km"
+                                        type="number"
+                                        autoValidate
+                                        mandatory
+                                        type="number"
+                                        disabled="true"></paper-input>
+                            </div>
+                            <div class="layout horizontal">
+                                <paper-button
+                                        on-tap="onStartTap"
+                                        trip="[[trip]]"
+                                        raised>
+                                    <iron-icon icon="dhl-icons:starttrip"></iron-icon> Start Rit</paper-button>
+                                <paper-button
+                                        on-tap="onStartTap"
+                                        trip="[[trip]]"
+                                        raised
+                                        disabled>
+                                    <iron-icon icon="dhl-icons:endtrip"></iron-icon> Einde Rit</paper-button>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </template>
+
             </div>
-        </template>
+            <div class="card">
+                <paper-button raised>Ververs data</paper-button>
+                <paper-button raised>SPRET Aannemen</paper-button>
+                <paper-button raised>Afhalen Parcel-shop / -Station</paper-button>
+                <paper-button raised>Afgehandelde Opdracten</paper-button>
+                <paper-button raised>Alle Opdrachten</paper-button>
+            </div>
+        </div>
 
 
 <!--
@@ -285,10 +290,10 @@ HI
             resp301Changed: function(resp, oldValue) {
                 if(!resp) return;
                 this.selectedTripId = this.tripKey;
-                this.$.prepareNav.click();
+                this.$.startNav.click();
             },
 
-            onPrepareTap: function(event) {
+            onStartTap: function(event) {
                 this.tripKey = event.target.trip.TRIP_KEY.toString();
                 //send start trip to the server
                 this.body = {
@@ -308,7 +313,7 @@ HI
                 };
             },
 
-            onStartTap: function(event) {
+            XonStartTap: function(event) {
                 this.tripKey = event.target.trip.TRIP_KEY.toString();
                 //send start trip to the server
                 this.$.startNav.click();

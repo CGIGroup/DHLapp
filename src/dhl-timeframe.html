@@ -72,20 +72,40 @@
         <dhl-xmlxhr
                 url="/src/xml/301.xml"
                 method="GET"
-                body="[[body]]"
+                body="[[body300]]"
                 response="{{resp301}}"
+                ok-text="Pakketten Opgehaald"
+                error-text="Pakketten Ophalen Mislukt">
+        </dhl-xmlxhr>
+
+
+        <dhl-xmlxhr
+                url="/src/xml/201B.xml"
+                method="GET"
+                body="[[body200]]"
+                response="{{resp201}}"
+                ok-text="Ritten Opgehaald"
+                error-text="Ritten Ophalen Mislukt">
+        </dhl-xmlxhr>
+
+        <dhl-xmlxhr
+                url="/src/xml/2001.xml"
+                method="GET"
+                body="[[body2000]]"
+                response="{{resp2001}}"
                 ok-text="Rit Gestart"
                 error-text="Rit Starten Mislukt">
         </dhl-xmlxhr>
+
 
         <div class="media">
             <div class="card">
                 <template is="dom-repeat"
                           items="{{resp201.xml-fragment.REPLY_OVERVIEW_TRIPS}}"
                           as="trip">
-                    <div class="timeframe">EVA: --:--</div> <!--[[timeframe.TIMEFRAME_DESCRIPTION]]-->
+                    <div class="timeframe">[[computeTimeFrameDesc(trip)]]</div> <!--[[timeframe.TIMEFRAME_DESCRIPTION]]-->
                     <div class="layout horizontal">
-                        <div class="leading">[[index]]</div>
+                        <div class="leading">[[calculateSeq(trip)]]</div>
                         <!--<div class="leading">[[trip.TRIP_SEQUENCE_NUMBER]]</div>-->
                         <div class="details">
                             <div class="layout horizontal">
@@ -94,48 +114,61 @@
                                 <div class="flex"></div>
                                 <div>0/[[trip.NUMBER_IN_TRIP]]</div>
                             </div>
-                            <div class="layout vertical">
-                                <paper-time-input label="Eerste Verwachte Aankomst" format="24"></paper-time-input>
-                                <paper-button
-                                        on-tap=""
-                                        trip="[[trip]]"
-                                        raised>EVA invullen</paper-button>
+                            <div hide$="[[!compareValues(2,trip.TRIP_PDA_STATUS)]]">
+                                <div class="layout horizontal">
+                                    <paper-time-input
+                                            label="Eerste Verwachte Aankomst"
+                                            format="24"
+                                            autoValidate
+                                            on-change="onChangeEva"
+                                            trip="[[trip]]"></paper-time-input>
+                                </div>
+                                <div class="layout horizontal">
+                                    <paper-button
+                                            on-tap="onEVATap"
+                                            trip="[[trip]]"
+                                            raised
+                                            disabled$="[[!evaIsValid]]">EVA invullen</paper-button>
+                                </div>
                             </div>
 
-                            <div class="layout horizontal">
-                                <paper-input
-                                        label="Start km"
-                                        slot="suffix" suffix
-                                        type="number"
-                                        autoValidate
-                                        mandatory>km</paper-input>
-                                <paper-input
-                                        label="Eind km"
-                                        type="number"
-                                        autoValidate
-                                        mandatory
-                                        type="number"
-                                        disabled="true"></paper-input>
-                                <paper-input
-                                        label="Prive km"
-                                        type="number"
-                                        autoValidate
-                                        mandatory
-                                        type="number"
-                                        disabled="true"></paper-input>
-                            </div>
-                            <div class="layout horizontal">
-                                <paper-button
-                                        on-tap="onStartTap"
-                                        trip="[[trip]]"
-                                        raised>
-                                    <iron-icon icon="dhl-icons:starttrip"></iron-icon> Start Rit</paper-button>
-                                <paper-button
-                                        on-tap="onStartTap"
-                                        trip="[[trip]]"
-                                        raised
-                                        disabled>
-                                    <iron-icon icon="dhl-icons:endtrip"></iron-icon> Einde Rit</paper-button>
+
+                            <div hide$="[[!compareValues(3,trip.TRIP_PDA_STATUS)]]">
+                                <div class="layout horizontal">
+                                    <paper-input
+                                            label="Start km"
+                                            slot="suffix" suffix
+                                            type="number"
+                                            autoValidate
+                                            mandatory>km</paper-input>
+                                    <paper-input
+                                            label="Eind km"
+                                            type="number"
+                                            autoValidate
+                                            mandatory
+                                            type="number"
+                                            disabled="true"></paper-input>
+                                    <paper-input
+                                            label="Prive km"
+                                            type="number"
+                                            autoValidate
+                                            mandatory
+                                            type="number"
+                                            disabled="true"></paper-input>
+                                </div>
+                                <div class="layout horizontal">
+                                    <paper-button
+                                            on-tap="onStartTap"
+                                            trip="[[trip]]"
+                                            raised>
+                                        <iron-icon icon="dhl-icons:starttrip"></iron-icon> Start Rit</paper-button>
+                                    <paper-button
+                                            on-tap="onStartTap"
+                                            trip="[[trip]]"
+                                            raised
+                                            disabled>
+                                        <iron-icon icon="dhl-icons:endtrip"></iron-icon> Einde Rit</paper-button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -152,86 +185,6 @@
         </div>
 
 
-<!--
-        <iron-list id="list"
-                   items="{{resp201.xml-fragment.REPLY_OVERVIEW_TIMEFRAME}}"
-                   as="timeframe"
-                   selection-enabled
-                   multi-selection>
-            <template>
-                <div class="media">
-                    <div class="card">
-                        <div class$="[[getClassForItem(timeframe, selected)]]" tabindex$="[[tabIndex]]">
-                            <div class="timeframe">[[timeframe.TIMEFRAME_DESCRIPTION]]</div>
-
-                            <div class="longText">
-                                <template is="dom-repeat"
-                                          items="{{resp201.xml-fragment.REPLY_OVERVIEW_TRIPS}}"
-                                          as="trip">
-                                    <div class="details">
-                                        <div class="layout horizontal">
-                                            <!--<div class="leading">[[trip.TRIP_SEQUENCE_NUMBER]]</div>-- >
-                                            <div class="leading">[[index]]</div>
-                                            <div>Rit [[trip.TRIP_NUMBER]]</div>
-                                            <div class="status">[[trip.TRIP_PDA_STATUS_DESCRIPTION]]</div>
-                                            <div class="flex"></div>
-                                            <div>0/[[trip.NUMBER_IN_TRIP]]</div>
-                                        </div>
-                                        <div class="layout horizontal">
-                                            <div class="leading"></div>
-                                            <paper-button
-                                                on-tap="onPrepareTap"
-                                                trip="[[trip]]"
-                                                raised>Voorbereiden Overdracht</paper-button>
-                                        </div>
-
-                                        <div class="layout horizontal">
-                                            <div class="leading"></div>
-                                            <paper-input
-                                                    label="Start km"
-                                                    slot="suffix" suffix
-                                                    type="number"
-                                                    autoValidate
-                                                    mandatory>km</paper-input>
-                                            <paper-input
-                                                    label="Eind km"
-                                                    type="number"
-                                                    autoValidate
-                                                    mandatory
-                                                    type="number"
-                                                    disabled="true"></paper-input>
-                                            <paper-input
-                                                    label="Prive km"
-                                                    type="number"
-                                                    autoValidate
-                                                    mandatory
-                                                    type="number"
-                                                    disabled="true"></paper-input>
-                                        </div>
-                                        <div class="layout horizontal">
-                                            <div class="leading"></div>
-                                            <paper-button
-                                                on-tap="onStartTap"
-                                                trip="[[trip]]"
-                                                raised>
-                                                <iron-icon icon="dhl-icons:starttrip"></iron-icon> Start Rit</paper-button>
-                                            <paper-button
-                                                on-tap="onStartTap"
-                                                trip="[[trip]]"
-                                                raised
-                                                disabled>
-                                                <iron-icon icon="dhl-icons:endtrip"></iron-icon> Einde Rit</paper-button>
-                                        </div>
-
-                                    </div>
-                                </template>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </template>
-        </iron-list>
--->
         <a id="prepareNav" href="/tripprepare" style="display:none;">In Rit</a>
         <a id="startNav" href="/tripexecute" style="display:none;">Start Rit</a>
 
@@ -261,18 +214,52 @@
                 },
 
                 /**
+                 * The resp301 object returned from the server
+                 */
+                resp201:{
+                    type: Object,
+                    observer: 'resp201Changed',
+                    notify: true
+                },
+
+                /**
+                 * The resp301 object returned from the server
+                 */
+                resp2001:{
+                    type: Object,
+                    observer: 'resp2001Changed',
+                    notify: true
+                },
+
+                /**
                  * The select trip id that results from this process
                  */
                 selectedTripId:{
                     type: Object,
                     notify: true
-                }
+                },
 
             },
 
-            attached: function() {
-                // Use the document element
-                // this.$.list.scrollTarget = this.ownerDocument.documentElement;
+            computeTimeFrameDesc: function(trip){
+                var timeframeKey = trip.TIMEFRAME_KEY;
+                var timeFrame = this.resp201['xml-fragment'].REPLY_OVERVIEW_TIMEFRAME.find(function(tf){
+                    return (timeframeKey.toString() == tf.TIMEFRAME_KEY.toString());
+                }.bind(this));
+                return timeFrame.TIMEFRAME_DESCRIPTION;
+            },
+            evaIsValid: function(trip){
+                return trip.evaIsValid;
+            },
+            onChangeEva: function(e){
+                if(e.target.validate()){
+                    e.target.trip.evaIsValid = true;
+                }
+                else e.target.trip.evaIsValid = false;
+            },
+            calculateSeq: function(trip) {
+                return 1;
+                return parseInt(trip.TRIP_SEQUENCE_NUMBER) + 1;
             },
 
             getClassForItem: function(item, selected) {
@@ -287,16 +274,10 @@
                 return index+1;
             },
 
-            resp301Changed: function(resp, oldValue) {
-                if(!resp) return;
-                this.selectedTripId = this.tripKey;
-                this.$.startNav.click();
-            },
-
-            onStartTap: function(event) {
+            onEVATap: function(event) {
                 this.tripKey = event.target.trip.TRIP_KEY.toString();
                 //send start trip to the server
-                this.body = {
+                this.body300 = {
                     REQUEST_LOGON:{
                         GENERAL_HEADER_PDA:{
                             MESSAGE_IDENTIFIER: 300,
@@ -308,15 +289,56 @@
                             PDA_MESSAGE_VERSION: '',
                             TRANSMISSION_ATTEMPT_NUMBER: '',
                             MESSAGE_SEQUENCE_SESSION_NUMBER: ''
-                        }
+                        },
+                        PDA_DATA_INDICATION: true,
                     }
                 };
             },
 
-            XonStartTap: function(event) {
+
+            resp301Changed: function(resp, oldValue) {
+                if(!resp) return;
+                //clone the header
+                var generalHeader = Object.create(this.resp101['xml-fragment'].GENERAL_HEADER_SVD);
+                generalHeader.MESSAGE_IDENTIFIER = 200;
+                generalHeader.MESSAGE_TIMESTAMP = new Date().getTime();
+                generalHeader.MESSAGE_SEQUENCE_SESSION_NUMBER = 2;//TODO is this important?
+                //send request to the server
+                this.body200 = {
+                    'xml-fragment':{
+                        GENERAL_HEADER_PDA: generalHeader
+                    }
+                }
+            },
+
+            resp201Changed: function(resp, oldValue) {
+                if(!resp) return;
+            },
+
+            onStartTap: function(event) {
                 this.tripKey = event.target.trip.TRIP_KEY.toString();
+                //clone the header
+                var generalHeader = Object.create(this.resp101['xml-fragment'].GENERAL_HEADER_SVD);
+                generalHeader.MESSAGE_IDENTIFIER = 2000;
+                generalHeader.MESSAGE_TIMESTAMP = new Date().getTime();
+                generalHeader.MESSAGE_SEQUENCE_SESSION_NUMBER = 2;//TODO is this important?
                 //send start trip to the server
+                this.body2000 = {
+                    'xml-fragment':{
+                        GENERAL_HEADER_PDA: generalHeader
+                    }
+                };
+            },
+
+
+            resp2001Changed: function(resp, oldValue) {
+                if(!resp) return;
+                this.selectedTripId = this.tripKey;
                 this.$.startNav.click();
+            },
+
+            compareValues: function(v1, v2){
+              return v1 == v2;
             },
 
             onEndTap: function(event) {

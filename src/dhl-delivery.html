@@ -60,25 +60,27 @@
                 <div>[[selectedParcel.STREET]] [[selectedParcel.HOUSE_NUMBER]]</div>
                 <div>[[selectedParcel.POSTAL_CODE_NUMERIC]][[selectedParcel.POSTAL_CODE_ALPHA]] [[selectedParcel.CITY]]</div>
 
-                <p>Rembours: 25,00 Euro</p>
-
-                <paper-input value="{{pin}}"
-                             label="Pincode"
-                             type="Number"
-                             required
-                             auto-validate>
-                </paper-input>
-
-                <div>Zet Hier Uw Handtekenning:</div>
-                <hand-signature data="{{signature}}"
-                                width="288px"
-                                height="200px"></hand-signature>
-
-                <paper-button raised>Op Adres</paper-button>
+                <paper-button on-tap="onAddress" raised>Op Adres</paper-button>
                 <paper-button raised>Bij Buren (KIB)</paper-button>
                 <paper-button raised>Niet Thuis (KIB)</paper-button>
                 <paper-button raised>Overig</paper-button>
 
+                <div hide$="[[!onAddressDisplay]]">
+                    <p>Rembours: 25,00 Euro</p>
+
+                    <paper-input value="{{Name}}"
+                                 label="Naam"
+                                 type="String"
+                                 required
+                                 auto-validate>
+                    </paper-input>
+
+                    <div>Zet Hier Uw Handtekenning:</div>
+                    <hand-signature data="{{signature}}"
+                                    width="288px"
+                                    height="200px"></hand-signature>
+
+                </div>
             </paper-card>
 
         </div>
@@ -107,9 +109,16 @@
                 signature: {
                     type: String,
                     observer: 'signatureChanged',
+                },
+
+                onAddressDisplay:{
+                    value: false,
+                    reflectToAttribute: true
                 }
             },
-
+            onAddress: function(){
+                this.onAddressDisplay = true;
+            },
             processBarcode: function(barcode, oldValue) {
                 if(!barcode) return;
                 //beep

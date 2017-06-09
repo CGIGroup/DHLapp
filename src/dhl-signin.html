@@ -15,6 +15,9 @@
             }
         </style>
 
+        <!--https://depotws-test.nl.dhl.com/SVDepotPDAWs
+        /src/xml/101.xml-->
+
         <dhl-xmlxhr
                 url="/src/xml/101.xml"
                 method="GET"
@@ -40,7 +43,8 @@
             <barcode-scanner code="{{barcode}}"
                              placeholder-message="Scanner Activeren"
                              on-tap="initializeAudio"
-                             on-recognize="onRecognize">
+                             on-recognize="onRecognize"
+                             readers="[[readers]]">
             </barcode-scanner>
 
             <paper-card class="card">
@@ -84,6 +88,16 @@
                     notify: true
                 },
 
+                readers:{
+                    type: Array,
+                    value: function(){
+                        return [
+                            'code_128_reader',
+                            'code_39_reader'
+                        ]
+                    }
+                },
+
                 /**
                  * The logon response from the server in JSON format
                  */
@@ -112,17 +126,17 @@
                 //if(!barcode) return;
                 //send P-Number to the server
                 this.body100 = {
-                    REQUEST_LOGON:{
+                    'xml-fragment':{
                         GENERAL_HEADER_PDA:{
                             MESSAGE_IDENTIFIER: 100,
-                            MESSAGE_TIMESTAMP: '',
-                            IMEI_NUMBER: '',
-                            TELEPHONE_NUMBER: '',
-                            P_NUMBER: '',
-                            PDA_SOFTWARE_VERSION: '',
-                            PDA_MESSAGE_VERSION: '',
-                            TRANSMISSION_ATTEMPT_NUMBER: '',
-                            MESSAGE_SEQUENCE_SESSION_NUMBER: ''
+                            MESSAGE_TIMESTAMP: new Date().toJSON().toString(),
+                            IMEI_NUMBER: '980067001198202',
+                            TELEPHONE_NUMBER: '0612345678',
+                            P_NUMBER: this.barcode,
+                            PDA_SOFTWARE_VERSION: '1.7.2.18607',
+                            PDA_MESSAGE_VERSION: '1.4.0',
+                            TRANSMISSION_ATTEMPT_NUMBER: '1',
+                            MESSAGE_SEQUENCE_SESSION_NUMBER: '1'
                         },
                         LOGON:{
                             P_NUMBER: this.barcode
@@ -133,20 +147,16 @@
 
             resp101Changed: function(resp, oldValue) {
                 if(!resp) return;
+                //clone the header
+                var generalHeader = Object.create(this.resp101['xml-fragment'].GENERAL_HEADER_SVD);
+                generalHeader.MESSAGE_IDENTIFIER = 200;
+                generalHeader.MESSAGE_TIMESTAMP = new Date().getTime();
+                generalHeader.MESSAGE_SEQUENCE_SESSION_NUMBER = 2;//TODO is this important?
                 //send request to the server
                 this.body200 = {
-                    REQUEST_LOGON:{
-                        GENERAL_HEADER_PDA:{
-                            MESSAGE_IDENTIFIER: 200,
-                            MESSAGE_TIMESTAMP: '',
-                            IMEI_NUMBER: '',
-                            TELEPHONE_NUMBER: '',
-                            P_NUMBER: '',
-                            PDA_SOFTWARE_VERSION: '',
-                            PDA_MESSAGE_VERSION: '',
-                            TRANSMISSION_ATTEMPT_NUMBER: '',
-                            MESSAGE_SEQUENCE_SESSION_NUMBER: ''
-                        }
+                    'xml-fragment':{
+                        GENERAL_HEADER_PDA: generalHeader
+
                     }
                 }
             },

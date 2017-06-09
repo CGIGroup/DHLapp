@@ -1,0 +1,34 @@
+<xml-fragment>
+    <svd:GENERAL_HEADER_SVD xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:MESSAGE_IDENTIFIER>201</svd:MESSAGE_IDENTIFIER>
+        <svd:MESSAGE_TIMESTAMP>2017-06-08T10:22:14.787+02:00</svd:MESSAGE_TIMESTAMP>
+        <svd:REQUEST_RESULT>OK</svd:REQUEST_RESULT>
+        <svd:DEPOT_CODE>ALKPAK</svd:DEPOT_CODE>
+        <svd:DEPOT_NUMBER>116</svd:DEPOT_NUMBER>
+    </svd:GENERAL_HEADER_SVD>
+    <svd:REPLY_OVERVIEW_TIMEFRAME xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:TIMEFRAME_KEY>48089</svd:TIMEFRAME_KEY>
+        <svd:TIMEFRAME_DESCRIPTION>EVA: 10:30</svd:TIMEFRAME_DESCRIPTION>
+        <svd:EXPECTED_ARRIVAL_TIME_FIRST_ADDRESS>2017-06-08T10:30:00.000+02:00</svd:EXPECTED_ARRIVAL_TIME_FIRST_ADDRESS>
+    </svd:REPLY_OVERVIEW_TIMEFRAME>
+    <svd:REPLY_OVERVIEW_TIMEFRAME xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:TIMEFRAME_KEY>48229</svd:TIMEFRAME_KEY>
+        <svd:TIMEFRAME_DESCRIPTION>EVA: --:--</svd:TIMEFRAME_DESCRIPTION>
+    </svd:REPLY_OVERVIEW_TIMEFRAME>
+    <svd:REPLY_OVERVIEW_TRIPS xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:TIMEFRAME_KEY>48089</svd:TIMEFRAME_KEY>
+        <svd:TRIP_KEY>7448089</svd:TRIP_KEY>
+        <svd:TRIP_NUMBER>33</svd:TRIP_NUMBER>
+        <svd:TRIP_PDA_STATUS>3</svd:TRIP_PDA_STATUS>
+        <svd:TRIP_PDA_STATUS_DESCRIPTION>Klaar voor aflevering</svd:TRIP_PDA_STATUS_DESCRIPTION>
+        <svd:NUMBER_IN_TRIP>16</svd:NUMBER_IN_TRIP>
+    </svd:REPLY_OVERVIEW_TRIPS>
+    <svd:REPLY_OVERVIEW_TRIPS xmlns:svd="http://selektvracht.nl/SVDepotPDAWs">
+        <svd:TIMEFRAME_KEY>48229</svd:TIMEFRAME_KEY>
+        <svd:TRIP_KEY>7448229</svd:TRIP_KEY>
+        <svd:TRIP_NUMBER>37</svd:TRIP_NUMBER>
+        <svd:TRIP_PDA_STATUS>2</svd:TRIP_PDA_STATUS>
+        <svd:TRIP_PDA_STATUS_DESCRIPTION>Toegewezen aan besteller</svd:TRIP_PDA_STATUS_DESCRIPTION>
+        <svd:NUMBER_IN_TRIP>33</svd:NUMBER_IN_TRIP>
+    </svd:REPLY_OVERVIEW_TRIPS>
+</xml-fragment>

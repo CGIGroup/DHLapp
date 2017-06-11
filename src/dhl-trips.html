@@ -1,0 +1,143 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="dhl-icons.html">
+<link rel="import" href="dhl-xmlxhr.html">
+<link rel="import" href="dhl-tripdetails.html">
+
+<dom-module id="dhl-trips">
+    <template>
+        <style include="iron-flex iron-flex-alignment iron-positioning"></style>
+        <style include="shared-styles">
+            :host {
+                display: block;
+            }
+
+            paper-button {
+                height: 60px;
+                margin-bottom: 5px;
+            }
+
+        </style>
+
+        <dhl-xmlxhr
+                id="ajax200"
+                url="/src/xml/201.xml"
+                method="GET"
+                body="[[req200]]"
+                response="{{resp201}}"
+                ok-text="Ritten Opgehaald"
+                error-text="Ritten Ophalen Mislukt">
+        </dhl-xmlxhr>
+
+        <div class="media">
+            <div class="card">
+                <template is="dom-repeat"
+                          items="{{resp201.xml-fragment.REPLY_OVERVIEW_TRIPS}}"
+                          as="trip">
+                    <div>
+                        <dhl-tripdetails trip="[[trip]]"
+                                         resp201="{{resp201}}"
+                                         trip-parcels="{{tripParcels}}"
+                                         general-header-pda="{{generalHeaderPda}}"></dhl-tripdetails>
+                    </div>
+                </template>
+            </div>
+
+            <div class="card">
+                <paper-button raised>Ververs data</paper-button>
+                <paper-button raised>SPRET Aannemen</paper-button>
+                <paper-button raised>Afhalen Parcel-shop / -Station</paper-button>
+                <paper-button raised>Afgehandelde Opdracten</paper-button>
+                <paper-button raised>Alle Opdrachten</paper-button>
+            </div>
+        </div>
+
+    </template>
+
+    <script>
+
+        Polymer({
+            is: 'dhl-trips',
+
+            properties: {
+
+                /**
+                 * The GENERAL_HEADER_PDA object
+                 */
+                generalHeaderPda:{
+                    type: Object,
+                    notify: true
+                },
+
+                /**
+                 * The user is signed in, go get the trips
+                 */
+                signedIn:{
+                    type: Boolean,
+                    observer: 'signedInChanged'
+                },
+
+                /**
+                 * The Array of parcels filtered by selected trip_key
+                 */
+                tripParcels:{
+                    type: Array,
+                    value: function(){
+                        return [];
+                    },
+                    notify: true
+                },
+                /**
+                 * The TripsOverview object sent to the server
+                 */
+                req200:{
+                    type: Object,
+                    value: function(){
+                        return {
+                            Envelope:{
+                                Header: null,
+                                Body: {
+                                    TripsOverview: {
+                                        GENERAL_HEADER_PDA:{},
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+
+                /**
+                 * The 201 response from the server in JSON format
+                 */
+                resp201: {
+                    type: Object,
+                    observer: 'resp201Changed',
+                }
+
+            },
+
+            signedInChanged: function(newValue, oldValue){
+                if(!newValue) return;
+                console.log(newValue);
+
+                // customize the general header
+                this.generalHeaderPda.MESSAGE_IDENTIFIER = 200;
+                this.generalHeaderPda.MESSAGE_IDENTIFIER = new Date().toJSON().toString();
+                this.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER =
+                        parseInt(this.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER) + 1;
+
+                //request trips
+                this.req200.Envelope.Body.TripsOverview.GENERAL_HEADER_PDA = this.generalHeaderPda;
+
+                this.$.ajax200.generateRequest();
+            }
+
+        });
+
+    </script>
+</dom-module>
+

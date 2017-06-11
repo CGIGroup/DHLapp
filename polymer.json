@@ -3,7 +3,8 @@
   "shell": "src/dhl-app.html",
   "fragments": [
     "src/dhl-signin.html",
-    "src/dhl-timeframe.html",
+    "src/dhl-trips.html",
+    "src/dhl-tripdetails.html",
     "src/dhl-tripprepare.html",
     "src/dhl-route.html",
     "src/dhl-tripexecute.html",

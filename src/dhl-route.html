@@ -58,25 +58,23 @@
             is: 'dhl-route',
             properties:{
 
-                resp301:{
-                    type: Object,
-                },
-
-                selectedTripId: {
-                    type: String
+                tripParcels:{
+                    type: Array,
+                    value: function(){
+                        return [];
+                    }
                 }
+
             },
             computedWaypoints:function(){
                 var wayPoints = [];
-                if(this.selectedTripId) this.resp301['xml-fragment'].REPLY_OVERVIEW_PARCELS.forEach(function(stop){
-                    if(this.selectedTripId == stop.TRIP_KEY){
-                        //wayPoints.push({location: stop.address.latitude+' '+stop.address.longitude});
-                        wayPoints.push({location: stop.STREET+' '+
-                        stop.HOUSE_NUMBER+' '+
-                        stop.CITY
-                            //stop.address.country
-                        });
-                    }
+                this.tripParcels.forEach(function(stop){
+                    //wayPoints.push({location: stop.address.latitude+' '+stop.address.longitude});
+                    wayPoints.push({location: stop.STREET+' '+
+                    stop.HOUSE_NUMBER+' '+
+                    stop.CITY
+                        //stop.address.country
+                    });
                 }.bind(this));
                 return wayPoints
             },

@@ -22,6 +22,10 @@
         Polymer({
             is: 'dhl-xmlxhr',
 
+            listeners: {
+                'generateRequest': 'generateRequest'
+            },
+
             properties:{
 
                 /**
@@ -44,7 +48,6 @@
                  */
                 body: {
                     type: Object,
-                    observer: 'sendBody'
                 },
 
                 /**
@@ -71,10 +74,10 @@
 
             },
 
-            sendBody: function(body) {
-                if(!body) return;
+            generateRequest: function(){
+                if(!this.body) return;
                 var parser = new X2JS();
-                var xmlBody = parser.json2xml_str(body);
+                var xmlBody = parser.json2xml_str(this.body);
                 this.$.ajax.body = xmlBody;
                 this.$.ajax.generateRequest();
             },

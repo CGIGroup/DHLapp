@@ -22,6 +22,7 @@
                 outline: #cc0201;
                 outline-style: solid;
                 padding: 3px;
+                cursor: pointer;
             }
 
             .leading {
@@ -45,12 +46,10 @@
 
                 <h3>Niet afgehandelde opdrachten</h3>
                 <template is="dom-repeat"
-                          items="{{resp301.xml-fragment.REPLY_OVERVIEW_PARCELS}}"
+                          items="{{tripParcels}}"
                           as="parcel"
-                          filter="isOurTrip"
-                          sort="sortBySeqNum"
-                          observe="DELIVERY_SEQUENCE_NUMBER">
-                    <div class="details">
+                          sort="sortBySeqNum">
+                    <div class="details" on-tap="onTapDetail">
                         <div class="layout horizontal">
                             <div class="leading">
                                 <div class="layout vertical">
@@ -60,7 +59,7 @@
                             </div>
                             <div class="flex">
                                 <div class="layout vertical">
-                                    <div>[[parcel.STREET]] [[parcel.HOUSE_NUMBER]]</div>
+                                    <div>[[parcel.STREET]] [[parcel.HOUSE_NUMBER]] [[parcel.HOUSE_NUMBER_ADDITION]]</div>
                                     <div>[[parcel.POSTAL_CODE_NUMERIC]][[parcel.POSTAL_CODE_ALPHA]] [[parcel.CITY]]</div>
                                     <div>[[parcel.CUSTOMER_SHORT_NAME]]</div>
                                 </div>
@@ -98,15 +97,16 @@
                     notify: true
                 },
 
-                resp301:{
-                    type: Object
-                },
-
-                selectedTripId:{
-                    type: String
+                tripParcels:{
+                    type: Array,
+                    value: function(){
+                        return [];
+                    }
                 }
             },
-
+ready:function(){
+    var i = 0;
+},
             processBarcode: function(barcode, oldValue) {
                 if(!barcode) return;
                 //beep
@@ -118,14 +118,16 @@
                 this.$.parcelNav.click();
             },
 
-            isOurTrip: function(parcel) {
-                return this.selectedTripId == parcel.TRIP_KEY;
-            },
             sortBySeqNum: function(v1, v2) {
                 var val1 = parseInt(v1.DELIVERY_SEQUENCE_NUMBER), val2 = parseInt(v2.DELIVERY_SEQUENCE_NUMBER);
                 if (val1 == val2) return 0;
                 if (val1 > val2) return 1;
                 if (val1 < val2) return -1;
+            },
+
+            onTapDetail: function(event){
+
+                var i = 0;
             }
 
         });

@@ -1,0 +1,243 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/geo-location/geo-location.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/hand-signature/hand-signature.html">
+<link rel="import" href="barcode-scanner.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="dhl-atneighbors">
+    <template>
+        <style include="iron-flex iron-flex-alignment iron-positioning"></style>
+
+        <style include="shared-styles">
+            :host {
+                display: block;
+                padding: 10px;
+            }
+
+            paper-button {
+                margin-top: 5px;
+            }
+
+        </style>
+
+        <geo-location watch-pos latitude="{{lat}}" longitude="{{lng}}"></geo-location>
+
+        <dhl-xmlxhr
+                id="ajax1500"
+                url="/src/xml/1501.xml"
+                method="GET"
+                body="[[req1500]]"
+                response="{{resp1501}}"
+                ok-text="Aflevering Verzonden"
+                error-text="Aflevering Verzenden Mislukt">
+        </dhl-xmlxhr>
+
+        <div class="media">
+
+            <barcode-scanner code="{{barcode}}"
+                             placeholder-message="Scanner Activeren"
+                             on-recognize="onRecognize">
+            </barcode-scanner>
+
+            <paper-card class="card">
+                <h3>Bij Buren</h3>
+
+                <paper-input value="{{barcode}}"
+                             label="KIB"
+                             required
+                             auto-validate>
+                </paper-input>
+
+                <div>[[selectedParcel.CUSTOMER_SHORT_NAME]]</div>
+                <div>[[selectedParcel.STREET]] [[selectedParcel.HOUSE_NUMBER]]</div>
+                <div>[[selectedParcel.POSTAL_CODE_NUMERIC]][[selectedParcel.POSTAL_CODE_ALPHA]] [[selectedParcel.CITY]]</div>
+                <p></p>
+                <div>PID:   [[selectedParcel.PID]]</div>
+                <div>instr: [[computeDelInstr(parcel)]]</div>
+
+                <div class="layout horizontal">
+                    <paper-input
+                            label="Straat"
+                            value="{{street}}"
+                            type="String"
+                            required
+                            auto-validate></paper-input>
+                    <paper-input
+                            label="Huisnummer"
+                            value="{{houseNumber}}"
+                            type="number"
+                            required
+                            auto-validate></paper-input>
+                    <paper-input
+                            label="Toev."
+                            value="{{houseNumberAdd}}"
+                            type="string"
+                            required
+                            auto-validate></paper-input>
+                </div>
+                <div class="layout horizontal">
+                    <paper-input
+                            label="PC Num"
+                            value="{{postCodeNum}}"
+                            type="number"
+                            length="4"
+                            required
+                            auto-validate></paper-input>
+                    <paper-input
+                            label="Alfa"
+                            value="{{postCodeAlfa}}"
+                            length="2"
+                            required
+                            auto-validate></paper-input>
+                    <paper-input
+                            label="Plaats"
+                            value="{{city}}"
+                            required
+                            auto-validate>
+                    </paper-input>
+                </div>
+
+                <!--<paper-input
+                        label="Pin Code"
+                        value="{{pinCode}}"
+                        required
+                        auto-validate>
+                </paper-input>-->
+                <!--
+                <p>Rembours: 25,00 Euro</p>
+                <paper-input
+                        label="Naam Ondertekenaar"
+                        value="{{signerName}}"
+                        required
+                        auto-validate>
+                </paper-input>
+
+                <div>Zet Hier Uw Handtekenning:</div>
+                <hand-signature data="{{signature}}"
+                                width="288px"
+                                height="200px"></hand-signature>
+                -->
+                <p></p>
+                <paper-button on-tap="onTapSend" raised>Verzenden</paper-button>
+
+            </paper-card>
+
+        </div>
+
+        <audio id="audio" src="../images/censor-beep-01.mp3"></audio>
+
+        <a id="tripExecuteNav" href="/tripexecute" style="display:none;">Rit Uitvoern</a>
+
+    </template>
+
+    <script>
+        Polymer({
+            is: 'dhl-atneighbors',
+
+            properties:{
+
+                barcode:{
+                    type: String,
+                    observer: 'processBarcode',
+                    notify: true,
+                },
+
+                selectedParcel: {
+                    type: Object,
+                    value: function(){return {};}
+                },
+
+                /**
+                 * The ParcelDeliveryResults object sent to the server
+                 */
+                req1500:{
+                    type: Object,
+                    value: function(){
+                        return {
+                            Envelope:{
+                                Header: null,
+                                Body: {
+                                    ParcelDeliveryResults: {
+                                        GENERAL_HEADER_PDA:{},
+                                        RESULT_MESSAGE_IDENTIFIER: {},
+                                        PARCEL_DELIVERY_RESULT: {}
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+
+                /**
+                 * The ParcelDeliveryResults object returned from the server
+                 */
+                resp1501:{
+                    type: Object,
+                    observer: 'resp1501Changed',
+                    notify: true
+                },
+
+            },
+
+            processBarcode: function(barcode, oldValue) {
+                if(!barcode) return;
+            },
+
+            onRecognize: function(e){
+                this.$.audio.play();// beep
+            },
+
+            computeDelInstr:function (parcel){
+                if(parcel.DELIVERY_INSTRUCTION) return parcel.DELIVERY_INSTRUCTION;
+                else return '';
+            },
+
+            onTapSend: function(event) {
+
+                this.req1500.Envelope.Body.ParcelDeliveryResults.RESULT_MESSAGE_IDENTIFIER = {
+                    MESSAGE_TIMESTAMP_ORIGINAL: '',
+                    MESSAGE_SEQUENCE_SESSION_NUMBER_ORIGINAL: ''
+                };
+
+                this.req1500.Envelope.Body.ParcelDeliveryResults.PARCEL_DELIVERY_RESULT = {
+                    GPS_LATITUDE: '',
+                    GPS_LONGITUDE: '',
+                    TIMEFRAME_KEY: '',
+                    TRIP_KEY: '',
+                    PARCEL_KEY: '',
+                    TIMESTAMP_PARCEL_STATUS: new Date().toJSON().toString(),
+                    RESULT_DESCRIPTION: '',
+                    SIGNATURE_BLOB: '',
+                    SIGNER_NAME: '',
+                    POSTAL_CODE_NUMERIC: '',
+                    POSTAL_CODE_ALPHA: '',
+                    STREET: '',
+                    HOUSE_NUMBER: '',
+                    HOUSE_NUMBER_ADDITION: '',
+                    CITY: '',
+                    BARCODE_KIB_CARD: ''
+                };
+
+                // customize the general header
+                this.generalHeaderPda.MESSAGE_IDENTIFIER = 1500;
+                this.generalHeaderPda.MESSAGE_IDENTIFIER = new Date().toJSON().toString();
+                this.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER =
+                        parseInt(this.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER) + 1;
+
+                // send start trip request
+                this.req1500.Envelope.Body.ParcelDeliveryResults.GENERAL_HEADER_PDA = this.generalHeaderPda;
+
+                this.$.ajax1500.generateRequest();
+
+            },
+
+            resp1501Changed: function(resp, oldValue) {
+                if(!resp) return;
+                this.$.tripExecuteNav.click();
+            },
+        });
+    </script>
+</dom-module>

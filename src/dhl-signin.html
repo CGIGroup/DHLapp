@@ -19,6 +19,16 @@
         /src/xml/101.xml-->
 
         <dhl-xmlxhr
+                id="ajax100Test"
+                url="https://depotws-test.nl.dhl.com/SVDepotPDAWs"
+                method="POST"
+                body="[[req100]]"
+                response="{{resp101}}"
+                ok-text="Aanmelden Gelukt"
+                error-text="Aanmelden Mislukt">
+        </dhl-xmlxhr>
+
+        <dhl-xmlxhr
                 id="ajax100"
                 url="/src/xml/101.xml"
                 method="GET"
@@ -56,6 +66,8 @@
             </paper-card>
 
         </div>
+
+        <paper-button style="width:30px;" on-tap="onTapSignInTest" raised>Sign In Test</paper-button>
 
         <audio id="audio"></audio>
 
@@ -181,7 +193,31 @@
                 // This is to prevent spontaneous video/audio download .
                 // We just play empty sound here
                 this.$.audio.play();// no sound
-            }
+            },
+
+            onTapSignInTest: function(e) {
+
+                // initially set the general header to be used on all future requests
+                this.generalHeaderPda = {
+                    IMEI_NUMBER: '980067001198202',
+                    TELEPHONE_NUMBER: '0612345678',
+                    P_NUMBER: '605477',
+                    PDA_SOFTWARE_VERSION: '1.7.2.18607',
+                    PDA_MESSAGE_VERSION: '1.4.0',
+                    MESSAGE_SEQUENCE_SESSION_NUMBER: '1'
+                };
+
+                // customize the general header
+                this.generalHeaderPda.MESSAGE_IDENTIFIER = 100;
+                this.generalHeaderPda.MESSAGE_IDENTIFIER = new Date().toJSON().toString();
+                this.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER = 1;
+                this.req100.Envelope.Body.LogOn.GENERAL_HEADER_PDA = this.generalHeaderPda;
+
+                // send P-Number to the server
+                this.req100.Envelope.Body.LogOn.LogOnNumber.P_NUMBER = '605477';//from barcode
+
+                this.$.ajax100Test.generateRequest();
+            },
         });
     </script>
 </dom-module>

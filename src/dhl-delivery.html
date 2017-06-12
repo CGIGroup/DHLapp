@@ -1,9 +1,8 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="barcode-scanner.html">
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
-<link rel="import" href="hand-signature.html">
+<link rel="import" href="barcode-scanner.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="dhl-delivery">
@@ -19,26 +18,6 @@
             }
 
         </style>
-
-        <dhl-xmlxhr
-                url="/test/xml/resp101.xml"
-                method="GET"
-                body="[[logonBody]]"
-                response="{{resp101}}"
-                ok-text="Aanmelden Gelukt"
-                error-text="Aanmelden Mislukt">
-        </dhl-xmlxhr>
-
-        <dhl-xmlxhr
-                url="/test/xml/replyOverviewTrips.xml"
-                method="GET"
-                body="[[timeframeBody]]"
-                response="{{resp301}}"
-                ok-text="Ritten Opgehaald"
-                error-text="Ritten Ophalen Mislukt">
-        </dhl-xmlxhr>
-
-
 
         <div class="media">
 
@@ -56,36 +35,27 @@
                              auto-validate>
                 </paper-input>
 
-                <div>[[selectedParcel.CUSTOMER_SHORT_NAME]]</div>
                 <div>[[selectedParcel.STREET]] [[selectedParcel.HOUSE_NUMBER]]</div>
                 <div>[[selectedParcel.POSTAL_CODE_NUMERIC]][[selectedParcel.POSTAL_CODE_ALPHA]] [[selectedParcel.CITY]]</div>
+                <div>[[selectedParcel.CUSTOMER_SHORT_NAME]]</div>
+                <p></p>
+                <div>[[selectedParcel.PID]]</div>
+                <div>[[computeDelInstr(parcel)]]</div>
 
-                <paper-button on-tap="onAddress" raised>Op Adres</paper-button>
-                <paper-button raised>Bij Buren (KIB)</paper-button>
-                <paper-button raised>Niet Thuis (KIB)</paper-button>
-                <paper-button raised>Overig</paper-button>
+                <paper-button on-tap="atAddress" raised>Op Adres</paper-button>
+                <paper-button on-tap="atNeighbors" raised>Bij Buren (KIB)</paper-button>
+                <paper-button on-tap="notHome" raised>Niet Thuis (KIB)</paper-button>
+                <paper-button disabled raised>Overig</paper-button>
 
-                <div hide$="[[!onAddressDisplay]]">
-                    <p>Rembours: 25,00 Euro</p>
-
-                    <paper-input value="{{Name}}"
-                                 label="Naam"
-                                 type="String"
-                                 required
-                                 auto-validate>
-                    </paper-input>
-
-                    <div>Zet Hier Uw Handtekenning:</div>
-                    <hand-signature data="{{signature}}"
-                                    width="288px"
-                                    height="200px"></hand-signature>
-
-                </div>
             </paper-card>
 
         </div>
 
         <audio id="audio" src="../images/censor-beep-01.mp3"></audio>
+
+        <a id="atAddressNav" href="/ataddress" style="display:none;">Op Adres</a>
+        <a id="atNeighborsNav" href="/atneighbors" style="display:none;">Bij Buren</a>
+        <a id="notHomeNav" href="/nothome" style="display:none;">Niet Thuis</a>
 
     </template>
 
@@ -111,18 +81,12 @@
                     observer: 'signatureChanged',
                 },
 
-                onAddressDisplay:{
-                    value: false,
-                    reflectToAttribute: true
-                }
             },
-            onAddress: function(){
-                this.onAddressDisplay = true;
-            },
+
             processBarcode: function(barcode, oldValue) {
                 if(!barcode) return;
                 //beep
-                this.$.audio.play();
+                //this.$.audio.play();
 
                 //update the status in tripInfo
                 //this.set('tripInfo.stops.'+sIdx+'.pieces.'+pIdx+'.status', 'sending...');
@@ -136,6 +100,24 @@
 
             onRecognize: function(e){
                 this.$.audio.play();// beep
+            },
+
+            computeDelInstr:function (parcel){
+                if(parcel.DELIVERY_INSTRUCTION) return parcel.DELIVERY_INSTRUCTION;
+                else return '';
+            },
+
+            atAddress: function(){
+                this.$.atAddressNav.click();
+
+            },
+
+            atNeighbors: function(){
+                this.$.atNeighborsNav.click();
+            },
+
+            notHome: function(){
+                this.$.notHomeNav.click();
             },
         });
     </script>

@@ -6,6 +6,7 @@
 <link rel="import" href="../bower_components/paper-styles/typography.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/iron-list/iron-list.html">
 <link rel="import" href="barcode-scanner.html">
 <link rel="import" href="shared-styles.html">
 
@@ -19,12 +20,14 @@
 
             .details{
                 margin-bottom: 20px;
-                outline: #cc0201;
-                outline-style: solid;
+                border: #cc0201;
+                border-style: solid;
                 padding: 3px;
                 cursor: pointer;
             }
-
+            .details.selected {
+                background-color: #fff;
+            }
             .leading {
                 width: 50px;
             }
@@ -45,33 +48,42 @@
                 </paper-input>
 
                 <h3>Niet afgehandelde opdrachten</h3>
-                <template is="dom-repeat"
-                          items="{{tripParcels}}"
-                          as="parcel"
-                          sort="sortBySeqNum">
-                    <div class="details" on-tap="onTapDetail">
-                        <div class="layout horizontal">
-                            <div class="leading">
-                                <div class="layout vertical">
-                                    <div>[[parcel.DELIVERY_SEQUENCE_NUMBER]]</div>
-                                    <div>19:18</div>
+                <iron-list id="itemsList"
+                           items="[[tripParcels]]"
+                           as="parcel"
+                           sort="sortBySeqNum"
+                           selected-item="{{selectedParcel}}"
+                           selection-enabled
+                           scroll-target="document">
+                    <template>
+                        <div>
+                            <div class$="[[_computedClass(selected)]]">
+                                <div class="layout horizontal">
+                                    <div class="leading">
+                                        <div class="layout vertical">
+                                            <div>[[parcel.DELIVERY_SEQUENCE_NUMBER]]</div>
+                                            <div>[[computeDelMom(parcel)]]</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex">
+                                        <div class="layout vertical">
+                                            <!-- [[parcel.HOUSE_NUMBER_ADDITION]]-->
+                                            <div>[[parcel.STREET]] [[parcel.HOUSE_NUMBER]]</div>
+                                            <div>[[parcel.POSTAL_CODE_NUMERIC]][[parcel.POSTAL_CODE_ALPHA]] [[parcel.CITY]]</div>
+                                            <div>[[parcel.CUSTOMER_SHORT_NAME]]</div>
+                                        </div>
+                                    </div>
+                                    <div class="layout vertical">
+                                        <div>PA</div>
+                                        <div>Icon</div>
+                                        <div>[[computeBarShort(parcel)]]</div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="flex">
-                                <div class="layout vertical">
-                                    <div>[[parcel.STREET]] [[parcel.HOUSE_NUMBER]] [[parcel.HOUSE_NUMBER_ADDITION]]</div>
-                                    <div>[[parcel.POSTAL_CODE_NUMERIC]][[parcel.POSTAL_CODE_ALPHA]] [[parcel.CITY]]</div>
-                                    <div>[[parcel.CUSTOMER_SHORT_NAME]]</div>
-                                </div>
-                            </div>
-                            <div class="layout vertical">
-                                <div>PA</div>
-                                <div>Icon</div>
-                                <div>...1234</div>
                             </div>
                         </div>
-                    </div>
-                </template>
+                    </template>
+                </iron-list>
+
             </div>
         </div>
 
@@ -94,7 +106,8 @@
 
                 selectedParcel:{
                     type: Object,
-                    notify: true
+                    notify: true,
+                    observer: 'selectedParcelChanged',
                 },
 
                 tripParcels:{
@@ -104,9 +117,7 @@
                     }
                 }
             },
-ready:function(){
-    var i = 0;
-},
+
             processBarcode: function(barcode, oldValue) {
                 if(!barcode) return;
                 //beep
@@ -125,11 +136,27 @@ ready:function(){
                 if (val1 < val2) return -1;
             },
 
-            onTapDetail: function(event){
+            _computedClass: function(isSelected) {
+                var classes = 'details';
+                if (isSelected) {
+                    classes += ' selected';
+                }
+                return classes;
+            },
 
-                var i = 0;
-            }
+            selectedParcelChanged: function(){
+                this.$.parcelNav.click();
+            },
 
+            computeDelMom: function(parcel){
+                if(!parcel.DELIVERY_MOMENT) return '';
+                var ts = new Date(parcel.DELIVERY_MOMENT);
+                return ts.getHours()+':'+ts.getMinutes();
+            },
+
+            computeBarShort: function(parcel){
+                return '...'+parcel.PID.toString().substr(parcel.PID.toString().length - 4);
+            },
         });
 
     </script>

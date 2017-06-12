@@ -102,6 +102,9 @@
                         <a name="route" href="/route">Route</a>
                         <a name="tripexecute" href="/tripexecute">Rit Uitvoeren</a>
                         <a name="delivery" href="/delivery">Afleveren</a>
+                        <a name="ataddress" href="/ataddress">Op Adres</a>
+                        <a name="atneighbors" href="/atneighbors">Bij Buren</a>
+                        <a name="nothome" href="/nothome">Niet Thuis</a>
                         <div class="flex"></div>
                         <a name="about" href="/about">About</a>
                         <a name="barcodegenerator" href="/barcodegenerator">Barcode Voorbeelden</a>
@@ -168,6 +171,21 @@
                             general-header-pda="{{generalHeaderPda}}"
                             selected-parcel="[[selectedParcel]]"
                             name="delivery"></dhl-delivery>
+
+                    <dhl-ataddress
+                            general-header-pda="{{generalHeaderPda}}"
+                            selected-parcel="[[selectedParcel]]"
+                            name="ataddress"></dhl-ataddress>
+
+                    <dhl-atneighbors
+                            general-header-pda="{{generalHeaderPda}}"
+                            selected-parcel="[[selectedParcel]]"
+                            name="atneighbors"></dhl-atneighbors>
+
+                    <dhl-nothome
+                            general-header-pda="{{generalHeaderPda}}"
+                            selected-parcel="[[selectedParcel]]"
+                            name="nothome"></dhl-nothome>
 
                     <dhl-about name="about"></dhl-about>
 

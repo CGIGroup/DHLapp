@@ -144,7 +144,8 @@
                 return classes;
             },
 
-            selectedParcelChanged: function(){
+            selectedParcelChanged: function(newValue){
+                if(!newValue) return;
                 this.$.parcelNav.click();
             },
 

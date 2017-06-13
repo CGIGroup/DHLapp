@@ -4,11 +4,12 @@
 <dom-module id="dhl-xmlxhr">
     <template>
 
+        <!-- text.xml sends prefilght, text/plain causes cors error error-->
         <iron-ajax
                 id="ajax"
                 url="[[url]]"
                 method="[[method]]"
-                content-type="application/xml"
+                content-type="text/xml"
                 handle-as="xml"
                 on-response="handleResponse"
                 on-error="handleError">
@@ -75,6 +76,38 @@
             },
 
             generateRequest: function(){
+                /*
+                var fragment = {
+                    'LogOn': {
+                        'GENERAL_HEADER_PDA':{},
+                        'LogOnNumber':{
+                            'P_NUMBER': ''
+                        }
+                    }
+                };
+
+
+                var envelope = {
+                    'soapenv:Envelope':{
+                        '_xmlns:soapenv': "http://schemas.xmlsoap.org/soap/envelope/",
+                        '_xmlns:svd': "http://selektvracht.nl/SVDepotPDAWs",
+                        'soapenv:Header': null,
+                        'soapenv:Body': {}
+                    }
+                };
+
+                // customize the general header
+                this.generalHeaderPda.MESSAGE_TIMESTAMP = new Date().toJSON().toString();
+                this.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER =
+                        parseInt(this.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER) + 1;
+                for(var key in origFrag){
+                    var value = origFrag[key];
+                    value.GENERAL_HEADER_PDA = this.generalHeaderPda;
+                }
+                var newFrag = this.addNameSpace(fragment);
+                */
+
+
                 if(!this.body) return;
                 var parser = new X2JS();
                 var xmlBody = parser.json2xml_str(this.body);
@@ -82,10 +115,24 @@
                 this.$.ajax.generateRequest();
             },
 
+            addNameSpace: function(origFrag){
+                var newFrag = {};
+                for(var key in origFrag){
+                    var value = origFrag[key];
+                    if(typeof(value) === 'object'){
+                        newFrag['svd:'+key] = this.addNameSpace(value)
+                    }
+                    else newFrag['svd:'+key] = value;
+                }
+                return newFrag;
+            },
+
             handleResponse: function(event){
                 var responseXml = event.detail.xhr.response;
                 var parser = new X2JS();
                 this.response = parser.xml_str2json(responseXml);
+
+                console.log(this.response);
 
                 //show result in toast
                 var toast = document.getElementById('toastOk');

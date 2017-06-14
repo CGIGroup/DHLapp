@@ -4,11 +4,13 @@
 <dom-module id="dhl-xmlxhr">
     <template>
 
-        <!-- text.xml sends prefilght, text/plain causes cors error error-->
+        <!-- text.xml sends prefilght, text/plain causes cors error error
+
+                url="[[url]]"
+                method="[[method]]"-->
         <iron-ajax
                 id="ajax"
-                url="[[url]]"
-                method="[[method]]"
+                methode="POST"
                 content-type="text/xml"
                 handle-as="xml"
                 on-response="handleResponse"
@@ -30,18 +32,10 @@
             properties:{
 
                 /**
-                 * The url to be used
+                 * The messageIdentifier to be used
                  */
-                url:{
+                messageIdentifier:{
                     type: String,
-                },
-
-                /**
-                 * The method to be used
-                 */
-                method:{
-                    type: String,
-                    value: 'GET'
                 },
 
                 /**
@@ -71,48 +65,44 @@
                  */
                 errorText:{
                     type: String
-                }
+                },
 
+                /**
+                 * The general header to be used on all future requests
+                 */
+                generalHeaderPda:{
+                    type: Object,
+                    notify: true
+                },
             },
 
             generateRequest: function(){
-                /*
-                var fragment = {
-                    'LogOn': {
-                        'GENERAL_HEADER_PDA':{},
-                        'LogOnNumber':{
-                            'P_NUMBER': ''
-                        }
-                    }
-                };
 
+                // update the general header
+                this.generalHeaderPda.MESSAGE_TIMESTAMP = new Date().toJSON().toString();
+                this.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER =
+                        parseInt(this.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER) + 1;
+                this.generalHeaderPda.MESSAGE_IDENTIFIER= this.messageIdentifier;
+
+                var operationName = Object.keys(this.body)[0];
+                this.body[operationName].GENERAL_HEADER_PDA = this.generalHeaderPda;
+
+                var prefixedFragment = this.addNameSpace(this.body);
 
                 var envelope = {
                     'soapenv:Envelope':{
                         '_xmlns:soapenv': "http://schemas.xmlsoap.org/soap/envelope/",
                         '_xmlns:svd': "http://selektvracht.nl/SVDepotPDAWs",
                         'soapenv:Header': null,
-                        'soapenv:Body': {}
+                        'soapenv:Body': prefixedFragment
                     }
                 };
 
-                // customize the general header
-                this.generalHeaderPda.MESSAGE_TIMESTAMP = new Date().toJSON().toString();
-                this.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER =
-                        parseInt(this.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER) + 1;
-                for(var key in origFrag){
-                    var value = origFrag[key];
-                    value.GENERAL_HEADER_PDA = this.generalHeaderPda;
-                }
-                var newFrag = this.addNameSpace(fragment);
-                */
-
-
-                if(!this.body) return;
                 var parser = new X2JS();
-                var xmlBody = parser.json2xml_str(this.body);
+                var xmlBody = parser.json2xml_str(envelope);
                 this.$.ajax.body = xmlBody;
-                this.$.ajax.generateRequest();
+                console.log(xmlBody);
+                //this.$.ajax.generateRequest();
             },
 
             addNameSpace: function(origFrag){

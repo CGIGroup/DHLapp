@@ -30,8 +30,8 @@
 
         <dhl-xmlxhr
                 id="ajax100"
-                url="/src/xml/101.xml"
-                method="GET"
+                message-identifier="100"
+                general-header-pda="{{generalHeaderPda}}"
                 body="[[req100]]"
                 response="{{resp101}}"
                 ok-text="Aanmelden Gelukt"
@@ -103,19 +103,13 @@
                 /**
                  * The req100 object sent to the server
                  */
-                req100:{
-                    type: Object,
-                    value: function(){
+                req100: {
+                    type: 'Object',
+                    value: function() {
                         return {
-                            Envelope:{
-                                Header: null,
-                                Body: {
-                                    LogOn: {
-                                        GENERAL_HEADER_PDA:{},
-                                        LogOnNumber:{
-                                            P_NUMBER: ''
-                                        }
-                                    }
+                            LogOn: {
+                                LogOnNumber: {
+                                    P_NUMBER: ''
                                 }
                             }
                         }
@@ -165,14 +159,8 @@
                     MESSAGE_SEQUENCE_SESSION_NUMBER: '1'
                 };
 
-                // customize the general header
-                this.generalHeaderPda.MESSAGE_IDENTIFIER = 100;
-                this.generalHeaderPda.MESSAGE_IDENTIFIER = new Date().toJSON().toString();
-                this.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER = 1;
-                this.req100.Envelope.Body.LogOn.GENERAL_HEADER_PDA = this.generalHeaderPda;
-
                 // send P-Number to the server
-                this.req100.Envelope.Body.LogOn.LogOnNumber.P_NUMBER = '605477';//from barcode
+                this.req100.LogOn.LogOnNumber.P_NUMBER = '605477';//from barcode
 
                 this.$.ajax100.generateRequest();
             },

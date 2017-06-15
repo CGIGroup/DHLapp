@@ -26,6 +26,28 @@
 <soapenv:Header/>
 <soapenv:Body>
     <svd:LogOn>
+        <svd:LogOnNumber>
+            <svd:P_NUMBER>605477</svd:P_NUMBER>
+        </svd:LogOnNumber>
+        <svd:GENERAL_HEADER_PDA>
+            <svd:IMEI_NUMBER>980067001198202</svd:IMEI_NUMBER>
+            <svd:TELEPHONE_NUMBER>0612345678</svd:TELEPHONE_NUMBER>
+            <svd:P_NUMBER>605477</svd:P_NUMBER>
+            <svd:PDA_SOFTWARE_VERSION>1.7.2.18607</svd:PDA_SOFTWARE_VERSION>
+            <svd:PDA_MESSAGE_VERSION>1.4.0</svd:PDA_MESSAGE_VERSION>
+            <svd:MESSAGE_SEQUENCE_SESSION_NUMBER>2</svd:MESSAGE_SEQUENCE_SESSION_NUMBER>
+            <svd:MESSAGE_TIMESTAMP>2017-06-14T15:41:18.884Z</svd:MESSAGE_TIMESTAMP>
+            <svd:MESSAGE_IDENTIFIER>100</svd:MESSAGE_IDENTIFIER>
+        </svd:GENERAL_HEADER_PDA>
+    </svd:LogOn>
+</soapenv:Body>
+</soapenv:Envelope>
+
+<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/'
+                  xmlns:svd='http://selektvracht.nl/SVDepotPDAWs'>
+<soapenv:Header/>
+<soapenv:Body>
+    <svd:LogOn>
         <svd:GENERAL_HEADER_PDA>
             <svd:IMEI_NUMBER>980067001198202</svd:IMEI_NUMBER>
             <svd:TELEPHONE_NUMBER>0612345678</svd:TELEPHONE_NUMBER>

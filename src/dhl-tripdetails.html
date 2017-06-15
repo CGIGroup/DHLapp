@@ -66,8 +66,8 @@
 
         <dhl-xmlxhr
                 id="ajax300"
-                url="/src/xml/301.xml"
-                method="GET"
+                message-identifier="300"
+                general-header-pda="{{generalHeaderPda}}"
                 body="[[req300]]"
                 response="{{resp301}}"
                 ok-text="Opdrachten Opgehaald"
@@ -76,8 +76,8 @@
 
         <dhl-xmlxhr
                 id="ajax200"
-                url="/src/xml/201B.xml"
-                method="GET"
+                message-identifier="200"
+                general-header-pda="{{generalHeaderPda}}"
                 body="[[req200]]"
                 response="{{resp201}}"
                 ok-text="Ritten Opgehaald"
@@ -86,8 +86,8 @@
 
         <dhl-xmlxhr
                 id="ajax2000"
-                url="/src/xml/2001.xml"
-                method="GET"
+                message-identifier="2000"
+                general-header-pda="{{generalHeaderPda}}"
                 body="[[req2000]]"
                 response="{{resp2001}}"
                 ok-text="Rit Gestart"
@@ -216,14 +216,7 @@
                     type: Object,
                     value: function(){
                         return {
-                            Envelope:{
-                                Header: null,
-                                Body: {
-                                    TripsOverview: {
-                                        GENERAL_HEADER_PDA:{},
-                                    }
-                                }
-                            }
+                            TripsOverview: {}
                         }
                     }
                 },
@@ -244,14 +237,8 @@
                     type: Object,
                     value: function(){
                         return {
-                            Envelope:{
-                                Header: null,
-                                Body: {
-                                    ParcelsInTrip: {
-                                        GENERAL_HEADER_PDA:{},
-                                        PDA_DATA_INDICATION: true
-                                    }
-                                }
+                            ParcelsInTrip: {
+                                PDA_DATA_INDICATION: true
                             }
                         }
                     }
@@ -273,14 +260,8 @@
                     type: Object,
                     value: function(){
                         return {
-                            Envelope:{
-                                Header: null,
-                                Body: {
-                                    BeginAndEndMilageTrip: {
-                                        GENERAL_HEADER_PDA:{},
-                                        BEGIN_END_TRIP_MILEAGE: {}
-                                    }
-                                }
+                            BeginAndEndMilageTrip: {
+                                BEGIN_END_TRIP_MILEAGE: {}
                             }
                         }
                     }
@@ -393,8 +374,8 @@
                 };
 
                 // add/update timeframe to request
-                if(timeFrameIdx > -1) this.req300.Envelope.Body.ParcelsInTrip[timeFrameIdx] = TIMEFRAME;
-                else this.req300.Envelope.Body.ParcelsInTrip.push(TIMEFRAME);
+                if(timeFrameIdx > -1) this.req300.ParcelsInTrip[timeFrameIdx] = TIMEFRAME;
+                else this.req300.ParcelsInTrip.push(TIMEFRAME);
 
                 // customize the general header
                 this.generalHeaderPda.MESSAGE_IDENTIFIER = 300;
@@ -403,7 +384,7 @@
                         parseInt(this.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER) + 1;
 
                 // send start trip request
-                this.req300.Envelope.Body.ParcelsInTrip.GENERAL_HEADER_PDA = this.generalHeaderPda;
+                this.req300.ParcelsInTrip.GENERAL_HEADER_PDA = this.generalHeaderPda;
 
                 this.$.ajax300.generateRequest();
             },
@@ -425,7 +406,7 @@
                 this.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER =
                         parseInt(this.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER) + 1;
 
-                this.req200.Envelope.Body.TripsOverview.GENERAL_HEADER_PDA = this.generalHeaderPda;
+                this.req200.TripsOverview.GENERAL_HEADER_PDA = this.generalHeaderPda;
 
                 this.$.ajax200.generateRequest();
             },
@@ -436,7 +417,7 @@
 
             onStartTap: function(event) {
 
-                this.req2000.Envelope.Body.BeginAndEndMilageTrip.BEGIN_END_TRIP_MILEAGE = {
+                this.req2000.BeginAndEndMilageTrip.BEGIN_END_TRIP_MILEAGE = {
                     TIMEFRAME_KEY: this.trip.TIMEFRAME_KEY,
                     TRIP_KEY: this.trip.TRIP_KEY,
                     TRIP_NUMBER: this.trip.TRIP_NUMBER,
@@ -451,7 +432,7 @@
                         parseInt(this.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER) + 1;
 
                 // send start trip request
-                this.req2000.Envelope.Body.BeginAndEndMilageTrip.GENERAL_HEADER_PDA = this.generalHeaderPda;
+                this.req2000.BeginAndEndMilageTrip.GENERAL_HEADER_PDA = this.generalHeaderPda;
 
                 this.$.ajax2000.generateRequest();
 

@@ -151,16 +151,17 @@
 
                 // initially set the general header to be used on all future requests
                 this.generalHeaderPda = {
-                    IMEI_NUMBER: '980067001198202',
+                    IMEI_NUMBER: '980060642228356',
                     TELEPHONE_NUMBER: '0612345678',
-                    P_NUMBER: '605477',
+                    P_NUMBER: '614444',
                     PDA_SOFTWARE_VERSION: '1.7.2.18607',
                     PDA_MESSAGE_VERSION: '1.4.0',
-                    MESSAGE_SEQUENCE_SESSION_NUMBER: '1'
+                    TRANSMISSION_ATTEMPT_NUMBER: '1',
+                    MESSAGE_SEQUENCE_SESSION_NUMBER: '0'
                 };
 
                 // send P-Number to the server
-                this.req100.LogOn.LogOnNumber.P_NUMBER = '605477';//from barcode
+                this.req100.LogOn.LogOnNumber.P_NUMBER = '614444';//from barcode
 
                 this.$.ajax100.generateRequest();
             },
@@ -185,27 +186,6 @@
 
             onTapSignInTest: function(e) {
 
-                // initially set the general header to be used on all future requests
-                this.generalHeaderPda = {
-                    'svd:IMEI_NUMBER': '980067001198202',
-                    'svd:TELEPHONE_NUMBER': '0612345678',
-                    'svd:P_NUMBER': '605477',
-                    'svd:PDA_SOFTWARE_VERSION': '1.7.2.18607',
-                    'svd:PDA_MESSAGE_VERSION': '1.4.0',
-                    'svd:TRANSMISSION_ATTEMPT_NUMBER': '1',
-                    'svd:MESSAGE_SEQUENCE_SESSION_NUMBER': '1'
-                };
-
-                // customize the general header
-                this.generalHeaderPda['svd:MESSAGE_IDENTIFIER'] = 100;
-                this.generalHeaderPda['svd:MESSAGE_TIMESTAMP'] = new Date().toJSON().toString();
-                this.generalHeaderPda['svd:MESSAGE_SEQUENCE_SESSION_NUMBER'] = 1;
-                this.req100['soapenv:Envelope']['soapenv:Body']['svd:LogOn']['svd:GENERAL_HEADER_PDA'] = this.generalHeaderPda;
-
-                // send P-Number to the server
-                this.req100['soapenv:Envelope']['soapenv:Body']['svd:LogOn']['svd:LogOnNumber']['svd:P_NUMBER'] = '605477';//from barcode
-
-                this.$.ajax100Test.generateRequest();
             },
         });
     </script>

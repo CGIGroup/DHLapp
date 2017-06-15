@@ -27,8 +27,8 @@
 
         <dhl-xmlxhr
                 id="ajax1500"
-                url="/src/xml/1501.xml"
-                method="GET"
+                message-identifier="1500"
+                general-header-pda="{{generalHeaderPda}}"
                 body="[[req1500]]"
                 response="{{resp1501}}"
                 ok-text="Aflevering Verzonden"
@@ -157,15 +157,9 @@
                     type: Object,
                     value: function(){
                         return {
-                            Envelope:{
-                                Header: null,
-                                Body: {
-                                    ParcelDeliveryResults: {
-                                        GENERAL_HEADER_PDA:{},
-                                        RESULT_MESSAGE_IDENTIFIER: {},
-                                        PARCEL_DELIVERY_RESULT: {}
-                                    }
-                                }
+                            ParcelDeliveryResults: {
+                                RESULT_MESSAGE_IDENTIFIER: {},
+                                PARCEL_DELIVERY_RESULT: {}
                             }
                         }
                     }
@@ -197,12 +191,12 @@
 
             onTapSend: function(event) {
 
-                this.req1500.Envelope.Body.ParcelDeliveryResults.RESULT_MESSAGE_IDENTIFIER = {
+                this.req1500.ParcelDeliveryResults.RESULT_MESSAGE_IDENTIFIER = {
                     MESSAGE_TIMESTAMP_ORIGINAL: '',
                     MESSAGE_SEQUENCE_SESSION_NUMBER_ORIGINAL: ''
                 };
 
-                this.req1500.Envelope.Body.ParcelDeliveryResults.PARCEL_DELIVERY_RESULT = {
+                this.req1500.ParcelDeliveryResults.PARCEL_DELIVERY_RESULT = {
                     GPS_LATITUDE: '',
                     GPS_LONGITUDE: '',
                     TIMEFRAME_KEY: '',
@@ -228,7 +222,7 @@
                         parseInt(this.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER) + 1;
 
                 // send start trip request
-                this.req1500.Envelope.Body.ParcelDeliveryResults.GENERAL_HEADER_PDA = this.generalHeaderPda;
+                this.req1500.ParcelDeliveryResults.GENERAL_HEADER_PDA = this.generalHeaderPda;
 
                 this.$.ajax1500.generateRequest();
 

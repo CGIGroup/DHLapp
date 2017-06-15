@@ -10,7 +10,8 @@
                 method="[[method]]"-->
         <iron-ajax
                 id="ajax"
-                methode="POST"
+                method="POST"
+                url="https://depotws-test.nl.dhl.com/SVDepotPDAWs"
                 content-type="text/xml"
                 handle-as="xml"
                 on-response="handleResponse"
@@ -102,7 +103,7 @@
                 var xmlBody = parser.json2xml_str(envelope);
                 this.$.ajax.body = xmlBody;
                 console.log(xmlBody);
-                //this.$.ajax.generateRequest();
+                this.$.ajax.generateRequest();
             },
 
             addNameSpace: function(origFrag){

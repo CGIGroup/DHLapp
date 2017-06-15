@@ -103,6 +103,13 @@
                 var xmlBody = parser.json2xml_str(envelope);
                 this.$.ajax.body = xmlBody;
                 console.log(xmlBody);
+
+                //DEBUG
+                var mockXml = this.messageIdentifier.substring(0, this.messageIdentifier.length-1) + '1';
+                this.$.ajax.method = 'GET';
+                this.$.ajax.url = '/src/xml/'+mockXml+'.xml';
+                //DEBUG
+
                 this.$.ajax.generateRequest();
             },
 

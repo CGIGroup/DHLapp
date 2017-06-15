@@ -25,8 +25,8 @@
 
         <dhl-xmlxhr
                 id="ajax200"
-                url="/src/xml/201.xml"
-                method="GET"
+                message-identifier="200"
+                general-header-pda="{{generalHeaderPda}}"
                 body="[[req200]]"
                 response="{{resp201}}"
                 ok-text="Ritten Opgehaald"
@@ -121,16 +121,7 @@
 
             signedInChanged: function(newValue, oldValue){
                 if(!newValue) return;
-                console.log(newValue);
-
-                // customize the general header
-                this.generalHeaderPda.MESSAGE_IDENTIFIER = 200;
-                this.generalHeaderPda.MESSAGE_IDENTIFIER = new Date().toJSON().toString();
-                this.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER =
-                        parseInt(this.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER) + 1;
-
-                //request trips
-                this.req200.Envelope.Body.TripsOverview.GENERAL_HEADER_PDA = this.generalHeaderPda;
+                //console.log(newValue);
 
                 this.$.ajax200.generateRequest();
             }

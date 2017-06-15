@@ -1,9 +1,10 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="barcode-scanner.html">
-<link rel="import" href="dhl-xmlxhr.html">
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../bower_components/hand-signature/hand-signature.html">
+<link rel="import" href="barcode-scanner.html">
+<link rel="import" href="dhl-xmlxhr.html">
+<link rel="import" href="redux-store.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="dhl-signin">
@@ -48,7 +49,8 @@
             </barcode-scanner>
 
             <paper-card class="card">
-                <paper-input value="{{barcode}}"
+                <paper-input id="pNumber"
+                             value="{{barcode}}"
                              label="P-Nummer"
                              required
                              auto-validate>
@@ -78,6 +80,8 @@
     <script>
         Polymer({
             is: 'dhl-signin',
+
+            behaviors: [ ReduxBehavior ],
 
             properties:{
 
@@ -142,11 +146,29 @@
 
             },
 
+            actions: {
+                logon: function(name) {
+                    return {
+                        type: 'START_LOGON',
+                        friend: name
+                    };
+                }
+            },
+
+            onTapSignIn: function() {
+                const input = this.$.pNumber;
+                if (input.value) {
+                    this.dispatch('logon', input.value);
+                    input.value = '';
+                    input.focus();
+                }
+            },
+
             processBarcode: function(barcode, oldValue) {
 
             },
 
-            onTapSignIn: function(e) {
+            XonTapSignIn: function(e) {
                 //if(!barcode) return;
 
                 // initially set the general header to be used on all future requests

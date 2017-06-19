@@ -1,0 +1,172 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="redux-store.html">
+
+<dom-module id="dhl-soapajax">
+    <template>
+
+        <iron-ajax
+                id="ajax"
+                method="POST"
+                url="https://depotws-test.nl.dhl.com/SVDepotPDAWs"
+                content-type="text/xml"
+                handle-as="xml"
+                on-response="handleResponse"
+                on-error="handleError">
+        </iron-ajax>
+
+    </template>
+
+    <script src="../bower_components/abdmob/x2js/xml2json.js"></script>
+
+    <script>
+        Polymer({
+            is: 'dhl-soapajax',
+
+            behaviors: [ ReduxBehavior ],
+
+            properties:{
+
+                /**
+                 * The name of the actions function to be used
+                 */
+                returnActionType:{
+                    type: String,
+                    value: '',
+                    statePath: 'returnActionType'
+                },
+
+                /**
+                 * The general header to be used on all requests
+                 */
+                generalHeaderPda:{
+                    type: Object,
+                    value: function(){return{};},
+                    statePath: 'generalHeaderPda'
+                },
+                
+                /**
+                 * The request to be sent, in JSON format
+                 */
+                request: {
+                    type: Object,
+                    value: function(){return{};},
+                    statePath: 'request',
+                    observer: 'requestChanged'
+                },
+
+
+            },
+
+            actions: {
+                logonSuccessWithGetTrips: function(response) {
+                    return function(dispatch) {
+                        dispatch({
+                            type: 'LOGON_SUCCESS',
+                            response: response
+                        });
+                        dispatch({ type: 'GET_TRIPS' });
+                    }
+                },
+                getTripsSuccess: function(response) {
+                    return {
+                        type: 'GET_TRIPS_SUCCESS',
+                        response: response
+                    };
+                },
+                sendEvaSuccessWithGetTrips: function(response) {
+                    return function(dispatch) {
+                        dispatch({
+                            type: 'SEND_EVA_SUCCESS',
+                            response: response
+                        });
+                        dispatch({ type: 'GET_TRIPS' });
+                    }
+                },
+                tripStartSuccessWithGetTrips: function(response) {
+                    return function(dispatch) {
+                        dispatch({
+                            type: 'START_TRIP_SUCCESS',
+                            response: response
+                        });
+                        dispatch({ type: 'GET_TRIPS' });
+                    }
+                },
+                tripEndSuccessWithGetTrips: function(response) {
+                    return function(dispatch) {
+                        dispatch({
+                            type: 'END_TRIP_SUCCESS',
+                            response: response
+                        });
+                        dispatch({ type: 'GET_TRIPS' });
+                    }
+                },
+            },
+
+            requestChanged: function(request){
+                console.log('requestChanged', request);
+                if(!request || Object.keys(request).length === 0) return;
+
+                var operationName = Object.keys(this.request)[0];
+                this.request[operationName].GENERAL_HEADER_PDA = this.generalHeaderPda;
+
+                var prefixedFragment = this.addNameSpace(this.request);
+
+                var envelope = {
+                    'soapenv:Envelope':{
+                        '_xmlns:soapenv': "http://schemas.xmlsoap.org/soap/envelope/",
+                        '_xmlns:svd': "http://selektvracht.nl/SVDepotPDAWs",
+                        'soapenv:Header': null,
+                        'soapenv:Body': prefixedFragment
+                    }
+                };
+
+                var parser = new X2JS();
+                var xmlBody = parser.json2xml_str(envelope);
+                this.$.ajax.body = xmlBody;
+                console.log(xmlBody);
+
+                //DEBUG
+                var mockXml = this.generalHeaderPda.MESSAGE_IDENTIFIER.substring(0, this.generalHeaderPda.MESSAGE_IDENTIFIER.length-1) + '1';
+                if(this.generalHeaderPda.MESSAGE_IDENTIFIER === '200' &&
+                        this.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER !== 2) mockXml = '201B';
+                this.$.ajax.method = 'GET';
+                this.$.ajax.url = '/src/xml/'+mockXml+'.xml';
+                //DEBUG
+
+                this.$.ajax.generateRequest();
+
+            },
+
+            addNameSpace: function(origFrag){
+                var newFrag = {};
+                for(var key in origFrag){
+                    var value = origFrag[key];
+                    if(typeof(value) === 'object'){
+                        newFrag['svd:'+key] = this.addNameSpace(value)
+                    }
+                    else newFrag['svd:'+key] = value;
+                }
+                return newFrag;
+            },
+
+            handleResponse: function(event){
+                var responseXml = event.detail.xhr.response;
+                var parser = new X2JS();
+                var response = parser.xml_str2json(responseXml);
+
+                console.log(response);
+
+                return this.dispatch(this.returnActionType, response);
+            },
+
+            handleError: function(event){
+                //show result in toast
+                var toast = document.getElementById('toastError');
+                var message = this.errorText?this.errorText:event.detail.request.xhr.response.message;
+                toast.text = event.detail.request.xhr.status+' '+message;
+                toast.open();
+            }
+        });
+    </script>
+</dom-module>

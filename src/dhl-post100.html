@@ -1,0 +1,95 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="dhl-xmlxhr.html">
+<link rel="import" href="redux-store.html">
+
+<dom-module id="dhl-post100">
+    <template>
+
+        <dhl-xmlxhr
+                id="ajax"
+                message-identifier="100"
+                general-header-pda="{{generalHeaderPda}}"
+                body="[[request]]"
+                response="{{response}}"
+                ok-text="Aanmelden Gelukt"
+                error-text="Aanmelden Mislukt">
+        </dhl-xmlxhr>
+
+
+    </template>
+
+
+    <script>
+        Polymer({
+            is: 'dhl-post100',
+
+            behaviors: [ ReduxBehavior ],
+
+            properties:{
+
+                /**
+                 * The request object sent to the server
+                 */
+                request: {
+                    type: 'Object'
+                },
+
+                /**
+                 * The logon response from the server in JSON format
+                 */
+                response: {
+                    type: Object,
+                    observer: 'responseChanged',
+                },
+
+                /**
+                 * The general header to be used on all requests
+                 */
+                generalHeaderPda:{
+                    type: Object,
+                    value: function(){return{P_NUMBER:''};},
+                    statePath: 'generalHeaderPda.P_NUMBER',
+                    observer: 'pNumberChanged'
+                },
+
+
+
+            },
+
+            observers: [
+               // 'generalHeaderPdaChanged(generalHeaderPda.P_NUMBER)'
+            ],
+
+            actions: {
+                logonSuccess: function() {
+                    return {
+                        type: 'LOGON_SUCCESS'
+                    };
+                }
+            },
+
+            pNumberChanged: function(pNumber) {
+                if(pNumber==='') return;
+                console.log('pNumber', pNumber);
+                var request = {
+                    LogOn: {
+                        LogOnNumber: {
+                            P_NUMBER: pNumber
+                        }
+                    }
+                };
+                //this.$.ajax.generateRequest();
+            },
+
+            responseChanged: function(resp, oldValue) {
+                if(!resp) return;
+                //TODO Test for NOK
+
+                debugger;
+
+                return this.dispatch('logonSuccess');
+            },
+
+        });
+    </script>
+</dom-module>

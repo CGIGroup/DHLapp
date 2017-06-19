@@ -1,9 +1,7 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
-<link rel="import" href="../bower_components/hand-signature/hand-signature.html">
 <link rel="import" href="barcode-scanner.html">
-<link rel="import" href="dhl-xmlxhr.html">
 <link rel="import" href="redux-store.html">
 <link rel="import" href="shared-styles.html">
 
@@ -15,29 +13,6 @@
                 padding: 10px;
             }
         </style>
-
-        <!--https://depotws-test.nl.dhl.com/SVDepotPDAWs
-        /src/xml/101.xml-->
-
-        <dhl-xmlxhr
-                id="ajax100Test"
-                url="https://depotws-test.nl.dhl.com/SVDepotPDAWs"
-                method="POST"
-                body="[[req100]]"
-                response="{{resp101}}"
-                ok-text="Aanmelden Gelukt"
-                error-text="Aanmelden Mislukt">
-        </dhl-xmlxhr>
-
-        <dhl-xmlxhr
-                id="ajax100"
-                message-identifier="100"
-                general-header-pda="{{generalHeaderPda}}"
-                body="[[req100]]"
-                response="{{resp101}}"
-                ok-text="Aanmelden Gelukt"
-                error-text="Aanmelden Mislukt">
-        </dhl-xmlxhr>
 
         <div class="media">
 
@@ -104,94 +79,21 @@
                     }
                 },
 
-                /**
-                 * The req100 object sent to the server
-                 */
-                req100: {
-                    type: 'Object',
-                    value: function() {
-                        return {
-                            LogOn: {
-                                LogOnNumber: {
-                                    P_NUMBER: ''
-                                }
-                            }
-                        }
-                    }
-                },
-
-                /**
-                 * The logon response from the server in JSON format
-                 */
-                resp101: {
-                    type: Object,
-                    observer: 'resp101Changed',
-                },
-
-                /**
-                 * The general header to be used on all future requests
-                 */
-                generalHeaderPda:{
-                    type: Object,
-                    notify: true
-                },
-
-                /**
-                 * The signedIn Boolean to tell dhl-trips that it can get the trips
-                 */
-                signedIn:{
-                    type: Boolean,
-                    notify: true
-                },
-
-            },
-
-            actions: {
-                logon: function(name) {
-                    return {
-                        type: 'START_LOGON',
-                        friend: name
-                    };
-                }
             },
 
             onTapSignIn: function() {
-                const input = this.$.pNumber;
-                if (input.value) {
-                    this.dispatch('logon', input.value);
-                    input.value = '';
-                    input.focus();
-                }
+                //return this.dispatch('logon', '614444', '980060642228356');
+
+                this.dispatch({
+                    type: 'LOGON',
+                    pNumber: '614444',
+                    imeiNumber: '980060642228356'
+
+                });
             },
 
             processBarcode: function(barcode, oldValue) {
 
-            },
-
-            XonTapSignIn: function(e) {
-                //if(!barcode) return;
-
-                // initially set the general header to be used on all future requests
-                this.generalHeaderPda = {
-                    IMEI_NUMBER: '980060642228356',
-                    TELEPHONE_NUMBER: '0612345678',
-                    P_NUMBER: '614444',
-                    PDA_SOFTWARE_VERSION: '1.7.2.18607',
-                    PDA_MESSAGE_VERSION: '1.4.0',
-                    TRANSMISSION_ATTEMPT_NUMBER: '1',
-                    MESSAGE_SEQUENCE_SESSION_NUMBER: '0'
-                };
-
-                // send P-Number to the server
-                this.req100.LogOn.LogOnNumber.P_NUMBER = '614444';//from barcode
-
-                this.$.ajax100.generateRequest();
-            },
-
-            resp101Changed: function(resp, oldValue) {
-                if(!resp) return;
-                this.signedIn = true;
-                this.$.timeframeNav.click();
             },
 
             onRecognize: function(e){

@@ -9,7 +9,7 @@
 <link rel="import" href="../bower_components/paper-time-input/paper-time-input.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/iron-list/iron-list.html">
-<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="redux-store.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="dhl-icons.html">
 
@@ -64,36 +64,6 @@
 
         </style>
 
-        <dhl-xmlxhr
-                id="ajax300"
-                message-identifier="300"
-                general-header-pda="{{generalHeaderPda}}"
-                body="[[req300]]"
-                response="{{resp301}}"
-                ok-text="Opdrachten Opgehaald"
-                error-text="Opdrachten Ophalen Mislukt">
-        </dhl-xmlxhr>
-
-        <dhl-xmlxhr
-                id="ajax200"
-                message-identifier="200"
-                general-header-pda="{{generalHeaderPda}}"
-                body="[[req200]]"
-                response="{{resp201}}"
-                ok-text="Ritten Opgehaald"
-                error-text="Ritten Ophalen Mislukt">
-        </dhl-xmlxhr>
-
-        <dhl-xmlxhr
-                id="ajax2000"
-                message-identifier="2000"
-                general-header-pda="{{generalHeaderPda}}"
-                body="[[req2000]]"
-                response="{{resp2001}}"
-                ok-text="Rit Gestart"
-                error-text="Rit Starten Mislukt">
-        </dhl-xmlxhr>
-
         <div class="timeframe">[[computeTimeFrameDesc()]]</div> <!--[[timeframe.TIMEFRAME_DESCRIPTION]]-->
         <div class="layout horizontal">
             <div class="leading">[[calculateSeq(trip)]]</div>
@@ -131,6 +101,7 @@
                 <div hide$="[[!compareValues(3,trip.TRIP_PDA_STATUS)]]">
                     <div class="layout horizontal">
                         <paper-input
+                                id="startKm"
                                 label="Start km"
                                 value="startKmValue"
                                 type="number"
@@ -138,6 +109,7 @@
                                 required
                                 auto-validate>km</paper-input>
                         <paper-input
+                                id="endKm"
                                 label="Eind km"
                                 value="endKmValue"
                                 type="number"
@@ -145,6 +117,7 @@
                                 required
                                 auto-validate></paper-input>
                         <paper-input
+                                id="privateKm"
                                 label="Prive km"
                                 value="privateValue"
                                 type="number"
@@ -155,13 +128,11 @@
                     <div class="layout horizontal">
                         <paper-button
                                 on-tap="onStartTap"
-                                trip="[[trip]]"
                                 raised
                                 disabled$="{{startKmInvalid}}">
                             <iron-icon icon="dhl-icons:starttrip"></iron-icon> Start Rit</paper-button>
                         <paper-button
                                 on-tap="onStartTap"
-                                trip="[[trip]]"
                                 raised
                                 disabled
                                 disabled$="{{endKmInvalid}}">
@@ -181,276 +152,125 @@
         Polymer({
             is: 'dhl-tripdetails',
 
-            properties: {
+            behaviors: [ReduxBehavior],
 
-                /**
-                 * The GENERAL_HEADER_PDA object tripParcels
-                 */
-                generalHeaderPda:{
-                    type: Object,
-                    notify: true
-                },
+            properties: {
 
                 /**
                  * The current trip object
                  */
-                trip:{
+                trip: {
                     type: Object,
-                },
-
-                /**
-                 * The Array of parcels filtered by selected trip_key
-                 */
-                tripParcels:{
-                    type: Array,
-                    value: function(){
-                        return [];
-                    },
-                    notify: true
-                },
-
-                /**
-                 * The TripsOverview object sent to the server
-                 */
-                req200:{
-                    type: Object,
-                    value: function(){
-                        return {
-                            TripsOverview: {}
-                        }
-                    }
-                },
-
-                /**
-                 * The resp201 object returned from the server
-                 */
-                resp201:{
-                    type: Object,
-                    observer: 'resp201Changed',
-                    notify: true
-                },
-
-                /**
-                 * The ParcelsInTrip object sent to the server
-                 */
-                req300:{
-                    type: Object,
-                    value: function(){
-                        return {
-                            ParcelsInTrip: {
-                                PDA_DATA_INDICATION: true
-                            }
-                        }
-                    }
-                },
-
-                /**
-                 * The resp301 object returned from the server
-                 */
-                resp301:{
-                    type: Object,
-                    observer: 'resp301Changed',
-                    notify: true
-                },
-
-                /**
-                 * The BeginAndEndMilageTrip object sent to the server
-                 */
-                req2000:{
-                    type: Object,
-                    value: function(){
-                        return {
-                            BeginAndEndMilageTrip: {
-                                BEGIN_END_TRIP_MILEAGE: {}
-                            }
-                        }
-                    }
-                },
-
-                /**
-                 * The BeginAndEndMilageTrip object returned from the server
-                 */
-                resp2001:{
-                    type: Object,
-                    observer: 'resp2001Changed',
-                    notify: true
                 },
 
                 /**
                  * The select trip id that results from this process
                  */
-                selectedTripId:{
+                selectedTripId: {
                     type: Object,
                     notify: true
                 },
 
-                evaInvalid:{
+                evaInvalid: {
                     type: Boolean,
                     value: true
                 },
 
-                startKmInvalid:{
+                startKmInvalid: {
                     type: Boolean,
                     value: true
                 },
 
-                endKmInvalid:{
+                endKmInvalid: {
                     type: Boolean,
                     value: true
                 }
 
             },
 
-            computeTimeFrameDesc: function(){
-                if(!this.trip) return '';
+            computeTimeFrameDesc: function () {
+                if (!this.trip) return '';
                 var timeframeKey = this.trip.TIMEFRAME_KEY;
-                var timeFrame = this.resp201['xml-fragment'].REPLY_OVERVIEW_TIMEFRAME.find(function(tf){
+                var timeFrame = this.resp201['xml-fragment'].REPLY_OVERVIEW_TIMEFRAME.find(function (tf) {
                     return (timeframeKey.toString() == tf.TIMEFRAME_KEY.toString());
                 }.bind(this));
                 return timeFrame.TIMEFRAME_DESCRIPTION;
             },
 
-            calculateSeq: function(trip) {
+            calculateSeq: function (trip) {
                 return 1;
                 return parseInt(trip.TRIP_SEQUENCE_NUMBER) + 1;
             },
 
-            onChangeEva: function(e){
-                if(e.target.validate()) this.evaInvalid = false;
+            onChangeEva: function (e) {
+                if (e.target.validate()) this.evaInvalid = false;
                 else this.evaInvalid = true;
             },
 
-            onChangeStartKm: function(e){
-                if(e.target.validate()) this.startKmInvalid = false;
+            onChangeStartKm: function (e) {
+                if (e.target.validate()) this.startKmInvalid = false;
                 else this.startKmInvalid = true;
             },
 
-            onChangeEndKm: function(e){
-                if(e.target.validate()) this.evaInvalid = false;
+            onChangeEndKm: function (e) {
+                if (e.target.validate()) this.evaInvalid = false;
                 else this.evaInvalid = true;
             },
 
-            onChangePrivateKm: function(e){
-                if(e.target.validate()) this.evaInvalid = false;
+            onChangePrivateKm: function (e) {
+                if (e.target.validate()) this.evaInvalid = false;
                 else this.evaInvalid = true;
             },
 
 
-
-
-            getClassForItem: function(item, selected) {
+            getClassForItem: function (item, selected) {
                 return selected ? 'item expanded' : 'item';
             },
 
-            compare: function(val1, val2) {
+            compare: function (val1, val2) {
                 return val1 == val2;
             },
 
-            computedIndex: function(index) {
-                return index+1;
+
+            compareValues: function(v1, v2){
+                return v1 == v2;
             },
 
+            computedIndex: function (index) {
+                return index + 1;
+            },
             /*
              // send EVA, get parcels
             */
-            onEVATap: function(event) {
+            onEVATap: function(){
 
-                // set the timestamp
-                var evaValue = this.$.evaInput;
-                var ts = new Date();
-                ts.setHours(evaValue.hour);
-                ts.setMinutes(evaValue.min);
-                ts.setSeconds(0);
+                this.dispatch({
+                    type: 'SEND_EVA',
+                    timeframeKey: this.trip.TIMEFRAME_KEY.toString(),
+                    evaHour: this.$.evaInput.hour,
+                    evaMin: this.$.evaInput.min
+                });
 
-                // find timeframe in resp201
-                var timeframeKey = this.trip.TIMEFRAME_KEY;
-                var timeFrameIdx = this.resp201['xml-fragment'].REPLY_OVERVIEW_TIMEFRAME.findIndex(function(tf){
-                    return (timeframeKey.toString() == tf.TIMEFRAME_KEY.toString());
-                }.bind(this));
-
-                var TIMEFRAME = {
-                    TIMEFRAME_KEY: timeframeKey,
-                    EXPECTED_ARRIVAL_TIME_FIRST_ADDRESS: ts.toJSON().toString()
-                };
-
-                // add/update timeframe to request
-                if(timeFrameIdx > -1) this.req300.ParcelsInTrip[timeFrameIdx] = TIMEFRAME;
-                else this.req300.ParcelsInTrip.push(TIMEFRAME);
-
-                // customize the general header
-                this.generalHeaderPda.MESSAGE_IDENTIFIER = 300;
-                this.generalHeaderPda.MESSAGE_IDENTIFIER = new Date().toJSON().toString();
-                this.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER =
-                        parseInt(this.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER) + 1;
-
-                // send start trip request
-                this.req300.ParcelsInTrip.GENERAL_HEADER_PDA = this.generalHeaderPda;
-
-                this.$.ajax300.generateRequest();
-            },
-
-            /*
-             // request trips (this will update EVA in display)
-             */
-            resp301Changed: function(resp, oldValue) {
-                if(!resp) return;
-
-                // populate our tripParcel array
-                this.tripParcels = this.resp301['xml-fragment'].REPLY_OVERVIEW_PARCELS.filter(function(parcel){
-                    return parcel.TRIP_KEY.toString() == this.trip.TRIP_KEY.toString();
-                }.bind(this));
-
-                // customize the general header
-                this.generalHeaderPda.MESSAGE_IDENTIFIER = 200;
-                this.generalHeaderPda.MESSAGE_IDENTIFIER = new Date().toJSON().toString();
-                this.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER =
-                        parseInt(this.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER) + 1;
-
-                this.req200.TripsOverview.GENERAL_HEADER_PDA = this.generalHeaderPda;
-
-                this.$.ajax200.generateRequest();
-            },
-
-            resp201Changed: function(resp, oldValue) {
-                if(!resp) return;
             },
 
             onStartTap: function(event) {
 
-                this.req2000.BeginAndEndMilageTrip.BEGIN_END_TRIP_MILEAGE = {
-                    TIMEFRAME_KEY: this.trip.TIMEFRAME_KEY,
-                    TRIP_KEY: this.trip.TRIP_KEY,
-                    TRIP_NUMBER: this.trip.TRIP_NUMBER,
-                    TRIP_SEQUENCE_NUMBER: this.trip.TRIP_SEQUENCE_NUMBER,
-                    BEGIN_TRIP_MILEAGE: this.startKmValue
-                };
+                this.dispatch({
+                    type: 'TRIP_START',
+                    tripKey: this.trip.TRIP_KEY.toString(),
+                    beginMileage: this.$.startKm.value
+                });
 
-                // customize the general header
-                this.generalHeaderPda.MESSAGE_IDENTIFIER = 2000;
-                this.generalHeaderPda.MESSAGE_IDENTIFIER = new Date().toJSON().toString();
-                this.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER =
-                        parseInt(this.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER) + 1;
-
-                // send start trip request
-                this.req2000.BeginAndEndMilageTrip.GENERAL_HEADER_PDA = this.generalHeaderPda;
-
-                this.$.ajax2000.generateRequest();
-
-            },
-
-
-            resp2001Changed: function(resp, oldValue) {
-                if(!resp) return;
-                this.$.startNav.click();
-            },
-
-            compareValues: function(v1, v2){
-              return v1 == v2;
             },
 
             onEndTap: function(event) {
-                this.trip = event.target.trip;
-                //send request to the server
+
+                this.dispatch({
+                    type: 'TRIP_END',
+                    tripKey: this.trip.TRIP_KEY.toString(),
+                    beginMileage: this.$.endKm.value,
+                    endMileage: this.$.privateKm.value
+                });
 
             },
 

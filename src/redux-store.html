@@ -4,37 +4,160 @@
     const initialState = {
         timeframes: [],
         trips: [],
+        parcels: [],
         tripParcels: [],
         selectedParcel: {},
         generalHeaderPda: {
-            IMEI_NUMBER: '980060642228356',
+            IMEI_NUMBER: '',
             TELEPHONE_NUMBER: '0612345678',
-            P_NUMBER: '614444',
+            P_NUMBER: '',
             PDA_SOFTWARE_VERSION: '1.7.2.18607',
             PDA_MESSAGE_VERSION: '1.4.0',
             TRANSMISSION_ATTEMPT_NUMBER: '1',
             MESSAGE_SEQUENCE_SESSION_NUMBER: '0'
-        }
+        },
+        request: {},
+        returnActionType: ''
+
     };
     const reducer = (state, action) => {
         if (!state) return initialState;
         switch (action.type) {
-            case 'SIGN_ON':
-                return Object.assign({}, state, { loading: true });
+            case 'LOGON':
+                var clonedState = Object.assign({}, state);
+
+                clonedState.generalHeaderPda.MESSAGE_TIMESTAMP = new Date().toJSON().toString();
+                clonedState.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER =
+                        parseInt(state.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER) + 1;
+                clonedState.generalHeaderPda.MESSAGE_IDENTIFIER = '100';
+
+                clonedState.generalHeaderPda.P_NUMBER = action.pNumber;
+                clonedState.generalHeaderPda.IMEI_NUMBER =  action.imeiNumber;
+
+                clonedState.request = {
+                    LogOn: {
+                        LogOnNumber: {
+                            P_NUMBER: action.pNumber
+                        }
+                    }
+                };
+
+                clonedState.returnActionType = 'logonSuccessWithGetTrips';
+
+                return clonedState;
+
+            case 'LOGON_SUCCESS':
+                var clonedState = Object.assign({}, state);
+
+                return clonedState;
+
             case 'GET_TRIPS':
-                return Object.assign({}, state, { loading: true });
+                var clonedState = Object.assign({}, state);
+
+                clonedState.generalHeaderPda.MESSAGE_TIMESTAMP = new Date().toJSON().toString();
+                clonedState.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER =
+                        parseInt(state.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER) + 1;
+                clonedState.generalHeaderPda.MESSAGE_IDENTIFIER = '200';
+
+                clonedState.request = {
+                    TripsOverview: {}
+                };
+
+                clonedState.returnActionType = 'getTripsSuccess';
+
+                return clonedState;
+            case 'GET_TRIPS_SUCCESS':
+                var clonedState = Object.assign({}, state);
+
+                clonedState.timeframes = action.response['xml-fragment'].REPLY_OVERVIEW_TIMEFRAME;
+                clonedState.trips = action.response['xml-fragment'].REPLY_OVERVIEW_TRIPS;
+                return clonedState;
+
             case 'SEND_EVA':
-                return Object.assign({}, state, { loading: true });
-            case 'START_TRIP':
-                return Object.assign({}, state, { loading: true });
+                var clonedState = Object.assign({}, state);
+
+                clonedState.generalHeaderPda.MESSAGE_TIMESTAMP = new Date().toJSON().toString();
+                clonedState.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER =
+                        parseInt(state.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER) + 1;
+                clonedState.generalHeaderPda.MESSAGE_IDENTIFIER = '300';
+
+                // set the timestamp
+                var ts = new Date();
+                ts.setHours(action.evaHour);
+                ts.setMinutes(action.evaMin);
+                ts.setSeconds(0);
+
+                // find timeframe
+                var timeFrameIdx = clonedState.timeframes.findIndex(function(tf){
+                    return (action.timeframeKey.toString() == tf.TIMEFRAME_KEY.toString());
+                }.bind(this));
+
+                // update timeframe to request
+                clonedState.timeframes[timeFrameIdx].EXPECTED_ARRIVAL_TIME_FIRST_ADDRESS = ts.toJSON().toString();
+
+                clonedState.request = {
+                    ParcelsInTrip: {
+                        PDA_DATA_INDICATION: true
+                    }
+                };
+
+                clonedState.returnActionType = 'sendEvaSuccessWithGetTrips';
+
+                return clonedState;
+
+            case 'SEND_EVA_SUCCESS':
+                var clonedState = Object.assign({}, state);
+
+                clonedState.parcels = action.response['xml-fragment'].REPLY_OVERVIEW_PARCELS;
+
+                return clonedState;
+
+            case 'TRIP_START':
+                var clonedState = Object.assign({}, state);
+
+                clonedState.generalHeaderPda.MESSAGE_TIMESTAMP = new Date().toJSON().toString();
+                clonedState.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER =
+                        parseInt(state.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER) + 1;
+                clonedState.generalHeaderPda.MESSAGE_IDENTIFIER = '2000';
+
+                // find trip
+                var timeFrameIdx = clonedState.trips.findIndex(function(tf){
+                    return (action.tripKey.toString() == tf.TRIP_KEY.toString());
+                }.bind(this));
+
+                // update trip to request
+                clonedState.trips[timeFrameIdx].BEGIN_TRIP_MILEAGE = action.startKmValue;
+
+                clonedState.request = {
+                    BeginAndEndMileageTrip: {
+                    }
+                };
+
+                clonedState.returnActionType = 'tripStartSuccessWithGetTrips';
+
+                // populate our tripParcel array
+                clonedState.tripParcels = clonedState.parcels.filter(function(parcel){
+                    return (action.tripKey.toString() == parcel.TRIP_KEY.toString());
+                }.bind(this));
+
+                return clonedState;
+
+            case 'TRIP_START_SUCCESS':
+                var clonedState = Object.assign({}, state);
+
+                // Navigate to trip execute
+                return clonedState;
+
             case 'DELIVER':
                 return Object.assign({}, state, { loading: true });
-            case 'END_TRIP':
+            case 'TRIP_END':
                 return Object.assign({}, state, { loading: true });
             case 'LOG_OFF':
                 return Object.assign({}, state, { loading: true });
         }
     }
-    const store = Redux.createStore(reducer);
+    const store = Redux.createStore(
+            reducer,
+            Redux.applyMiddleware(ReduxThunk.default));
     const ReduxBehavior = PolymerRedux(store);
 </script>

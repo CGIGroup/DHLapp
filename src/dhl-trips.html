@@ -1,11 +1,9 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
-<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="redux-store.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="dhl-icons.html">
-<link rel="import" href="dhl-xmlxhr.html">
 <link rel="import" href="dhl-tripdetails.html">
 
 <dom-module id="dhl-trips">
@@ -23,26 +21,13 @@
 
         </style>
 
-        <dhl-xmlxhr
-                id="ajax200"
-                message-identifier="200"
-                general-header-pda="{{generalHeaderPda}}"
-                body="[[req200]]"
-                response="{{resp201}}"
-                ok-text="Ritten Opgehaald"
-                error-text="Ritten Ophalen Mislukt">
-        </dhl-xmlxhr>
-
         <div class="media">
             <div class="card">
                 <template is="dom-repeat"
-                          items="{{resp201.xml-fragment.REPLY_OVERVIEW_TRIPS}}"
+                          items="{{trips}}"
                           as="trip">
                     <div>
-                        <dhl-tripdetails trip="[[trip]]"
-                                         resp201="{{resp201}}"
-                                         trip-parcels="{{tripParcels}}"
-                                         general-header-pda="{{generalHeaderPda}}"></dhl-tripdetails>
+                        <dhl-tripdetails trip="[[trip]]"></dhl-tripdetails>
                     </div>
                 </template>
             </div>
@@ -63,67 +48,20 @@
         Polymer({
             is: 'dhl-trips',
 
+            behaviors: [ ReduxBehavior ],
+
             properties: {
 
                 /**
-                 * The GENERAL_HEADER_PDA object
+                 * The Trips that have previously been retrieved
                  */
-                generalHeaderPda:{
-                    type: Object,
-                    notify: true
-                },
-
-                /**
-                 * The user is signed in, go get the trips
-                 */
-                signedIn:{
-                    type: Boolean,
-                    observer: 'signedInChanged'
-                },
-
-                /**
-                 * The Array of parcels filtered by selected trip_key
-                 */
-                tripParcels:{
+                trips:{
                     type: Array,
-                    value: function(){
-                        return [];
-                    },
-                    notify: true
-                },
-                /**
-                 * The TripsOverview object sent to the server
-                 */
-                req200:{
-                    type: Object,
-                    value: function(){
-                        return {
-                            Envelope:{
-                                Header: null,
-                                Body: {
-                                    TripsOverview: {
-                                        GENERAL_HEADER_PDA:{},
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-
-                /**
-                 * The 201 response from the server in JSON format
-                 */
-                resp201: {
-                    type: Object,
+                    value: function(){return[];},
+                    statePath: 'trips',
+                    observer: 'tripsChanged'
                 }
 
-            },
-
-            signedInChanged: function(newValue, oldValue){
-                if(!newValue) return;
-                //console.log(newValue);
-
-                this.$.ajax200.generateRequest();
             }
 
         });

@@ -3,6 +3,7 @@
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../bower_components/paper-time-input/paper-time-input.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="redux-store.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="dhl-icons.html">
 
@@ -66,6 +67,7 @@
         Polymer({
             is: 'dhl-tripprepare',
 
+            behaviors: [ ReduxBehavior ],
 
             properties: {
 

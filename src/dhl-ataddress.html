@@ -4,6 +4,7 @@
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../bower_components/hand-signature/hand-signature.html">
+<link rel="import" href="redux-store.html">
 <link rel="import" href="barcode-scanner.html">
 <link rel="import" href="shared-styles.html">
 
@@ -135,6 +136,8 @@
     <script>
         Polymer({
             is: 'dhl-ataddress',
+
+            behaviors: [ ReduxBehavior ],
 
             properties:{
 

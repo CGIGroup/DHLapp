@@ -2,6 +2,7 @@
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="redux-store.html">
 <link rel="import" href="barcode-scanner.html">
 <link rel="import" href="shared-styles.html">
 
@@ -62,6 +63,8 @@
     <script>
         Polymer({
             is: 'dhl-delivery',
+
+            behaviors: [ ReduxBehavior ],
 
             properties:{
 

@@ -136,9 +136,17 @@
                 clonedState.returnActionType = 'tripStartSuccessWithGetTrips';
 
                 // populate our tripParcel array
-                clonedState.tripParcels = clonedState.parcels.filter(function(parcel){
-                    return (action.tripKey.toString() == parcel.TRIP_KEY.toString());
+                //clonedState.tripParcels = clonedState.parcels.filter(function(parcel){
+                //    return (action.tripKey.toString() == parcel.TRIP_KEY.toString());
+                //}.bind(this));
+
+                clonedState.parcels.forEach(function(parcel){
+                    if(action.tripKey.toString() == parcel.TRIP_KEY.toString()) {
+                        clonedState.tripParcels.push(parcel)//
+                    };
                 }.bind(this));
+
+                //this.push('clonedState.tripParcels', tripParcels);
 
                 return clonedState;
 
@@ -149,11 +157,14 @@
                 return clonedState;
 
             case 'DELIVER':
-                return Object.assign({}, state, { loading: true });
+                return Object.assign({}, state);
             case 'TRIP_END':
-                return Object.assign({}, state, { loading: true });
+                return Object.assign({}, state);
             case 'LOG_OFF':
-                return Object.assign({}, state, { loading: true });
+                return Object.assign({}, state);
+            default:
+                console.error('Unknown action type:', action.type);
+                return Object.assign({}, state);
         }
     }
     const store = Redux.createStore(

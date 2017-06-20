@@ -86,7 +86,7 @@
                 tripStartSuccessWithGetTrips: function(response) {
                     return function(dispatch) {
                         dispatch({
-                            type: 'START_TRIP_SUCCESS',
+                            type: 'TRIP_START_SUCCESS',
                             response: response
                         });
                         dispatch({ type: 'GET_TRIPS' });
@@ -95,7 +95,7 @@
                 tripEndSuccessWithGetTrips: function(response) {
                     return function(dispatch) {
                         dispatch({
-                            type: 'END_TRIP_SUCCESS',
+                            type: 'TRIP_END_SUCCESS',
                             response: response
                         });
                         dispatch({ type: 'GET_TRIPS' });

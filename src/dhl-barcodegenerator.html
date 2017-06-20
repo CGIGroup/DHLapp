@@ -1,6 +1,7 @@
 //https://gist.github.com/desk-sr/3960aba180a453e401f95c8904afb7aa
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="dhl-barcode-generator.html">
+<link rel="import" href="redux-store.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="dhl-barcodegenerator">
@@ -31,6 +32,8 @@
     <script>
         Polymer({
             is: 'dhl-barcodegenerator',
+
+            behaviors: [ ReduxBehavior ],
 
             properties: {
                 resp301: {

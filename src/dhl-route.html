@@ -3,6 +3,7 @@
 <link rel="import" href="../bower_components/geo-location/geo-location.html">
 <link rel="import" href="../bower_components/google-map/google-map-directions.html">
 <link rel="import" href="../bower_components/google-streetview-pano/google-streetview-pano.html">
+<link rel="import" href="redux-store.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="dhl-route">
@@ -56,6 +57,9 @@
     <script>
         Polymer({
             is: 'dhl-route',
+
+            behaviors: [ ReduxBehavior ],
+
             properties:{
 
                 tripParcels:{

@@ -124,7 +124,8 @@
                 var parser = new X2JS();
                 var xmlBody = parser.json2xml_str(envelope);
                 this.$.ajax.body = xmlBody;
-                console.log(xmlBody);
+
+                //console.log(xmlBody);
 
                 //DEBUG
                 var mockXml = this.generalHeaderPda.MESSAGE_IDENTIFIER.substring(0, this.generalHeaderPda.MESSAGE_IDENTIFIER.length-1) + '1';

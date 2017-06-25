@@ -19,7 +19,7 @@
         <h1>Barcodes for demo purposes</h1>
 
         <template is="dom-if" if="{{resp301}}">
-            <template is="dom-repeat" items="{{resp301.xml-fragment.REPLY_OVERVIEW_PARCELS}}" as="parcel">
+            <template is="dom-repeat" items="{{tripParcels}}" as="parcel">
                 <h2>[[parcel.STREET]] [[parcel.HOUSE_NUMBER]]</h2>
                 <dhl-barcode-generator data="[[parcel.PID]]"></dhl-barcode-generator>
             </template>
@@ -36,9 +36,10 @@
             behaviors: [ ReduxBehavior ],
 
             properties: {
-                resp301: {
-                    type: Object,
-                    value: null,
+                tripParcels:{
+                    type: Array,
+                    value: function(){return [];},
+                    statePath: 'tripParcels'
                 }
             }
         });

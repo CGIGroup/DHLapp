@@ -45,7 +45,8 @@
 
         </div>
 
-        <paper-button style="width:30px;" on-tap="onTapSignInTest" raised>Sign In Test</paper-button>
+        <paper-button style="width:30px;" on-tap="onTapGetParcelsTest" raised>Get Parcels Test</paper-button>
+        <paper-button style="width:30px;" on-tap="onTapStartTripTest" raised>Start Trip Test</paper-button>
 
         <audio id="audio"></audio>
 
@@ -82,15 +83,41 @@
 
             },
 
+            actions: {
+                testGetParcels: function() {
+                    return function(dispatch) {
+                        //dispatch({ type: 'LOGON' });
+
+                        //dispatch({ type: 'GET_TRIPS' });
+
+                        dispatch({
+                            type: 'SEND_EVA',
+                            timeframe: 48089,
+                            evaMin: 11,
+                            evaHour: 11,
+                        });
+                    }
+                },
+                testStartTrip: function() {
+                    return function(dispatch) {
+
+                        dispatch({
+                            type: 'TRIP_START',
+                            tripKey: 7448089,
+                            beginMileage: 11
+                        });
+                    }
+                }
+            },
+
             onTapSignIn: function() {
-                //return this.dispatch('logon', '614444', '980060642228356');
 
                 this.dispatch({
                     type: 'LOGON',
                     pNumber: '614444',
                     imeiNumber: '980060642228356'
-
                 });
+
             },
 
             processBarcode: function(barcode, oldValue) {
@@ -109,7 +136,14 @@
                 this.$.audio.play();// no sound
             },
 
-            onTapSignInTest: function(e) {
+            onTapGetParcelsTest: function(e) {
+
+                return this.dispatch('testGetParcels');
+
+            },
+            onTapStartTripTest: function(e) {
+
+                return this.dispatch('testStartTrip');
 
             },
         });

@@ -34,7 +34,7 @@
             }
         </style>
 
-        <Xarray-selector id="selector" items="{{tripParcels}}" selected="{{selected}}" toggle></Xarray-selector>
+        <array-selector id="selector" items="{{tripParcels}}" selected="{{selected}}" toggle></array-selector>
 
         <div class="media">
 
@@ -54,39 +54,35 @@
                 <template is="dom-repeat"
                           id="itemsList"
                           items="{{tripParcels}}"
+                          selected="{{selected}}"
                           as="parcel"
                           sort="sortBySeqNum"
                           observe="DELIVERY_SEQUENCE_NUMBER"
                           scroll-target="document">
-                    <template>
-                        <div>
-                            <div class$="[[_computedClass(selected)]]">
-                                <div class="layout horizontal">
-                                    <div class="leading">
-                                        <div class="layout vertical">
-                                            <div>[[parcel.DELIVERY_SEQUENCE_NUMBER]]</div>
-                                            <div>[[computeDelMom(parcel)]]</div>
-                                        </div>
-                                    </div>
-                                    <div class="flex">
-                                        <div class="layout vertical">
-                                            <!-- [[parcel.HOUSE_NUMBER_ADDITION]]-->
-                                            <div>[[parcel.STREET]] [[parcel.HOUSE_NUMBER]]</div>
-                                            <div>[[parcel.POSTAL_CODE_NUMERIC]][[parcel.POSTAL_CODE_ALPHA]] [[parcel.CITY]]</div>
-                                            <div>[[parcel.CUSTOMER_SHORT_NAME]]</div>
-                                        </div>
-                                    </div>
-                                    <div class="layout vertical">
-                                        <div>PA</div>
-                                        <div>Icon</div>
-                                        <div>[[computeBarShort(parcel)]]</div>
-                                    </div>
+                    <div class$="[[_computedClass(selected)]]" on-tap="toggleSelection">
+                        <div class="layout horizontal">
+                            <div class="leading">
+                                <div class="layout vertical">
+                                    <div>[[parcel.DELIVERY_SEQUENCE_NUMBER]]</div>
+                                    <div>[[computeDelMom(parcel)]]</div>
                                 </div>
                             </div>
+                            <div class="flex">
+                                <div class="layout vertical">
+                                    <!-- [[parcel.HOUSE_NUMBER_ADDITION]]-->
+                                    <div>[[parcel.STREET]] [[parcel.HOUSE_NUMBER]]</div>
+                                    <div>[[parcel.POSTAL_CODE_NUMERIC]][[parcel.POSTAL_CODE_ALPHA]] [[parcel.CITY]]</div>
+                                    <div>[[parcel.CUSTOMER_SHORT_NAME]]</div>
+                                </div>
+                            </div>
+                            <div class="layout vertical">
+                                <div>PA</div>
+                                <div>Icon</div>
+                                <div>[[computeBarShort(parcel)]]</div>
+                            </div>
                         </div>
-                    </template>
+                    </div>
                 </template>
-
             </div>
         </div>
 
@@ -167,8 +163,19 @@
                 tripParcels:{
                     type: Array,
                     value: function(){return [];},
-                    statePath: 'tripParcels'
+                    statePath: 'tripParcels',
+                    observer: 'tripParcelsChanged'
                 }
+            },
+            Xready: function(){
+                this.push('tripParcels', {
+                    DELIVERY_SEQUENCE_NUMBER: 1,
+                    PID: 12345646547
+                });
+                this.push('tripParcels', {
+                    DELIVERY_SEQUENCE_NUMBER: 2,
+                    PID: 12345646547
+                });
             },
 
             processBarcode: function(barcode, oldValue) {
@@ -211,6 +218,14 @@
             computeBarShort: function(parcel){
                 return '...'+parcel.PID.toString().substr(parcel.PID.toString().length - 4);
             },
+
+            tripParcelsChanged: function(newVal, oldVal){
+                //debugger;
+            },
+            toggleSelection: function(e) {
+                var item = this.$.itemsList.itemForElement(e.target);
+                this.$.selector.select(item);
+            }
         });
 
     </script>

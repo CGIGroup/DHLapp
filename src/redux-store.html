@@ -17,7 +17,10 @@
             MESSAGE_SEQUENCE_SESSION_NUMBER: '0'
         },
         request: {},
-        returnActionType: ''
+        returnActionType: '',
+        okText: '',
+        errorText: '',
+        navigateTo: ''
 
     };
     const reducer = (state, action) => {
@@ -49,7 +52,7 @@
 
             case 'LOGON_SUCCESS':
                 var clonedState = Object.assign({}, state);
-
+                clonedState.okText = "Aanmelden Gelukt";
                 return clonedState;
 
             case 'GET_TRIPS':

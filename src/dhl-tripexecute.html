@@ -167,16 +167,6 @@
                     observer: 'tripParcelsChanged'
                 }
             },
-            Xready: function(){
-                this.push('tripParcels', {
-                    DELIVERY_SEQUENCE_NUMBER: 1,
-                    PID: 12345646547
-                });
-                this.push('tripParcels', {
-                    DELIVERY_SEQUENCE_NUMBER: 2,
-                    PID: 12345646547
-                });
-            },
 
             processBarcode: function(barcode, oldValue) {
                 if(!barcode) return;

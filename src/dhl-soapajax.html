@@ -44,7 +44,7 @@
                     value: function(){return{};},
                     statePath: 'generalHeaderPda'
                 },
-                
+
                 /**
                  * The request to be sent, in JSON format
                  */
@@ -139,18 +139,6 @@
 
             },
 
-            addNameSpace: function(origFrag){
-                var newFrag = {};
-                for(var key in origFrag){
-                    var value = origFrag[key];
-                    if(typeof(value) === 'object'){
-                        newFrag['svd:'+key] = this.addNameSpace(value)
-                    }
-                    else newFrag['svd:'+key] = value;
-                }
-                return newFrag;
-            },
-
             handleResponse: function(event){
                 var responseXml = event.detail.xhr.response;
                 var parser = new X2JS();
@@ -167,7 +155,19 @@
                 var message = this.errorText?this.errorText:event.detail.request.xhr.response.message;
                 toast.text = event.detail.request.xhr.status+' '+message;
                 toast.open();
-            }
+            },
+
+            addNameSpace: function(origFrag){
+                var newFrag = {};
+                for(var key in origFrag){
+                    var value = origFrag[key];
+                    if(typeof(value) === 'object'){
+                        newFrag['svd:'+key] = this.addNameSpace(value)
+                    }
+                    else newFrag['svd:'+key] = value;
+                }
+                return newFrag;
+            },
         });
     </script>
 </dom-module>

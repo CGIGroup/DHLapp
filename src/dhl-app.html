@@ -23,8 +23,9 @@
 <link rel="import" href="../bower_components/platinum-sw/platinum-sw-fetch.html">
 <link rel="import" href="../bower_components/platinum-sw/platinum-sw-cache.html">
 <link rel="import" href="../bower_components/platinum-sw/platinum-sw-import-script.html">
-<link rel="import" href="dhl-icons.html">
+<link rel="import" href="redux-store.html">
 <link rel="import" href="dhl-soapajax.html">
+<link rel="import" href="dhl-icons.html">
 
 <dom-module id="dhl-app">
     <template>
@@ -80,6 +81,18 @@
             }
             .toolbarIcon {
                 margin-left: 12px;
+            }
+            #toastOk {
+                --paper-toast-background-color: green;
+                --paper-toast-color: white;
+                font-size: 16px;
+                font-weight: bold;
+            }
+            #toastError {
+                --paper-toast-background-color: red;
+                --paper-toast-color: white;
+                font-size: 16px;
+                font-weight: bold;
             }
         </style>
 
@@ -163,6 +176,8 @@
                 </iron-pages>
             </app-header-layout>
         </app-drawer-layout>
+        <paper-toast id="toastOk" class="fit-bottom" text="[[okText]]"></paper-toast>
+        <paper-toast id="toastError" class="fit-bottom" text="[[errorText]]"></paper-toast>
     </template>
 
     <script>
@@ -179,6 +194,28 @@
                     reflectToAttribute: true,
                     observer: '_pageChanged',
                 },
+                camera:{
+                    type: Object,
+                    value: null
+                },
+                okText: {
+                    type: String,
+                    value: '',
+                    statePath: 'okText',
+                    observer: 'okTextChanged'
+                },
+                errorText: {
+                    type: String,
+                    value: '',
+                    statePath: 'errorText',
+                    observer: 'errorTextChanged'
+                },
+                navigateTo: {
+                    type: String,
+                    value: '',
+                    statePath: 'navigateTo',
+                    observer: 'navigateToChanged'
+                }
             },
 
             observers: [
@@ -254,31 +291,20 @@
                     }
                 }*/
             },
-
-            /**
-             * Handles the first AJAX response
-             * @param e - event containing the response in `e.detail.response`
-             */
-            handleTripsResponse: function(e){
-                //var tripInfo = e.detail.response;
-                //this.push('tripInfoArray', tripInfo);
-                var toast = document.getElementById('toastOk');
-                toast.text = 'Trips Downloaded';
-                toast.open();
+            okTextChanged: function(newVal){
+                if(!newVal) return;
+                this.$.toastOk.open();
+            },
+            errorTextChanged: function(newVal){
+                if(!newVal) return;
+                this.$.toastError.open();
             },
 
-            /**
-             * Sends error response to toast
-             * @param event - event containing the response in `event.detail.response`
-             */
-            handleError: function(event){
-                var toast = document.getElementById('toastError');
-                var message = 'Go-Deliver Server Not Found';
-                if(event.detail.request.xhr.status != 0)
-                    message = event.detail.request.xhr.status+' '+event.detail.request.xhr.response.message;
-                toast.text = message;
-                toast.open();
+            navigateToChanged: function(){
+
             },
+
+
 
         });
     </script>

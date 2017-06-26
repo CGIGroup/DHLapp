@@ -97,7 +97,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <script src="/node_modules/redux/dist/redux.js"></script>
     <script src="/node_modules/redux-thunk/dist/redux-thunk.js"></script>
     <link rel="import" href="/bower_components/iron-flex-layout/iron-flex-layout-classes.html">
-    <link rel="import" href="/bower_components/paper-toast/paper-toast.html">
     <link rel="import" href="/src/dhl-app.html">
 
     <style is="custom-style" include="iron-flex iron-flex-alignment iron-positioning"></style><!--must: is="custom-style"-->
@@ -111,32 +110,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             min-height: 100vh;
             background-color: #eeeeee;
         }
-        #toastOk {
-            --paper-toast-background-color: green;
-            --paper-toast-color: white;
-            font-size: 16px;
-            font-weight: bold;
-        }
-        #toastError {
-            --paper-toast-background-color: red;
-            --paper-toast-color: white;
-            font-size: 16px;
-            font-weight: bold;
-        }
-        #toastWarn {
-            --paper-toast-background-color: purple;
-            --paper-toast-color: white;
-            font-size: 16px;
-            font-weight: bold;
-        }
     </style>
 </head>
 <body class="fullbleed layout vertical">
-    <dhl-app class=flex"></dhl-app>
 
-    <paper-toast id="toastOk" class="fit-bottom" text="Ok"></paper-toast>
-    <paper-toast id="toastError" class="fit-bottom" text="Error"></paper-toast>
-    <paper-toast id="toastWarn" class="fit-bottom" text="Error"></paper-toast>
+    <dhl-app class=flex"></dhl-app>
 
 </body>
 </html>

@@ -26,16 +26,6 @@
 
         <geo-location watch-pos latitude="{{lat}}" longitude="{{lng}}"></geo-location>
 
-        <dhl-xmlxhr
-                id="ajax1500"
-                message-identifier="1500"
-                general-header-pda="{{generalHeaderPda}}"
-                body="[[req1500]]"
-                response="{{resp1501}}"
-                ok-text="Aflevering Verzonden"
-                error-text="Aflevering Verzenden Mislukt">
-        </dhl-xmlxhr>
-
         <div class="media">
             <!--
             <barcode-scanner code="{{barcode}}"
@@ -129,8 +119,6 @@
 
         <audio id="audio" src="../images/censor-beep-01.mp3"></audio>
 
-        <a id="tripExecuteNav" href="/tripexecute" style="display:none;">Rit Uitvoern</a>
-
     </template>
 
     <script>
@@ -149,32 +137,8 @@
 
                 selectedParcel: {
                     type: Object,
-                    value: function(){return [];},
+                    value: function(){return {};},
                     statePath: 'selectedParcel'
-                },
-
-                /**
-                 * The ParcelDeliveryResults object sent to the server
-                 */
-                req1500:{
-                    type: Object,
-                    value: function(){
-                        return {
-                            ParcelDeliveryResults: {
-                                RESULT_MESSAGE_IDENTIFIER: {},
-                                PARCEL_DELIVERY_RESULT: {}
-                            }
-                        }
-                    }
-                },
-
-                /**
-                 * The ParcelDeliveryResults object returned from the server
-                 */
-                resp1501:{
-                    type: Object,
-                    observer: 'resp1501Changed',
-                    notify: true
                 },
 
             },
@@ -193,48 +157,13 @@
             },
 
             onTapSend: function(event) {
-
-                this.req1500.ParcelDeliveryResults.RESULT_MESSAGE_IDENTIFIER = {
-                    MESSAGE_TIMESTAMP_ORIGINAL: '',
-                    MESSAGE_SEQUENCE_SESSION_NUMBER_ORIGINAL: ''
-                };
-
-                this.req1500.ParcelDeliveryResults.PARCEL_DELIVERY_RESULT = {
-                    GPS_LATITUDE: '',
-                    GPS_LONGITUDE: '',
-                    TIMEFRAME_KEY: '',
-                    TRIP_KEY: '',
-                    PARCEL_KEY: '',
-                    TIMESTAMP_PARCEL_STATUS: new Date().toJSON().toString(),
-                    RESULT_DESCRIPTION: '',
-                    SIGNATURE_BLOB: '',
-                    SIGNER_NAME: '',
-                    POSTAL_CODE_NUMERIC: '',
-                    POSTAL_CODE_ALPHA: '',
-                    STREET: '',
-                    HOUSE_NUMBER: '',
-                    HOUSE_NUMBER_ADDITION: '',
-                    CITY: '',
-                    BARCODE_KIB_CARD: ''
-                };
-
-                // customize the general header
-                this.generalHeaderPda.MESSAGE_IDENTIFIER = 1500;
-                this.generalHeaderPda.MESSAGE_IDENTIFIER = new Date().toJSON().toString();
-                this.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER =
-                        parseInt(this.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER) + 1;
-
-                // send start trip request
-                this.req1500.ParcelDeliveryResults.GENERAL_HEADER_PDA = this.generalHeaderPda;
-
-                this.$.ajax1500.generateRequest();
-
+                this.dispatch({
+                    type: 'SEND_DELIVERY',
+                    lat: this.lat,
+                    lng: this.lng
+                });
             },
 
-            resp1501Changed: function(resp, oldValue) {
-                if(!resp) return;
-                this.$.tripExecuteNav.click();
-            },
         });
     </script>
 </dom-module>

@@ -19,8 +19,7 @@
         request: {},
         returnActionType: '',
         okText: '',
-        errorText: '',
-        navigateTo: ''
+        errorText: ''
 
     };
     const reducer = (state, action) => {
@@ -30,14 +29,17 @@
             case 'LOGON':
                 var clonedState = Object.assign({}, state);
 
+                // Update the General Header, required by Soap
                 clonedState.generalHeaderPda.MESSAGE_TIMESTAMP = new Date().toJSON().toString();
                 clonedState.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER =
                         parseInt(state.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER) + 1;
                 clonedState.generalHeaderPda.MESSAGE_IDENTIFIER = '100';
 
+                // One time only
                 clonedState.generalHeaderPda.P_NUMBER = action.pNumber;
                 clonedState.generalHeaderPda.IMEI_NUMBER =  action.imeiNumber;
 
+                // Create the request
                 clonedState.request = {
                     LogOn: {
                         LogOnNumber: {
@@ -52,17 +54,25 @@
 
             case 'LOGON_SUCCESS':
                 var clonedState = Object.assign({}, state);
+
+                // Inform user
                 clonedState.okText = "Aanmelden Gelukt";
+
+                window.history.pushState({}, null, '/trips');
+                window.dispatchEvent(new CustomEvent('location-changed'));
+
                 return clonedState;
 
             case 'GET_TRIPS':
                 var clonedState = Object.assign({}, state);
 
+                // Update the General Header, required by Soap
                 clonedState.generalHeaderPda.MESSAGE_TIMESTAMP = new Date().toJSON().toString();
                 clonedState.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER =
                         parseInt(state.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER) + 1;
                 clonedState.generalHeaderPda.MESSAGE_IDENTIFIER = '200';
 
+                // Create the request
                 clonedState.request = {
                     TripsOverview: {}
                 };
@@ -73,13 +83,19 @@
             case 'GET_TRIPS_SUCCESS':
                 var clonedState = Object.assign({}, state);
 
+                // Process data recieved from the server
                 clonedState.timeframes = action.response['xml-fragment'].REPLY_OVERVIEW_TIMEFRAME;
                 clonedState.trips = action.response['xml-fragment'].REPLY_OVERVIEW_TRIPS;
+
+                // Inform user
+                clonedState.okText = "Ritten Ophalen Gelukt";
+
                 return clonedState;
 
             case 'SEND_EVA':
                 var clonedState = Object.assign({}, state);
 
+                // Update the General Header, required by Soap
                 clonedState.generalHeaderPda.MESSAGE_TIMESTAMP = new Date().toJSON().toString();
                 clonedState.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER =
                         parseInt(state.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER) + 1;
@@ -99,6 +115,7 @@
                 // update timeframe to request
                 if(timeFrameIdx>-1) clonedState.timeframes[timeFrameIdx].EXPECTED_ARRIVAL_TIME_FIRST_ADDRESS = ts.toJSON().toString();
 
+                // Create the request
                 clonedState.request = {
                     ParcelsInTrip: {
                         PDA_DATA_INDICATION: true
@@ -112,13 +129,18 @@
             case 'SEND_EVA_SUCCESS':
                 var clonedState = Object.assign({}, state);
 
+                // Process data recieved from the server
                 clonedState.parcels = action.response['xml-fragment'].REPLY_OVERVIEW_PARCELS;
+
+                // Inform user
+                clonedState.okText = "EVA Verzonden";
 
                 return clonedState;
 
             case 'TRIP_START':
                 var clonedState = Object.assign({}, state);
 
+                // Update the General Header, required by Soap
                 clonedState.generalHeaderPda.MESSAGE_TIMESTAMP = new Date().toJSON().toString();
                 clonedState.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER =
                         parseInt(state.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER) + 1;
@@ -132,6 +154,7 @@
                 // update trip to request
                 //clonedState.trips[timeFrameIdx].BEGIN_TRIP_MILEAGE = action.startKmValue;
 
+                // Create the request
                 clonedState.request = {
                     BeginAndEndMileageTrip: {
                     }
@@ -150,11 +173,114 @@
                     return (clonedState.selectedTrip == parcel.TRIP_KEY.toString());
                 }.bind(this));
 
+                // Inform user
+                clonedState.okText = "Rit Gestart";
+
                 // Navigate to trip execute
+                window.history.pushState({}, null, '/tripexecute');
+                window.dispatchEvent(new CustomEvent('location-changed'));
+
                 return clonedState;
 
-            case 'DELIVER':
-                return Object.assign({}, state);
+            case 'DELIVERY':
+                var clonedState = Object.assign({}, state);
+
+                // populate our selectedParcel
+                clonedState.selectedParcel = action.selectedParcel;
+
+                // Navigate to trip delivery
+                window.history.pushState({}, null, '/delivery');
+                window.dispatchEvent(new CustomEvent('location-changed'));
+
+                return clonedState;
+
+            case 'AT_ADDRESS':
+                var clonedState = Object.assign({}, state);
+
+                // Navigate to at address page
+                window.history.pushState({}, null, '/ataddress');
+                window.dispatchEvent(new CustomEvent('location-changed'));
+
+                return clonedState;
+
+            case 'AT_NEIGHBORS':
+                var clonedState = Object.assign({}, state);
+
+                // populate our selectedParcel
+                clonedState.selectedParcel = action.selectedParcel;
+
+                // Navigate to at neighbors page
+                window.history.pushState({}, null, '/atneighbors');
+                window.dispatchEvent(new CustomEvent('location-changed'));
+
+                return clonedState;
+
+            case 'NOT_HOME':
+                var clonedState = Object.assign({}, state);
+
+                // Navigate to not home page
+                window.history.pushState({}, null, '/nothome');
+                window.dispatchEvent(new CustomEvent('location-changed'));
+
+                return clonedState;
+
+            case 'SEND_DELIVERY':
+                var clonedState = Object.assign({}, state);
+
+                // Update the General Header, required by Soap
+                clonedState.generalHeaderPda.MESSAGE_TIMESTAMP = new Date().toJSON().toString();
+                clonedState.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER =
+                        parseInt(state.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER) + 1;
+                clonedState.generalHeaderPda.MESSAGE_IDENTIFIER = '1500';
+
+                // Create the request
+                clonedState.request = {
+                    ParcelDeliveryResults: {
+                        RESULT_MESSAGE_IDENTIFIER: {
+                            MESSAGE_TIMESTAMP_ORIGINAL: '',
+                            MESSAGE_SEQUENCE_SESSION_NUMBER_ORIGINAL: ''
+                        },
+                        PARCEL_DELIVERY_RESULT: {
+                            GPS_LATITUDE: action.lat,
+                            GPS_LONGITUDE: action.lng,
+                            TIMEFRAME_KEY: '',
+                            TRIP_KEY: '',
+                            PARCEL_KEY: '',
+                            TIMESTAMP_PARCEL_STATUS: new Date().toJSON().toString(),
+                            RESULT_DESCRIPTION: '',
+                            SIGNATURE_BLOB: '',
+                            SIGNER_NAME: '',
+                            POSTAL_CODE_NUMERIC: '',
+                            POSTAL_CODE_ALPHA: '',
+                            STREET: '',
+                            HOUSE_NUMBER: '',
+                            HOUSE_NUMBER_ADDITION: '',
+                            CITY: '',
+                            BARCODE_KIB_CARD: ''
+                        }
+                    }
+                };
+
+                clonedState.returnActionType = 'sendDeliverySuccess';
+
+                return clonedState;
+
+
+            case 'SEND_DELIVERY_SUCCESS':
+                var clonedState = Object.assign({}, state);
+
+                // Depopulate our selectedParcel
+                clonedState.selectedParcel = null;
+
+                // Inform user
+                clonedState.okText = "Opdracht Voltooid";
+
+                // Navigate to trip execute
+                window.history.pushState({}, null, '/tripexecute');
+                window.dispatchEvent(new CustomEvent('location-changed'));
+
+                return clonedState;
+
             case 'TRIP_END':
                 return Object.assign({}, state);
             case 'LOG_OFF':

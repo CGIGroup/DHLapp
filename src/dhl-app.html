@@ -185,7 +185,8 @@
             is: 'dhl-app',
 
             behaviors: [
-                Polymer.AppNetworkStatusBehavior
+                Polymer.AppNetworkStatusBehavior,
+                ReduxBehavior
             ],
 
             properties: {
@@ -299,9 +300,10 @@
                 if(!newVal) return;
                 this.$.toastError.open();
             },
-
-            navigateToChanged: function(){
-
+            navigateToChanged: function(newVal){
+                if(!newVal) return;
+                //window.history.pushState({}, null, '/'+newVal);
+                //window.dispatchEvent(new CustomEvent('location-changed'));
             },
 
 

@@ -101,6 +101,14 @@
                         dispatch({ type: 'GET_TRIPS' });
                     }
                 },
+                sendDeliverySuccess: function(response) {
+                    return function(dispatch) {
+                        dispatch({
+                            type: 'SEND_DELIVERY_SUCCESS',
+                            response: response
+                        });
+                    }
+                },
             },
 
             requestChanged: function(request){

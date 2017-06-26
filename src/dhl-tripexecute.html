@@ -86,7 +86,7 @@
             </div>
         </div>
 
-
+<!--
         <div class="media">
 
             <div class="card">
@@ -115,7 +115,7 @@
                                     </div>
                                     <div class="flex">
                                         <div class="layout vertical">
-                                            <!-- [[parcel.HOUSE_NUMBER_ADDITION]]-->
+                                            <!-- [[parcel.HOUSE_NUMBER_ADDITION]]-- >
                                             <div>[[parcel.STREET]] [[parcel.HOUSE_NUMBER]]</div>
                                             <div>[[parcel.POSTAL_CODE_NUMERIC]][[parcel.POSTAL_CODE_ALPHA]] [[parcel.CITY]]</div>
                                             <div>[[parcel.CUSTOMER_SHORT_NAME]]</div>
@@ -134,9 +134,8 @@
 
             </div>
         </div>
-
+-->
         <audio id="audio" src="../images/censor-beep-01.mp3"></audio>
-        <a id="parcelNav" href="/delivery" style="display:none;">In Rit</a>
 
     </template>
 
@@ -154,10 +153,10 @@
                     observer: 'processBarcode',
                 },
 
-                selectedParcel:{
+                selected:{
                     type: Object,
                     notify: true,
-                    observer: 'selectedParcelChanged',
+                    observer: 'selectedChanged',
                 },
 
                 tripParcels:{
@@ -194,9 +193,12 @@
                 return classes;
             },
 
-            selectedParcelChanged: function(newValue){
+            selectedChanged: function(newValue){
                 if(!newValue) return;
-                this.$.parcelNav.click();
+                this.dispatch({
+                    type: 'DELIVERY',
+                    selectedParcel: newValue
+                });
             },
 
             computeDelMom: function(parcel){

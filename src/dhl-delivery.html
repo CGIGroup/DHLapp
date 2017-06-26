@@ -54,10 +54,6 @@
 
         <audio id="audio" src="../images/censor-beep-01.mp3"></audio>
 
-        <a id="atAddressNav" href="/ataddress" style="display:none;">Op Adres</a>
-        <a id="atNeighborsNav" href="/atneighbors" style="display:none;">Bij Buren</a>
-        <a id="notHomeNav" href="/nothome" style="display:none;">Niet Thuis</a>
-
     </template>
 
     <script>
@@ -71,19 +67,13 @@
                 barcode:{
                     type: String,
                     observer: 'processBarcode',
-                    notify: true,
                 },
 
                 selectedParcel: {
                     type: Object,
                     value: function(){return [];},
                     statePath: 'selectedParcel'
-                },
-
-                signature: {
-                    type: String,
-                    observer: 'signatureChanged',
-                },
+                }
 
             },
 
@@ -97,11 +87,6 @@
 
             },
 
-            signatureChanged: function (newValue, oldValue) {
-                //console.log('signature', newValue);
-                // The newValue contains the image data
-            },
-
             onRecognize: function(e){
                 this.$.audio.play();// beep
             },
@@ -112,16 +97,21 @@
             },
 
             atAddress: function(){
-                this.$.atAddressNav.click();
-
+                this.dispatch({
+                    type: 'AT_ADDRESS'
+                });
             },
 
             atNeighbors: function(){
-                this.$.atNeighborsNav.click();
+                this.dispatch({
+                    type: 'AT_NEIGHBORS'
+                });
             },
 
             notHome: function(){
-                this.$.notHomeNav.click();
+                this.dispatch({
+                    type: 'NOT_HOME'
+                });
             },
         });
     </script>

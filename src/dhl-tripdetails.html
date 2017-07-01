@@ -64,7 +64,7 @@
 
         </style>
 
-        <div class="timeframe">[[computeTimeFrameDesc()]]</div> <!--[[timeframe.TIMEFRAME_DESCRIPTION]]-->
+        <div class="timeframe">[[computeTimeFrameDesc(timeframe)]]</div> <!--[[timeframe.TIMEFRAME_DESCRIPTION]]-->
         <div class="layout horizontal">
             <div class="leading">[[calculateSeq(trip)]]</div>
             <!--<div class="leading">[[trip.TRIP_SEQUENCE_NUMBER]]</div>-->
@@ -164,11 +164,10 @@
                 },
 
                 /**
-                 * The select trip id that results from this process
+                 * The current timeframe object
                  */
-                selectedTripId: {
+                timeframe: {
                     type: Object,
-                    notify: true
                 },
 
                 evaInvalid: {
@@ -188,13 +187,8 @@
 
             },
 
-            computeTimeFrameDesc: function () {
-                if (!this.trip) return '';
-                var timeframeKey = this.trip.TIMEFRAME_KEY;
-                var timeFrame = this.resp201['xml-fragment'].REPLY_OVERVIEW_TIMEFRAME.find(function (tf) {
-                    return (timeframeKey.toString() == tf.TIMEFRAME_KEY.toString());
-                }.bind(this));
-                return timeFrame.TIMEFRAME_DESCRIPTION;
+            computeTimeFrameDesc: function (timeframe) {
+                return timeframe.TIMEFRAME_DESCRIPTION.toString();
             },
 
             calculateSeq: function (trip) {
@@ -222,23 +216,10 @@
                 else this.evaInvalid = true;
             },
 
-
-            getClassForItem: function (item, selected) {
-                return selected ? 'item expanded' : 'item';
-            },
-
-            compare: function (val1, val2) {
-                return val1 == val2;
-            },
-
-
             compareValues: function(v1, v2){
                 return v1 == v2;
             },
 
-            computedIndex: function (index) {
-                return index + 1;
-            },
             /*
              // send EVA, get parcels
             */
@@ -256,7 +237,7 @@
             onStartTap: function(event) {
 
                 this.dispatch({
-                    type: 'TRIP_START',
+                    type: 'START_TRIP',
                     tripKey: this.trip.TRIP_KEY.toString(),
                     beginMileage: this.$.startKm.value
                 });

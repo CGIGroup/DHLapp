@@ -39,7 +39,7 @@
         <div class="media">
 
             <barcode-scanner code="{{barcode}}"
-                             placeholder-message="Scanner Activeren"
+                             placeholder-message="PID Scanner Activeren"
                              on-recognize="onRecognize">
             </barcode-scanner>
 
@@ -54,12 +54,11 @@
                 <template is="dom-repeat"
                           id="itemsList"
                           items="{{tripParcels}}"
-                          selected="{{selected}}"
                           as="parcel"
                           sort="sortBySeqNum"
                           observe="DELIVERY_SEQUENCE_NUMBER"
                           scroll-target="document">
-                    <div class$="[[_computedClass(selected)]]" on-tap="toggleSelection">
+                    <div class$="[[computedClass(parcel,selected)]]" on-tap="toggleSelection">
                         <div class="layout horizontal">
                             <div class="leading">
                                 <div class="layout vertical">
@@ -86,55 +85,6 @@
             </div>
         </div>
 
-<!--
-        <div class="media">
-
-            <div class="card">
-                <paper-input value="{{barcode}}"
-                             label="PID"
-                             required
-                             auto-validate>
-                </paper-input>
-
-                <h3>Niet afgehandelde opdrachten</h3>
-                <iron-list items="{{tripParcels}}"
-                           as="parcel"
-                           sort="sortBySeqNum"
-                           selected-item="{{selectedParcel}}"
-                           selection-enabled
-                           scroll-target="document">
-                    <template>
-                        <div>
-                            <div class$="[[_computedClass(selected)]]">
-                                <div class="layout horizontal">
-                                    <div class="leading">
-                                        <div class="layout vertical">
-                                            <div>[[parcel.DELIVERY_SEQUENCE_NUMBER]]</div>
-                                            <div>[[computeDelMom(parcel)]]</div>
-                                        </div>
-                                    </div>
-                                    <div class="flex">
-                                        <div class="layout vertical">
-                                            <!-- [[parcel.HOUSE_NUMBER_ADDITION]]-- >
-                                            <div>[[parcel.STREET]] [[parcel.HOUSE_NUMBER]]</div>
-                                            <div>[[parcel.POSTAL_CODE_NUMERIC]][[parcel.POSTAL_CODE_ALPHA]] [[parcel.CITY]]</div>
-                                            <div>[[parcel.CUSTOMER_SHORT_NAME]]</div>
-                                        </div>
-                                    </div>
-                                    <div class="layout vertical">
-                                        <div>PA</div>
-                                        <div>Icon</div>
-                                        <div>[[computeBarShort(parcel)]]</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </template>
-                </iron-list>
-
-            </div>
-        </div>
--->
         <audio id="audio" src="../images/censor-beep-01.mp3"></audio>
 
     </template>
@@ -162,20 +112,16 @@
                 tripParcels:{
                     type: Array,
                     value: function(){return [];},
-                    statePath: 'tripParcels',
-                    observer: 'tripParcelsChanged'
+                    statePath: 'tripParcels'
                 }
             },
 
             processBarcode: function(barcode, oldValue) {
                 if(!barcode) return;
-                //beep
-                this.$.audio.play();
+            },
 
-                //update the status in tripInfo
-                //this.set('tripInfo.stops.'+sIdx+'.pieces.'+pIdx+'.status', 'sending...');
-
-                this.$.parcelNav.click();
+            onRecognize: function(e){
+                this.$.audio.play();// beep
             },
 
             sortBySeqNum: function(v1, v2) {
@@ -185,9 +131,9 @@
                 if (val1 < val2) return -1;
             },
 
-            _computedClass: function(isSelected) {
+            computedClass: function(parcel, selected) {
                 var classes = 'details';
-                if (isSelected) {
+                if(parcel === selected) {
                     classes += ' selected';
                 }
                 return classes;
@@ -211,9 +157,6 @@
                 return '...'+parcel.PID.toString().substr(parcel.PID.toString().length - 4);
             },
 
-            tripParcelsChanged: function(newVal, oldVal){
-                //debugger;
-            },
             toggleSelection: function(e) {
                 var item = this.$.itemsList.itemForElement(e.target);
                 this.$.selector.select(item);

@@ -27,77 +27,19 @@
         <geo-location watch-pos latitude="{{lat}}" longitude="{{lng}}"></geo-location>
 
         <div class="media">
-            <!--
-            <barcode-scanner code="{{barcode}}"
-                             placeholder-message="Scanner Activeren"
-                             on-recognize="onRecognize">
-            </barcode-scanner>
-            -->
+
             <paper-card class="card">
                 <h3>Op Adres</h3>
-                <!--
-                <paper-input value="{{barcode}}"
-                             label="KIB"
-                             required
-                             auto-validate>
-                </paper-input>
-                -->
+
                 <div>[[selectedParcel.CUSTOMER_SHORT_NAME]]</div>
                 <div>[[selectedParcel.STREET]] [[selectedParcel.HOUSE_NUMBER]]</div>
                 <div>[[selectedParcel.POSTAL_CODE_NUMERIC]][[selectedParcel.POSTAL_CODE_ALPHA]] [[selectedParcel.CITY]]</div>
                 <p></p>
                 <div>PID:   [[selectedParcel.PID]]</div>
                 <div>instr: [[computeDelInstr(parcel)]]</div>
-                <!--
-                <div class="layout horizontal">
-                    <paper-input
-                            label="Straat"
-                            value="{{street}}"
-                            type="String"
-                            required
-                            auto-validate></paper-input>
-                    <paper-input
-                            label="Huisnummer"
-                            value="{{houseNumber}}"
-                            type="number"
-                            required
-                            auto-validate></paper-input>
-                    <paper-input
-                            label="Toev."
-                            value="{{houseNumberAdd}}"
-                            type="string"
-                            required
-                            auto-validate></paper-input>
-                </div>
-                <div class="layout horizontal">
-                    <paper-input
-                            label="PC Num"
-                            value="{{postCodeNum}}"
-                            type="number"
-                            length="4"
-                            required
-                            auto-validate></paper-input>
-                    <paper-input
-                            label="Alfa"
-                            value="{{postCodeAlfa}}"
-                            length="2"
-                            required
-                            auto-validate></paper-input>
-                    <paper-input
-                            label="Plaats"
-                            value="{{city}}"
-                            required
-                            auto-validate>
-                    </paper-input>
-                </div>
-                -->
-                <!--<paper-input
-                        label="Pin Code"
-                        value="{{pinCode}}"
-                        required
-                        auto-validate>
-                </paper-input>-->
+
                 <p>Rembours: 25,00 Euro</p>
+
                 <paper-input
                         label="Naam Ondertekenaar"
                         value="{{signerName}}"

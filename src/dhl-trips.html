@@ -27,7 +27,7 @@
                           items="{{trips}}"
                           as="trip">
                     <div>
-                        <dhl-tripdetails trip="[[trip]]"></dhl-tripdetails>
+                        <dhl-tripdetails trip="[[trip]]" timeframe="[[calculateTimeframe(trip)]]"></dhl-tripdetails>
                     </div>
                 </template>
             </div>
@@ -59,8 +59,24 @@
                     type: Array,
                     value: function(){return[];},
                     statePath: 'trips'
-                }
+                },
 
+                /**
+                 * The timeframes that have previously been retrieved
+                 */
+                timeframes:{
+                    type: Array,
+                    value: function(){return[];},
+                    statePath: 'timeframes'
+                }
+            },
+            calculateTimeframe: function(trip){
+                if(!trip) return {};
+                var timeframeKey = trip.TIMEFRAME_KEY;
+                var timeFrame = this.timeframes.find(function (tf) {
+                    return (timeframeKey.toString() == tf.TIMEFRAME_KEY.toString());
+                }.bind(this));
+                return timeFrame;
             }
 
         });

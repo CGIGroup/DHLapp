@@ -6,11 +6,12 @@
     <template>
 
         <iron-ajax
+                auto
                 id="ajax"
                 method="POST"
-                url="https://depotws-test.nl.dhl.com/SVDepotPDAWs"
                 content-type="text/xml"
                 handle-as="xml"
+                body="[[calculateBody(request)]]"
                 on-response="handleResponse"
                 on-error="handleError">
         </iron-ajax>
@@ -28,21 +29,20 @@
             properties:{
 
                 /**
-                 * The name of the actions function to be used
+                 * The name of the actions function to be used on success
                  */
-                returnActionType:{
+                successActionType:{
                     type: String,
                     value: '',
-                    statePath: 'returnActionType'
+                    statePath: 'successActionType'
                 },
-
                 /**
-                 * The general header to be used on all requests
+                 * The name of the action to be used on error
                  */
-                generalHeaderPda:{
-                    type: Object,
-                    value: function(){return{};},
-                    statePath: 'generalHeaderPda'
+                errorActionType:{
+                    type: String,
+                    value: '',
+                    statePath: 'errorActionType'
                 },
 
                 /**
@@ -51,11 +51,8 @@
                 request: {
                     type: Object,
                     value: function(){return{};},
-                    statePath: 'request',
-                    observer: 'requestChanged'
-                },
-
-
+                    statePath: 'request'
+                }
             },
 
             actions: {
@@ -86,7 +83,7 @@
                 tripStartSuccessWithGetTrips: function(response) {
                     return function(dispatch) {
                         dispatch({
-                            type: 'TRIP_START_SUCCESS',
+                            type: 'START_TRIP_SUCCESS',
                             response: response
                         });
                         dispatch({ type: 'GET_TRIPS' });
@@ -111,12 +108,9 @@
                 },
             },
 
-            requestChanged: function(request){
+            calculateBody: function(request){
                 console.log('requestChanged', request);
                 if(!request || Object.keys(request).length === 0) return;
-
-                var operationName = Object.keys(this.request)[0];
-                this.request[operationName].GENERAL_HEADER_PDA = this.generalHeaderPda;
 
                 var prefixedFragment = this.addNameSpace(this.request);
 
@@ -131,19 +125,23 @@
 
                 var parser = new X2JS();
                 var xmlBody = parser.json2xml_str(envelope);
-                this.$.ajax.body = xmlBody;
 
-                //console.log(xmlBody);
+                console.log(xmlBody);
 
                 //DEBUG
-                var mockXml = this.generalHeaderPda.MESSAGE_IDENTIFIER.substring(0, this.generalHeaderPda.MESSAGE_IDENTIFIER.length-1) + '1';
-                if(this.generalHeaderPda.MESSAGE_IDENTIFIER === '200' &&
-                        this.generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER !== 2) mockXml = '201B';
+                var operationName = Object.keys(this.request)[0];
+                var generalHeaderPda = this.request[operationName].GENERAL_HEADER_PDA;
+                var mockXml = generalHeaderPda.MESSAGE_IDENTIFIER.substring(0, generalHeaderPda.MESSAGE_IDENTIFIER.length-1) + '1';
+                if(generalHeaderPda.MESSAGE_IDENTIFIER === '200' &&
+                        generalHeaderPda.MESSAGE_SEQUENCE_SESSION_NUMBER !== 2) mockXml = '201B';
                 this.$.ajax.method = 'GET';
                 this.$.ajax.url = '/src/xml/'+mockXml+'.xml';
+
+                //We initially leave the url empty to prevent automatic ajax with empty request.
+                //this.$.ajax.url="https://depotws-test.nl.dhl.com/SVDepotPDAWs";
                 //DEBUG
 
-                this.$.ajax.generateRequest();
+                return xmlBody;
 
             },
 
@@ -154,15 +152,14 @@
 
                 console.log(response);
 
-                return this.dispatch(this.returnActionType, response);
+                return this.dispatch(this.successActionType, response);
             },
 
             handleError: function(event){
-                //show result in toast
-                var toast = document.getElementById('toastError');
-                var message = this.errorText?this.errorText:event.detail.request.xhr.response.message;
-                toast.text = event.detail.request.xhr.status+' '+message;
-                toast.open();
+                this.dispatch({
+                    action: this.errorActionType,
+                    response: event.detail.xhr.response
+                });
             },
 
             addNameSpace: function(origFrag){

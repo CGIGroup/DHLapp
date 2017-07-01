@@ -29,7 +29,7 @@
         <div class="media">
 
             <barcode-scanner code="{{barcode}}"
-                             placeholder-message="Scanner Activeren"
+                             placeholder-message="KIB Scanner Activeren"
                              on-recognize="onRecognize">
             </barcode-scanner>
 
@@ -91,26 +91,6 @@
                     </paper-input>
                 </div>
 
-                <!--<paper-input
-                        label="Pin Code"
-                        value="{{pinCode}}"
-                        required
-                        auto-validate>
-                </paper-input>-->
-                <!--
-                <p>Rembours: 25,00 Euro</p>
-                <paper-input
-                        label="Naam Ondertekenaar"
-                        value="{{signerName}}"
-                        required
-                        auto-validate>
-                </paper-input>
-
-                <div>Zet Hier Uw Handtekenning:</div>
-                <hand-signature data="{{signature}}"
-                                width="288px"
-                                height="200px"></hand-signature>
-                -->
                 <p></p>
                 <paper-button on-tap="onTapSend" raised>Verzenden</paper-button>
 

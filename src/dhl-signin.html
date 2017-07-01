@@ -17,7 +17,7 @@
         <div class="media">
 
             <barcode-scanner code="{{barcode}}"
-                             placeholder-message="Scanner Activeren"
+                             placeholder-message="P-Nummer Scanner Activeren"
                              on-tap="initializeAudio"
                              on-recognize="onRecognize"
                              readers="[[readers]]">
@@ -50,7 +50,6 @@
 
         <audio id="audio"></audio>
 
-        <a id="timeframeNav" href="/trips" style="display:none;">Trips</a>
     </template>
 
 
@@ -102,7 +101,7 @@
                     return function(dispatch) {
 
                         dispatch({
-                            type: 'TRIP_START',
+                            type: 'START_TRIP',
                             tripKey: 7448089,
                             beginMileage: 11
                         });
@@ -137,14 +136,10 @@
             },
 
             onTapGetParcelsTest: function(e) {
-
                 return this.dispatch('testGetParcels');
-
             },
             onTapStartTripTest: function(e) {
-
                 return this.dispatch('testStartTrip');
-
             },
         });
     </script>

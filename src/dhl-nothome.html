@@ -29,7 +29,7 @@
         <div class="media">
 
             <barcode-scanner code="{{barcode}}"
-                             placeholder-message="Scanner Activeren"
+                             placeholder-message="KIB Scanner Activeren"
                              on-recognize="onRecognize">
             </barcode-scanner>
 
@@ -48,69 +48,7 @@
                 <p></p>
                 <div>PID:   [[selectedParcel.PID]]</div>
                 <div>instr: [[computeDelInstr(parcel)]]</div>
-                <!--
-                <div class="layout horizontal">
-                    <paper-input
-                            label="Straat"
-                            value="{{street}}"
-                            type="String"
-                            required
-                            auto-validate></paper-input>
-                    <paper-input
-                            label="Huisnummer"
-                            value="{{houseNumber}}"
-                            type="number"
-                            required
-                            auto-validate></paper-input>
-                    <paper-input
-                            label="Toev."
-                            value="{{houseNumberAdd}}"
-                            type="string"
-                            required
-                            auto-validate></paper-input>
-                </div>
-                <div class="layout horizontal">
-                    <paper-input
-                            label="PC Num"
-                            value="{{postCodeNum}}"
-                            type="number"
-                            length="4"
-                            required
-                            auto-validate></paper-input>
-                    <paper-input
-                            label="Alfa"
-                            value="{{postCodeAlfa}}"
-                            length="2"
-                            required
-                            auto-validate></paper-input>
-                    <paper-input
-                            label="Plaats"
-                            value="{{city}}"
-                            required
-                            auto-validate>
-                    </paper-input>
-                </div>
-                -->
-                <!--<paper-input
-                        label="Pin Code"
-                        value="{{pinCode}}"
-                        required
-                        auto-validate>
-                </paper-input>-->
-                <!--
-                <p>Rembours: 25,00 Euro</p>
-                <paper-input
-                        label="Naam Ondertekenaar"
-                        value="{{signerName}}"
-                        required
-                        auto-validate>
-                </paper-input>
 
-                <div>Zet Hier Uw Handtekenning:</div>
-                <hand-signature data="{{signature}}"
-                                width="288px"
-                                height="200px"></hand-signature>
-                -->
                 <p></p>
                 <paper-button on-tap="onTapSend" raised>Verzenden</paper-button>
 

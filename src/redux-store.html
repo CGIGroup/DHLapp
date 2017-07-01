@@ -17,7 +17,8 @@
             MESSAGE_SEQUENCE_SESSION_NUMBER: '0'
         },
         request: {},
-        returnActionType: '',
+        successActionType: '',
+        errorActionType: '',
         okText: '',
         errorText: ''
 
@@ -42,13 +43,17 @@
                 // Create the request
                 clonedState.request = {
                     LogOn: {
+                        GENERAL_HEADER_PDA: clonedState.generalHeaderPda,
                         LogOnNumber: {
-                            P_NUMBER: action.pNumber
+                            LogOnNumber: {
+                                P_NUMBER: action.pNumber
+                            }
                         }
                     }
                 };
 
-                clonedState.returnActionType = 'logonSuccessWithGetTrips';
+                clonedState.successActionType = 'logonSuccessWithGetTrips';
+                clonedState.errorActionType = 'LOGON_FAILURE';
 
                 return clonedState;
 
@@ -58,8 +63,17 @@
                 // Inform user
                 clonedState.okText = "Aanmelden Gelukt";
 
+                // Navigate to trips screen
                 window.history.pushState({}, null, '/trips');
                 window.dispatchEvent(new CustomEvent('location-changed'));
+
+                return clonedState;
+
+            case 'LOGON_FAILURE':
+                var clonedState = Object.assign({}, state);
+
+                // Inform user
+                clonedState.errorText = "Aanmelden Mislukt";
 
                 return clonedState;
 
@@ -74,21 +88,33 @@
 
                 // Create the request
                 clonedState.request = {
-                    TripsOverview: {}
+                    TripsOverview: {
+                        GENERAL_HEADER_PDA: clonedState.generalHeaderPda
+                    }
                 };
 
-                clonedState.returnActionType = 'getTripsSuccess';
+                clonedState.successActionType = 'getTripsSuccess';
+                clonedState.errorActionType = 'GET_TRIPS_FAILURE';
 
                 return clonedState;
+            
             case 'GET_TRIPS_SUCCESS':
                 var clonedState = Object.assign({}, state);
 
-                // Process data recieved from the server
+                // Process data received from the server
                 clonedState.timeframes = action.response['xml-fragment'].REPLY_OVERVIEW_TIMEFRAME;
                 clonedState.trips = action.response['xml-fragment'].REPLY_OVERVIEW_TRIPS;
 
                 // Inform user
                 clonedState.okText = "Ritten Ophalen Gelukt";
+
+                return clonedState;
+
+            case 'GET_TRIPS_FAILURE':
+                var clonedState = Object.assign({}, state);
+
+                // Inform user
+                clonedState.errorText = "Aanmelden Mislukt";
 
                 return clonedState;
 
@@ -118,11 +144,13 @@
                 // Create the request
                 clonedState.request = {
                     ParcelsInTrip: {
+                        GENERAL_HEADER_PDA: clonedState.generalHeaderPda,
                         PDA_DATA_INDICATION: true
                     }
                 };
 
-                clonedState.returnActionType = 'sendEvaSuccessWithGetTrips';
+                clonedState.successActionType = 'sendEvaSuccessWithGetTrips';
+                clonedState.errorActionType = 'SEND_EVA_FAILURE';
 
                 return clonedState;
 
@@ -137,7 +165,16 @@
 
                 return clonedState;
 
-            case 'TRIP_START':
+
+            case 'SEND_EVA_FAILURE':
+                var clonedState = Object.assign({}, state);
+
+                // Inform user
+                clonedState.errorText = "EVA Verzending Mislukt";
+
+                return clonedState;
+
+            case 'START_TRIP':
                 var clonedState = Object.assign({}, state);
 
                 // Update the General Header, required by Soap
@@ -157,15 +194,17 @@
                 // Create the request
                 clonedState.request = {
                     BeginAndEndMileageTrip: {
+                        GENERAL_HEADER_PDA: clonedState.generalHeaderPda
                     }
                 };
 
                 clonedState.selectedTrip = action.tripKey.toString();
-                clonedState.returnActionType = 'tripStartSuccessWithGetTrips';
+                clonedState.successActionType = 'tripStartSuccessWithGetTrips';
+                clonedState.errorActionType = 'START_TRIP_FAILURE';
 
                 return clonedState;
 
-            case 'TRIP_START_SUCCESS':
+            case 'START_TRIP_SUCCESS':
                 var clonedState = Object.assign({}, state);
 
                 // populate our tripParcel array
@@ -179,6 +218,15 @@
                 // Navigate to trip execute
                 window.history.pushState({}, null, '/tripexecute');
                 window.dispatchEvent(new CustomEvent('location-changed'));
+
+                return clonedState;
+
+
+            case 'START_TRIP_FAILURE':
+                var clonedState = Object.assign({}, state);
+
+                // Inform user
+                clonedState.errorText = "Rit Starten Mislukt";
 
                 return clonedState;
 
@@ -236,6 +284,7 @@
                 // Create the request
                 clonedState.request = {
                     ParcelDeliveryResults: {
+                        GENERAL_HEADER_PDA: clonedState.generalHeaderPda,
                         RESULT_MESSAGE_IDENTIFIER: {
                             MESSAGE_TIMESTAMP_ORIGINAL: '',
                             MESSAGE_SEQUENCE_SESSION_NUMBER_ORIGINAL: ''
@@ -261,11 +310,11 @@
                     }
                 };
 
-                clonedState.returnActionType = 'sendDeliverySuccess';
+                clonedState.successActionType = 'sendDeliverySuccess';
+                clonedState.errorActionType = 'SEND_DELIVERY_FAILURE';
 
                 return clonedState;
-
-
+            
             case 'SEND_DELIVERY_SUCCESS':
                 var clonedState = Object.assign({}, state);
 
@@ -278,6 +327,14 @@
                 // Navigate to trip execute
                 window.history.pushState({}, null, '/tripexecute');
                 window.dispatchEvent(new CustomEvent('location-changed'));
+
+                return clonedState;
+            
+            case 'SEND_DELIVERY_FAILURE':
+                var clonedState = Object.assign({}, state);
+
+                // Inform user
+                clonedState.errorText = "Afleveren Mislukt";
 
                 return clonedState;
 

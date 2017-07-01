@@ -25,33 +25,20 @@
 
         <geo-location watch-pos latitude="{{lat}}" longitude="{{lng}}"></geo-location>
 
-        <template is="dom-if" if="{{lat}}">
-            <google-map  map="{{map}}"
-                         latitude="[[lat]]" longitude="[[lng]]"
-                         fitToMarkers
-                         api-key="AIzaSyDrIreXFKXwprD4yBAemMUB3JZhw8rG65c">
-                <google-map-marker latitude="[[lat]]" longitude="[[lng]]"></google-map-marker>
-            </google-map>
+        <google-map  map="{{map}}"
+                     latitude="[[lat]]" longitude="[[lng]]"
+                     XfitToMarkers
+                     api-key="AIzaSyDrIreXFKXwprD4yBAemMUB3JZhw8rG65c">
+            <google-map-marker latitude="[[lat]]" longitude="[[lng]]"></google-map-marker>
+        </google-map>
 
-            <template is="dom-if" if="{{selectedTripId}}">
-                <google-map-directions map="{{map}}"
-                                       start-address="[[computedPosition()]]"
-                                       end-address="[[computedPosition()]]"
-                                       waypoints="[[computedWaypoints()]]"
-                                       api-key="AIzaSyDrIreXFKXwprD4yBAemMUB3JZhw8rG65c">
-                </google-map-directions>
-                <!--
-                <google-streetview-pano
-                        position="[[computedPosition()]]"
-                        heading="330"
-                        pitch="-2"
-                        zoom="0.8"
-                        disable-default-ui
-                        api-key="AIzaSyDrIreXFKXwprD4yBAemMUB3JZhw8rG65c">
-                </google-streetview-pano>
-                               position="[[computedPosition()]]"   -->
-            </template>
-        </template>
+        <google-map-directions map="{{map}}"
+                               start-address="[[computedPosition()]]"
+                               end-address="[[computedPosition()]]"
+                               waypoints="[[computedWaypoints(tripParcels)]]"
+                               api-key="AIzaSyDrIreXFKXwprD4yBAemMUB3JZhw8rG65c">
+        </google-map-directions>
+
     </template>
 
     <script>
@@ -70,21 +57,23 @@
 
 
             },
-            computedWaypoints:function(){
+
+            computedWaypoints:function(tripParcels){
                 var wayPoints = [];
-                this.tripParcels.forEach(function(stop){
+                tripParcels.forEach(function(stop, idx){
+                    if(idx>23) return;
                     //wayPoints.push({location: stop.address.latitude+' '+stop.address.longitude});
                     wayPoints.push({location: stop.STREET+' '+
-                    stop.HOUSE_NUMBER+' '+
-                    stop.CITY
-                        //stop.address.country
+                        stop.HOUSE_NUMBER+' '+
+                        stop.CITY
+                        //TODO huisnummer toevoeging
                     });
                 }.bind(this));
                 return wayPoints
             },
+
             computedPosition:function(){
-                //return { lat: 42.345573, lng: -71.098326 };
-                //return {location: this.lat+' '+this.lng}
+                return { lat: 52.061745, lng: 5.035043 };
                 return {lat: this.lat, lng:this.lng}
             }
 

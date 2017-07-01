@@ -19,7 +19,8 @@
   "sources": [
     "src/**/*",
     "images/**/*",
-    "bower.json"
+    "bower.json",
+    "node_modules/**/*"
   ],
   "extraDependencies": [
     "manifest.json",

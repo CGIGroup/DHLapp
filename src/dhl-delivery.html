@@ -5,7 +5,15 @@
 <link rel="import" href="redux-store.html">
 <link rel="import" href="barcode-scanner.html">
 <link rel="import" href="shared-styles.html">
+<!--
+# dhl-delivery
+`<dhl-delivery>`
+This element displays parcel data.
+Used when courier is at address.
+Features a barcode scanner to scan PID
+Dispatches 'AT_ADDRESS', 'AT_NEIGHBORS', 'NOT_HOME' for navigation
 
+-->
 <dom-module id="dhl-delivery">
     <template>
         <style include="shared-styles">
@@ -64,11 +72,18 @@
 
             properties:{
 
+                /**
+                 * The scanned barcode
+                 */
                 barcode:{
                     type: String,
                     observer: 'processBarcode',
                 },
 
+                /**
+                 * The selected parcel
+                 * Managed by redux-store
+                 */
                 selectedParcel: {
                     type: Object,
                     value: function(){return [];},

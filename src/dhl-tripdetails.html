@@ -81,7 +81,7 @@
                     <div class="layout horizontal">
                         <paper-time-input
                                 id="evaInput"
-                                label="Eerste Verwachte Aankomst"
+                                label="Eerste Verwachte Aankomsttijd"
                                 value="{{evaValue}}"
                                 format="24"
                                 on-change="onChangeEva"
@@ -103,11 +103,14 @@
                         <paper-input
                                 id="startKm"
                                 label="Start km"
-                                value="startKmValue"
-                                type="number"
-                                on-change="onChangeStartKm"
+                                value="{{startKmValue}}"
                                 required
-                                auto-validate>km</paper-input>
+                                auto-validate
+                                always-float-label
+                                allowed-pattern="[0-9]"
+                                maxlength="12"
+                                error-message="Ongeldige Start km"
+                                invalid="{{startKmInvalid}}">km</paper-input>
                         <paper-input
                                 id="endKm"
                                 label="Eind km"
@@ -115,7 +118,8 @@
                                 type="number"
                                 on-change="onChangeEndKm"
                                 required
-                                auto-validate></paper-input>
+                                auto-validate
+                                disabled></paper-input>
                         <paper-input
                                 id="privateKm"
                                 label="Prive km"
@@ -123,8 +127,10 @@
                                 type="number"
                                 on-change="onChangePrivate"
                                 required
-                                auto-validate></paper-input>
+                                auto-validate
+                                disabled></paper-input>
                     </div>
+                    <p></p>
                     <div class="layout horizontal">
                         <paper-button
                                 on-tap="onStartTap"

@@ -7,7 +7,15 @@
 <link rel="import" href="redux-store.html">
 <link rel="import" href="barcode-scanner.html">
 <link rel="import" href="shared-styles.html">
+<!--
+# dhl-ataddress
+`<dhl-ataddress>`
+This element displays parcel data.
+Used when rhe courier is at the correct address.
+Features a barcode scanner to scan PID and hand signature
+Dispatches SEND_DELIVERY action with current lat, lng, name, signature
 
+-->
 <dom-module id="dhl-ataddress">
     <template>
         <style include="iron-flex iron-flex-alignment iron-positioning"></style>
@@ -36,7 +44,7 @@
                 <div>[[selectedParcel.POSTAL_CODE_NUMERIC]][[selectedParcel.POSTAL_CODE_ALPHA]] [[selectedParcel.CITY]]</div>
                 <p></p>
                 <div>PID:   [[selectedParcel.PID]]</div>
-                <div>instr: [[computeDelInstr(parcel)]]</div>
+                <div>Instructie: [[computeDelInstr(parcel)]]</div>
 
                 <p>Rembours: 25,00 Euro</p>
 
@@ -71,12 +79,19 @@
 
             properties:{
 
+                /**
+                 * The scanned barcode
+                 */
                 barcode:{
                     type: String,
                     observer: 'processBarcode',
                     notify: true,
                 },
 
+                /**
+                 * The selected parcel
+                 * Managed by redux-store
+                 */
                 selectedParcel: {
                     type: Object,
                     value: function(){return {};},

@@ -4,7 +4,14 @@
 <link rel="import" href="barcode-scanner.html">
 <link rel="import" href="redux-store.html">
 <link rel="import" href="shared-styles.html">
+<!--
+# dhl-signin
+`<dhl-signin>`
+This element displays P-Number and IMEI input fields.
+Used to Logon.
+Dispatches 'LOGON' action with P-Number and IMEI
 
+-->
 <dom-module id="dhl-signin">
     <template>
         <style include="shared-styles">
@@ -16,7 +23,7 @@
 
         <div class="media">
 
-            <barcode-scanner code="{{barcode}}"
+            <barcode-scanner code="{{pNumber}}"
                              placeholder-message="P-Nummer Scanner Activeren"
                              on-tap="initializeAudio"
                              on-recognize="onRecognize"
@@ -25,29 +32,42 @@
 
             <paper-card class="card">
                 <paper-input id="pNumber"
-                             value="{{barcode}}"
+                             value="{{pNumber}}"
                              label="P-Nummer"
                              required
-                             auto-validate>
+                             auto-validate
+                             always-float-label
+                             pattern="[0-9]{6}"
+                             allowed-pattern="[0-9]"
+                             maxlength="6"
+                             error-message="Ongeldige P-Nummer"
+                             invalid="{{pNumberInvalid}}">
                 </paper-input>
 
                 <paper-input id="imeiNumber"
                              value="{{imeiNumber}}"
-                             label="PIN"
+                             label="IMEI Nummer"
                              required
                              auto-validate
-                             type="number">
+                             always-float-label
+                             pattern="[0-9]{15}"
+                             allowed-pattern="[0-9]"
+                             maxlength="15"
+                             error-message="Ongeldige IMEI Nummer"
+                             invalid="{{imeiNumberInvalid}}">
                 </paper-input>
 
-                <paper-button on-tap="onTapSignIn" raised>Aanmelden</paper-button>
+                <p></p>
+                <paper-button on-tap="onTapSignIn"
+                              disabled$="[[computeDisabled(pNumberInvalid,imeiNumberInvalid)]]"
+                              raised>Aanmelden</paper-button>
 
             </paper-card>
 
         </div>
-
-        <paper-button style="width:30px;" on-tap="onTapGetParcelsTest" raised>Get Parcels Test</paper-button>
-        <paper-button style="width:30px;" on-tap="onTapStartTripTest" raised>Start Trip Test</paper-button>
-
+<!--
+        <paper-button style="width:30px;" on-tap="onTapFill" raised>Fill</paper-button>
+-->
         <audio id="audio"></audio>
 
     </template>
@@ -64,12 +84,14 @@
                 /**
                  * The scanned Barcode
                  */
-                barcode:{
+                pNumber:{
                     type: String,
-                    observer: 'processBarcode',
                     notify: true
                 },
 
+                /**
+                 * The readers used by the barcode scanner
+                 */
                 readers:{
                     type: Array,
                     value: function(){
@@ -82,6 +104,42 @@
 
             },
 
+            onTapSignIn: function() {
+                this.dispatch({
+                    type: 'LOGON',
+                    pNumber: this.pNumber,
+                    imeiNumber: this.imeiNumber
+                });
+            },
+
+            computeDisabled: function(pNumberInvalid, imeiNumberInvalid){
+                if(!this.pNumber || !this.imeiNumber) return true;
+                return pNumberInvalid || imeiNumberInvalid
+            },
+
+            onRecognize: function(e){
+                this.$.audio.src = '../images/censor-beep-01.mp3';
+                this.$.audio.play();// beep
+            },
+
+            initializeAudio: function(e){
+                // On mobile, audio must be initialized by a human.
+                // This is to prevent spontaneous video/audio download .
+                // We just play empty sound here
+                this.$.audio.play();// no sound
+            },
+
+            //DEBUG
+            onTapFill: function(e) {
+                this.pNumber = 614444;
+                this.imeiNumber = 980060642228356;
+            },
+            onTapGetParcelsTest: function(e) {
+                return this.dispatch('testGetParcels');
+            },
+            onTapStartTripTest: function(e) {
+                return this.dispatch('testStartTrip');
+            },
             actions: {
                 testGetParcels: function() {
                     return function(dispatch) {
@@ -107,39 +165,6 @@
                         });
                     }
                 }
-            },
-
-            onTapSignIn: function() {
-
-                this.dispatch({
-                    type: 'LOGON',
-                    pNumber: '614444',
-                    imeiNumber: '980060642228356'
-                });
-
-            },
-
-            processBarcode: function(barcode, oldValue) {
-
-            },
-
-            onRecognize: function(e){
-                this.$.audio.src = '../images/censor-beep-01.mp3';
-                this.$.audio.play();// beep
-            },
-
-            initializeAudio: function(e){
-                // On mobile, audio must be initialized by a human.
-                // This is to prevent spontaneous video/audio download .
-                // We just play empty sound here
-                this.$.audio.play();// no sound
-            },
-
-            onTapGetParcelsTest: function(e) {
-                return this.dispatch('testGetParcels');
-            },
-            onTapStartTripTest: function(e) {
-                return this.dispatch('testStartTrip');
             },
         });
     </script>

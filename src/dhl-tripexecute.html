@@ -63,7 +63,7 @@
                             <div class="leading">
                                 <div class="layout vertical">
                                     <div>[[parcel.DELIVERY_SEQUENCE_NUMBER]]</div>
-                                    <div>[[computeDelMom(parcel)]]</div>
+                                    <div>[[computeDeliveryMoment(parcel)]]</div>
                                 </div>
                             </div>
                             <div class="flex">
@@ -98,17 +98,27 @@
 
             properties: {
 
+                /**
+                 * The scanned barcode
+                 */
                 barcode:{
                     type: String,
                     observer: 'processBarcode',
                 },
 
+                /**
+                 * The selected parcel
+                 */
                 selected:{
                     type: Object,
                     notify: true,
                     observer: 'selectedChanged',
                 },
 
+                /**
+                 * The array of parcels, filtered by selected trip
+                 * Managed by redux-store
+                 */
                 tripParcels:{
                     type: Array,
                     value: function(){return [];},
@@ -118,6 +128,13 @@
 
             processBarcode: function(barcode, oldValue) {
                 if(!barcode) return;
+                // find parcel
+                var foundParcel = this.tripParcels.find(function(parcel){
+                    return (barcode === parcel.PID.toString());
+                }.bind(this));
+
+                if(foundParcel) this.$.selector.select(foundParcel);
+                else this.$.audio.play();// beep
             },
 
             onRecognize: function(e){
@@ -147,10 +164,12 @@
                 });
             },
 
-            computeDelMom: function(parcel){
+            computeDeliveryMoment: function(parcel){
                 if(!parcel.DELIVERY_MOMENT) return '';
                 var ts = new Date(parcel.DELIVERY_MOMENT);
-                return ts.getHours()+':'+ts.getMinutes();
+                var hours =  ("0" + ts.getHours()).slice(-2);
+                var minutes =  ("0" + ts.getMinutes()).slice(-2);
+                return hours+':'+minutes;
             },
 
             computeBarShort: function(parcel){

@@ -11,8 +11,6 @@
 <link rel="import" href="../bower_components/app-storage/app-network-status-behavior.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
-<!--<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
-<link rel="import" href="../bower_components/iron-icons/image-icons.html">-->
 <link rel="import" href="../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
@@ -26,6 +24,17 @@
 <link rel="import" href="redux-store.html">
 <link rel="import" href="dhl-soapajax.html">
 <link rel="import" href="dhl-icons.html">
+
+<!--
+# dhl-app
+`<dhl-app>`
+Polymer 1.X app includes:
+- Offline Capability
+- SOAP/XML communication with the backend
+- Barcode scanner
+- Hand Signature
+
+-->
 
 <dom-module id="dhl-app">
     <template>
@@ -108,6 +117,7 @@
 
 
         <app-drawer-layout fullbleed>
+
             <!-- Drawer content -->
             <app-drawer id="drawer">
                 <div class="layout vertical">
@@ -190,32 +200,42 @@
             ],
 
             properties: {
+
+                /**
+                 * The page that is to be displayed
+                 */
                 page: {
                     type: String,
                     reflectToAttribute: true,
                     observer: '_pageChanged',
                 },
+
+                /**
+                 * The camera object use to turn flashlight on/off
+                 */
                 camera:{
                     type: Object,
                     value: null
                 },
+
+                /**
+                 * The Ok text to be displayed in the toast
+                 * Managed by redux-store
+                 */
                 okText: {
                     type: String,
                     value: '',
                     statePath: 'okText',
                     observer: 'okTextChanged'
                 },
+                /**
+                 * The Error text to be displayed in the toast
+                 */
                 errorText: {
                     type: String,
                     value: '',
                     statePath: 'errorText',
                     observer: 'errorTextChanged'
-                },
-                navigateTo: {
-                    type: String,
-                    value: '',
-                    statePath: 'navigateTo',
-                    observer: 'navigateToChanged'
                 }
             },
 
@@ -259,6 +279,7 @@
                 //window.alert('Flashlight doesnt work yet');
                 this.camera = !this.camera;
                 return;
+                //TODO
                 if(this.camera == null){
                     this.camera = Camera.open();
                     var parameters = camera.getParameters();
@@ -275,7 +296,7 @@
 
             _setOnline: function(online){
                 var self = this;
-                this.online = online;
+                this.online = online;//updates the online icon
                 /*if(online){
                     if(this.$.request.getLocalStorage) {
                         this.$.request.getLocalStorage('queue').then(function(localStorage){
@@ -292,6 +313,7 @@
                     }
                 }*/
             },
+
             okTextChanged: function(newVal){
                 if(!newVal) return;
                 this.$.toastOk.open();
@@ -300,13 +322,6 @@
                 if(!newVal) return;
                 this.$.toastError.open();
             },
-            navigateToChanged: function(newVal){
-                if(!newVal) return;
-                //window.history.pushState({}, null, '/'+newVal);
-                //window.dispatchEvent(new CustomEvent('location-changed'));
-            },
-
-
 
         });
     </script>

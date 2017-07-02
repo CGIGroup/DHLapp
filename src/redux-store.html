@@ -26,6 +26,7 @@
     const reducer = (state, action) => {
         if (!state) return initialState;
         console.log('action.type: ', action.type );
+
         switch (action.type) {
             case 'LOGON':
                 var clonedState = Object.assign({}, state);

@@ -5,7 +5,12 @@
 <link rel="import" href="../bower_components/google-streetview-pano/google-streetview-pano.html">
 <link rel="import" href="redux-store.html">
 <link rel="import" href="shared-styles.html">
+<!--
+# dhl-route
+`<dhl-route>`
+This element displays the route of the first 25 addresses.
 
+-->
 <dom-module id="dhl-route">
     <template>
         <style include="shared-styles">
@@ -49,6 +54,10 @@
 
             properties:{
 
+                /**
+                 * The array of parcels, filtered by selected trip
+                 * Managed by redux-store
+                 */
                 tripParcels:{
                     type: Array,
                     value: function(){return [];},

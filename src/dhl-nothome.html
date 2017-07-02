@@ -7,7 +7,15 @@
 <link rel="import" href="redux-store.html">
 <link rel="import" href="barcode-scanner.html">
 <link rel="import" href="shared-styles.html">
+<!--
+# dhl-nothome
+`<dhl-nothome>`
+This element displays parcel data.
+Used when customer is not home.
+Features a barcode scanner to scan KIB
+Dispatches SEND_DELIVERY action with current lat, lng, KIB
 
+-->
 <dom-module id="dhl-nothome">
     <template>
         <style include="iron-flex iron-flex-alignment iron-positioning"></style>
@@ -68,12 +76,19 @@
 
             properties:{
 
+                /**
+                 * The scanned barcode
+                 */
                 barcode:{
                     type: String,
                     observer: 'processBarcode',
                     notify: true,
                 },
 
+                /**
+                 * The selected parcel
+                 * Managed by redux-store
+                 */
                 selectedParcel: {
                     type: Object,
                     value: function(){return {};},
@@ -99,7 +114,8 @@
                 this.dispatch({
                     type: 'SEND_DELIVERY',
                     lat: this.lat,
-                    lng: this.lng
+                    lng: this.lng,
+                    kib: this.barcode
                 });
             },
 

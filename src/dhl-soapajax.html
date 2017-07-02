@@ -1,7 +1,20 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="redux-store.html">
+<!--
+# dhl-soapajax
+`<dhl-soapajax>`
+This element listens for changes in request and sends it in the form of SOAP/XML.
+- The request is enclosed in a SOAP envelope
+- A svd: prefix is provided for each of the request tags
+- The request object is translated to an XML string
+- The request is sent to the server
+- The response is parsed into JSON
+- Dispatches action with response parameter
+The action depends on Success/Error and is determined by successActionType/errorActionType
+We initially leave the url empty to prevent automatic ajax with empty request.
 
+-->
 <dom-module id="dhl-soapajax">
     <template>
 
@@ -30,6 +43,7 @@
 
                 /**
                  * The name of the actions function to be used on success
+                 * Managed by redux-store
                  */
                 successActionType:{
                     type: String,
@@ -38,6 +52,7 @@
                 },
                 /**
                  * The name of the action to be used on error
+                 * Managed by redux-store
                  */
                 errorActionType:{
                     type: String,
@@ -47,6 +62,7 @@
 
                 /**
                  * The request to be sent, in JSON format
+                 * Managed by redux-store
                  */
                 request: {
                     type: Object,

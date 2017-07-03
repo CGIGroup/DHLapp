@@ -5,7 +5,6 @@
     "src/dhl-signin.html",
     "src/dhl-trips.html",
     "src/dhl-tripdetails.html",
-    "src/dhl-tripprepare.html",
     "src/dhl-route.html",
     "src/dhl-tripexecute.html",
     "src/dhl-delivery.html",
